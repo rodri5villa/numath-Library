@@ -1,6 +1,6 @@
 import pytest
 import math
-from numath.ecuaciones_una_variable import bisection, fixed_point_iteration, newton_method, derivative
+from numath.ecuaciones_una_variable import bisection, fixed_point_iteration, newton_method, secant_method, false_position
 
 ### BISECTION ###
 
@@ -48,7 +48,7 @@ def test_fixed_point_error():
 
 ### NEWTON METHOD ###
 
-def test_newton_sqrt2():
+def test_newton_sqrt():
     def f(x):
         return x**2 - 2
 
@@ -76,30 +76,68 @@ def test_newton_deriv_zero():
     with pytest.raises(ValueError):
         newton_method(f, p0, TOL=1e-5, N0=50, factor=1e-8)
 
+### SECANT METHOD ###
 
-
-
-
-### ADICIONALES ###
-
-## _DERIVATIVE ##
-
-def test_derivative_cos():
+def test_secant_sqrt():
     def f(x):
-        return math.cos(x)
-    
-    df_approx = derivative(f, TOL=1e-5)
-    x_val = math.pi / 4
-    expected = -math.sin(x_val) 
-    assert df_approx(x_val) == pytest.approx(expected, rel=1e-5), \
-        f"Derivada de cos(x) en {x_val} debería ser ~{expected}, pero se obtuvo {df_approx(x_val)}"
+        return x**2 - 4
 
-def test_derivative_x2():
+    p0 = 1.0
+    p1 = 2.0
+    solution, iterations = secant_method(f, p0, p1, TOL=1e-5, N0=100)
+    expected = math.sqrt(4)
+    assert solution == pytest.approx(expected, rel=1e-5), \
+           f"Se esperaba {expected} pero se obtuvo {solution} en {iterations} iteraciones."
+
+def test_secant_linear():
     def f(x):
-        return x**2
-    
-    df_approx = derivative(f, TOL=1e-5)
-    x_val = 3.0
-    expected = 6.0  
-    assert df_approx(x_val) == pytest.approx(expected, rel=1e-5), \
-        f"Derivada de x^2 en {x_val} debería ser {expected}, pero se obtuvo {df_approx(x_val)}"
+        return 5 * x + 3
+
+    p0 = 0.0
+    p1 = 1.0
+    solution, iterations = secant_method(f, p0, p1, TOL=1e-5, N0=100)
+    expected = -3/5
+    assert solution == pytest.approx(expected, rel=1e-5), \
+           f"Se esperaba {expected} pero se obtuvo {solution} en {iterations} iteraciones."
+
+def test_secant_division_zero():
+    def f(x):
+        return 5
+
+    p0 = 1.0
+    p1 = 2.0
+    with pytest.raises(ValueError):
+        secant_method(f, p0, p1, TOL=1e-5, N0=100)
+
+### FALSE POSITION ###
+
+def test_false_position_sqrt():
+    def f(x):
+        return x**2 - 7
+
+    p0 = 2.0
+    p1 = 4.0
+    solution, iterations = false_position(f, p0, p1, TOL=1e-5, N0=100)
+    expected = math.sqrt(7)
+    assert solution == pytest.approx(expected, rel=1e-5), \
+           f"Se esperaba {expected} pero se obtuvo {solution} en {iterations} iteraciones."
+
+def test_false_position_linear():
+    def f(x):
+        return 11 * x + 4
+
+    p0 = -1.0
+    p1 = 0.0
+    solution, iterations = false_position(f, p0, p1, TOL=1e-5, N0=100)
+    expected = -4/11
+    assert solution == pytest.approx(expected, rel=1e-5), \
+           f"Se esperaba {expected} pero se obtuvo {solution} en {iterations} iteraciones."
+
+def test_false_position_invalid_interval():
+    def f(x):
+        return 2 * x + x**3 - 2
+
+    p0 = 2.0
+    p1 = 3.0
+    with pytest.raises(ValueError):
+        false_position(f, p0, p1, TOL=1e-5, N0=100)
