@@ -1,6 +1,6 @@
 import pytest
 import math
-from numath.ecuaciones_una_variable import bisection, fixed_point_iteration, newton_method, secant_method, false_position
+from numath.ecuaciones_una_variable import bisection, fixed_point_iteration, newton_method, secant_method, false_position, steffensen_method
 
 ### BISECTION ###
 
@@ -141,3 +141,30 @@ def test_false_position_invalid_interval():
     p1 = 3.0
     with pytest.raises(ValueError):
         false_position(f, p0, p1, TOL=1e-5, N0=100)
+
+### STEFFENSEN METHOD ###
+
+def test_steffensen_correct():
+    def g(x):
+        return math.cos(x)
+    p0 = 7.0
+    solution, iterations = steffensen_method(g, p0, TOL=1e-5, N0=100)
+    expected = 0.739085
+    assert solution == pytest.approx(expected, rel=1e-5), \
+           f"Se esperaba {expected} pero se obtuvo {solution} en {iterations} iteraciones."
+
+def test_steffensen_identity():
+    def g(x):
+        return x
+    p0 = 5.0
+    solution, iterations = steffensen_method(g, p0, TOL=1e-5, N0=100)
+    assert solution == pytest.approx(5.0, rel=1e-5), \
+           f"Se esperaba 5.0, pero se obtuvo {solution} en {iterations} iteraciones."
+    assert iterations == 1, f"Se esperaba convergencia en 1 iteración, pero se realizaron {iterations} iteraciones."
+
+def test_steffensen_division_by_zero():
+    def g(x):
+        return x + 1
+    p0 = 0.0
+    with pytest.raises(ValueError):
+        steffensen_method(g, p0, TOL=1e-5, N0=100)

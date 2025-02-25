@@ -57,38 +57,61 @@
 ## 4- Método de la Secante
 
 ### 1. Test de Funcionalidad (`test_secant_sqrt`): 
-   - Se definen dos aproximaciones iniciales.
-   - Se espera que el método de la secante converja a la raíz real, que es `sqrt{4} (2)`.
-   - Se utiliza `pytest.approx` para validar que la solución obtenida se encuentre dentro de la tolerancia definida.
+  - Se definen dos aproximaciones iniciales.
+  - Se espera que el método de la secante converja a la raíz real, que es `sqrt{4} (2)`.
+  - Se utiliza `pytest.approx` para validar que la solución obtenida se encuentre dentro de la tolerancia definida.
 
 ### 2. Test de Funcionalidad (`test_secant_linear`):
-   - Se define una función lineal, cuya raíz es `-3/5`.
-   - Debido a la linealidad de la función, el método de la secante debe converger en una sola iteración.
-   - Se verifica que la solución obtenida es igual a `-3/5`.
+  - Se define una función lineal, cuya raíz es `-3/5`.
+  - Debido a la linealidad de la función, el método de la secante debe converger en una sola iteración.
+  - Se verifica que la solución obtenida es igual a `-3/5`.
 
 ### 3. Test de Excepción (`test_secant_division_zero`):  
-   - Se define una función constante, `f(x)=5`, para la cual el numerador de la fórmula de la secante es cero ya que `f(p0) = f(p1) = 5`.
-   - Esta situación produce una división por cero en el cálculo de la nueva aproximación.
-   - Se utiliza `pytest.raises(ValueError)` para confirmar que el método lanza la excepción adecuada.
+  - Se define una función constante, `f(x)=5`, para la cual el numerador de la fórmula de la secante es cero ya que `f(p0) = f(p1) = 5`.
+  - Esta situación produce una división por cero en el cálculo de la nueva aproximación.
+  - Se utiliza `pytest.raises(ValueError)` para confirmar que el método lanza la excepción adecuada.
 
 ## 5 - Método de Posición Falsa
 
 ### 1. Test de Funcionalidad (`test_false_position_sqrt`)
-- Se define la función `f(x)=x^2-7`. Esta función tiene dos raíces reales: `sqrt{7}` y `-sqrt{7}`.  
-  En este test, se utilizan las aproximaciones iniciales `p0=2.0` y `p1=4.0`, de modo que:
-  - `f(2.0) = 4 - 7 = -3` (negativo)
-  - `f(4.0) = 16 - 7 = 9` (positivo)  
-  Esto garantiza que el intervalo `[2.0,4.0]` encierra la raíz positiva `sqrt{7}`.
-- Se utiliza `pytest.approx` para comparar la solución obtenida con el valor esperado con una tolerancia relativa de 1e-5.  
-  En caso de que la solución no se aproxime al valor esperado, se mostrará un mensaje con la solución y el número de iteraciones.
+  - Se define la función `f(x)=x^2-7`. Esta función tiene dos raíces reales: `sqrt{7}` y `-sqrt{7}`.  
+    En este test, se utilizan las aproximaciones iniciales `p0=2.0` y `p1=4.0`, de modo que:
+    - `f(2.0) = 4 - 7 = -3` (negativo)
+    - `f(4.0) = 16 - 7 = 9` (positivo)  
+  - Esto garantiza que el intervalo `[2.0,4.0]` encierra la raíz positiva `sqrt{7}`.
+  - Se utiliza `pytest.approx` para comparar la solución obtenida con el valor esperado con una tolerancia relativa de 1e-5.  
 
 ### 2. Test de Funcionalidad (`test_false_position_linear`)
 
-- Se define la función lineal `f(x)=11x+4`, cuya única raíz es `x = -4/11 approx -0.363636`.  
-- Se utiliza `pytest.approx` para comparar la solución obtenida con `-4/11` utilizando una tolerancia relativa de 1e-5.
+  - Se define la función lineal `f(x)=11x+4`, cuya única raíz es `x = -4/11 approx -0.363636`.  
+  - Se utiliza `pytest.approx` para comparar la solución obtenida con `-4/11` utilizando una tolerancia relativa de 1e-5.
 
 ### 3. Test de Excepción (`test_false_position_invalid_interval`)
 
-- Se define la función `f(x)=2x+x^3-2`.  
-- En este caso, se espera que ambos valores `f(2.0)` y `f(3.0)` tengan el mismo signo, lo que implica que el intervalo no encierra ninguna raíz (violando la condición necesaria).
-- Se utiliza `pytest.raises(ValueError)` para comprobar que se lanza el error esperado en este escenario.
+  - Se define la función `f(x)=2x+x^3-2`.  
+  - En este caso, se espera que ambos valores `f(2.0)` y `f(3.0)` tengan el mismo signo, lo que implica que el intervalo no encierra ninguna raíz (violando la condición necesaria).
+  - Se utiliza `pytest.raises(ValueError)` para comprobar que se lanza el error esperado en este escenario.
+
+## 6 - Método de Steffensen
+
+#### 1. Test de Funcionalidad (`test_steffensen_correct`)
+
+  - Se define la función `g(x) = cos(x)` cuyo punto fijo es aproximadamente `0.739085`. Aunque se utiliza un valor inicial `p0 = 7.0`, el método debe converger a la solución correcta en pocas iteraciones.
+  - Se utiliza `pytest.approx` para comparar la solución obtenida con el valor esperado `0.739085` usando una tolerancia relativa de 1e-5.  
+  - Se informa mediante un mensaje de error en caso de que la solución no coincida.
+
+#### 2. Test Trivial de Identidad (`test_steffensen_identity`)
+ 
+  - Se define la función `g(x) = x`.  
+  - Dado que para la función identidad cualquier valor es punto fijo, se espera que, con una aproximación inicial `p0 = 5.0`, el método retorne inmediatamente `5.0`.
+  - Se verifica que la solución obtenida sea exactamente 5.0 y que el número de iteraciones sea 1, utilizando `pytest.approx` para la comparación.
+
+#### 3. Test de Excepción (`test_steffensen_division_by_zero`)
+
+  - Se define una función `g(x) = x + 1`.  
+  - En este caso, para cualquier valor de `p` se tiene:  
+    - `p1 = g(p0) = p0 + 1`  
+    - `p2 = g(p1) = p1 + 1`  
+  - El denominador en la fórmula de Steffensen se calcula como `p2 - 2 * p1 + p0`
+  - Esto provocará una división por cero.
+  - Se utiliza `pytest.raises(ValueError)` para comprobar que se lanza la excepción esperada en este caso.

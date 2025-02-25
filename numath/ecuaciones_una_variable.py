@@ -98,3 +98,23 @@ def false_position(f, p0, p1, TOL=1e-5, N0=100):
         q1 = q
 
     raise ValueError(f"El método falló después de {N0} iteraciones.")
+
+def steffensen_method(g, p0, TOL=1e-5, N0=100):
+    
+    i = 1 
+    while i <= N0:
+        p1 = g(p0)    
+        if abs(p1 - p0) < TOL:
+            return p0, i  
+        p2 = g(p1)      
+        denominator = p2 - 2 * p1 + p0
+        if denominator == 0:
+            raise ValueError("Denominador cero en el cálculo de p; el método no puede continuar.")
+       
+        p = p0 - ((p1 - p0) ** 2) / denominator 
+        if abs(p - p0) < TOL:  
+            return p, i
+        i += 1               
+        p0 = p        
+
+    raise ValueError(f"El método falló después de {N0} iteraciones.")

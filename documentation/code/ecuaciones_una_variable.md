@@ -9,19 +9,19 @@ El **método de bisección** es un método numérico para encontrar la raíz de 
 1. **Verificación de la condición inicial:**  
    Se comprueba que `f(a)` y `f(b)` tengan signos opuestos, es decir, que `f(a) * f(b) < 0`.
 
-2. **Inicialización:**  
+2. **Inicialización**  
    Se inicializa el contador en 1 y se evalúa `FA = f(a)`.
 
-3. **Iteración:**  
+3. **Iteración**  
    En cada iteración se calcula el punto medio y se evalúa `FP = f(p)`.  
    Si `FP` es 0 o si la mitad del ancho del intervalo (b-a)/2 es menor que la tolerancia, se retorna `p` junto con el número de iteraciones.
 
-4. **Actualización del Intervalo:**  
+4. **Actualización del Intervalo**  
    Se incrementa i y se decide:
    - Si `FA` y `FP` tienen signos opuestos, la raíz se encuentra en `[𝑎,p]` por lo que se actualiza `b = p`.
    - De lo contrario, la raíz se encuentra en `[p,𝑏]` por lo que se actualiza `a = p` y `FA = FP`.
 
-5. **Fallo:**  
+5. **Fallo**  
    Si se alcanzan `N0` iteraciones sin convergencia, se lanza un error.
 
 ### Parametros de Entrada y Salida
@@ -62,18 +62,20 @@ Si la función `g(p)` es contractiva en la región cercana al punto fijo, la suc
 
 ### Proceso del Método
 
-**Inicialización:**   
+1. **Conversión**  
+   Se convierte la función dada a la forma `p = g(p)`.
+
+2. **Inicialización**   
   Se inicializa el contador de iteraciones y se inicia un bucle que se ejecuta mientras el número de iteraciones no supere `N0`.
 
-- **Proceso:**  
+3. **Proceso**  
   Se calcula el siguiente valor `p` aplicando la función `g` a la aproximación actual `p0`.  
   Se verifica si la diferencia entre la nueva aproximación y la anterior es menor que la tolerancia. Si es así, se retorna `p` y el número de iteraciones y se termina la ejecución.
 
-- **Iteración:**   
-  Se incrementa el contador de iteraciones.
-  Se actualiza `p0` con el valor de `p` para la siguiente iteración.
+4. **Iteración**   
+  Se incrementa el contador de iteraciones. y se actualiza `p0` con el valor de `p` para la siguiente iteración.
 
-- **Fallo:**  
+5. **Fallo**  
   Si se sale del bucle sin convergencia, se lanza un `ValueError` indicando que el método falló tras `N0` iteraciones.
 
 ### Parametros de Entrada y Salida
@@ -116,10 +118,10 @@ El Método de Newton es un procedimiento iterativo para encontrar soluciones apr
 
 ### Proceso del Método
 
-1. **Inicialización:**  
+1. **Inicialización**  
    Se elige una aproximación inicial para la raíz de la función `f(x)=0`, se establece el contador de iteraciones en 1 y llamamos al metodo privado `_derivative` para calcular la derivada de la función.
 
-2. **Iteración:**  
+2. **Iteración**  
    En cada iteración se realiza lo siguiente:
    - **Cálculo de la nueva aproximación:**  
      Se calcula:
@@ -130,13 +132,13 @@ El Método de Newton es un procedimiento iterativo para encontrar soluciones apr
      Se calcula la diferencia para evaluar el progreso de la iteración.
 
    **`threshold`**:   El umbral se define como `factor * (1 + |p0|)`. Esto permite ajustar el umbral en función de la escala de la aproximación inicial. Si la magnitud de la derivada en `p0` es menor que este umbral, se considera que la derivada es demasiado pequeña, y por tanto no es seguro aplicar el método de Newton.
-3. **Criterio de Convergencia:**  
+3. **Criterio de Convergencia**  
    Si la diferencia es menor que la tolerancia predefinida, se considera que la iteración ha convergido y se retorna la solución aproximada junto con el número de iteraciones.
 
-4. **Actualización:**  
+4. **Actualización**  
    Si la condición de convergencia no se cumple, se incrementa el contador en 1 y se actualiza `p0` con el valor de `p` para la siguiente iteración.
 
-5. **Fallo:**  
+5. **Fallo**  
    Si la derivada es demasiado pequeña en `p0` (es decir, menor que el umbral relativo calculado) o si se alcanza el número máximo de iteraciones sin convergencia, se lanza un ValueError indicando que el método de Newton no se puede aplicar o que ha fallado.
 
 ### Parametros de Entrada y Salida
@@ -176,13 +178,13 @@ El **Método de la Secante** es un método numérico para encontrar una solució
 
 ### Proceso del Método
 
-1. **Inicialización:**  
+1. **Inicialización**  
    Se disponen dos aproximaciones iniciales `p0` y `p1` y se calcula:
    - `q0 = f(p0)`
    - `q1 = f(p1)`
    Se establece el contador de iteraciones en `i = 2`, ya que ya se conocen dos puntos.
 
-2. **Iteración:**  
+2. **Iteración**  
    Mientras que la iteración es menor o igual al número máximo de iteraciones, se hacen los siguientes pasos:
    - **Cálculo de la nueva aproximación:**  
      Se calcula: `p = p1 - q1 * (p1 - p0) / (q1 - q0)`
@@ -193,7 +195,7 @@ El **Método de la Secante** es un método numérico para encontrar una solució
      - `p0 <- p1` y `q0 <- q1`
      - `p1 <- p` y `q1 <- f(p)` Se incrementa `i`.
 
-3. **Fallo:**  
+3. **Fallo**  
    Si se alcanzan `N0` iteraciones sin satisfacer el criterio de convergencia, se lanza un error indicando que el método no fue exitoso.
 
 ### Parametros de Entrada y Salida
@@ -235,21 +237,24 @@ El **método de la posición falsa** es un método numérico para encontrar una 
 
 ### Proceso del Método
 
-1. **Inicialización:**
-   - Se establecen dos aproximaciones iniciales.
-   - Se calculan `q0 = f(p0)` y `q1 = f(p1)`.
-   - Se fija el contador `i=2`.
+1. **Inicialización**
 
-2. **Iteración:**
-   - Se calcula una nueva aproximación usando la fórmula de la posición falsa: `p = p1 - q1 * (p1 - p0) / (q1 - q0)`
-   - Si `|p - p_1| < TOL`, se considera que el proceso ha convergido y se retorna `p` junto con el número de iteraciones.
-   - Se incrementa el contador en 1.
-   - Se calcula `q = f(p)`. Luego, se verifica el signo de `q` respecto a `q1`:
+   Se establecen dos aproximaciones iniciales.   
+   Se calculan `q0 = f(p0)` y `q1 = f(p1)`.   
+   Se fija el contador `i=2`.
+
+2. **Iteración**
+
+   Se calcula una nueva aproximación usando la fórmula de la posición falsa: `p = p1 - q1 * (p1 - p0) / (q1 - q0)`.   
+   Si `|p - p_1| < TOL`, se considera que el proceso ha convergido y se retorna `p` junto con el número de iteraciones.
+   Se incrementa el contador en 1.
+   Se calcula `q = f(p)`. Luego, se verifica el signo de `q` respecto a `q1`:
      - Si `q * q1 < 0`, se actualiza `p0 = p1` y `q0 = q1`.
-   - Se actualiza `p1 = p` y `q1 = q`.
+   Se actualiza `p1 = p` y `q1 = q`.
    
-3. **Fallo:**
-   - Si se alcanza el número máximo de iteraciones `N0` sin convergencia, se lanza un error indicando que el método falló.
+3. **Fallo**
+
+   Si se alcanza el número máximo de iteraciones `N0` sin convergencia, se lanza un error indicando que el método falló.
 
 ### Parametros de Entrada y Salida
 
@@ -302,6 +307,64 @@ solution, iterations = false_position(f, p0, p1, TOL=1e-5, N0=100)
 print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
 ```
 
+## 6- Método de Steffensen(`steffensen_method(g, p0, TOL=1e-5, N0=100)`)
+
+El Método de Steffensen es un método para acelerar la convergencia de una iteración de punto fijo. Es decir, se utiliza para encontrar la solución de `p = g(p)` a partir de una aproximación inicial. La idea es aplicar el proceso de aceleración de Aitken para obtener una mejor aproximación en cada iteración.
+
+### Proceso del Método
+
+1. **Conversión**  
+   Se convierte la función dada a la forma `p = g(p)`.
+
+2. **Inicialización**
+
+   Se establece la aproximación inicial y se fija el contador de iteraciones en `i = 1`.
+
+3. **Iteración**
+
+   Se calcula `p1 = g(p0)` (se evalúa la función en `p0`).
+   Se verifica `p1`, si es igual (o prácticamente igual) a `p0` ya hemos convergido.
+   Se calcula `p2 = g(p1)` (se evalúa la función en `p1`).
+   Se calcula la nueva aproximación utilizando la fórmula `p = p0 - ((p1 - p0) ** 2) / (p2 - 2 * p1 + p0)`.
+   Se verifica el criterio de convergencia.
+   Si no se cumple el criterio de convergencia, se incrementa `i` en 1 y se actualiza `p0` con el valor de `p` para proceder a la siguiente iteración.
+
+4. **Fallo**
+
+   Si se alcanza el número máximo de iteraciones `N0` sin que se cumpla el criterio de convergencia, se lanza un error indicando que el método no fue exitoso.
+
+### Parametros de Entrada y Salida
+
+```python
+def steffensen_method(g, p0, TOL=1e-5, N0=100):
+    """
+    Entradas:
+       g    : función (callable) que define el método de punto fijo, es decir, g(p).
+       p0   : aproximación inicial.
+       TOL  : tolerancia para la convergencia.
+       N0   : número máximo de iteraciones permitidas.
+
+    Salida:
+       Retorna una tupla (p, i) donde:
+          - p es la aproximación a la solución.
+          - i es el número de iteraciones realizadas.
+    """
+``` 
+
+### Ejemplo de Uso
+
+Supongamos que queremos resolver la ecuación de punto fijo para la función `g(x)=cos(x)`
+
+```python
+
+def g(x):
+    return math.cos(x)
+
+p0 = 1.0 
+
+solution, iterations = steffensen_method(g, p0, TOL=1e-5, N0=100)
+print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
+```
 
 
 
