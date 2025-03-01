@@ -1,6 +1,6 @@
 import pytest
 import math
-from numath.ecuaciones_una_variable import bisection, fixed_point_iteration, newton_method, secant_method, false_position, steffensen_method
+from numath.ecuaciones_una_variable import bisection, fixed_point_iteration, newton_method, secant_method, false_position, steffensen_method, horner_method
 
 ### BISECTION ###
 
@@ -168,3 +168,32 @@ def test_steffensen_division_by_zero():
     p0 = 0.0
     with pytest.raises(ValueError):
         steffensen_method(g, p0, TOL=1e-5, N0=100)
+
+### HORNER METHOD ###
+
+def test_horner_cubic():
+    # P(x) = 2x^3 - 6x + 4.
+
+    a = [2, 0, -6, 4]
+    x0 = 2
+    y, z = horner_method(a, x0)
+    assert y == pytest.approx(8, rel=1e-5), f"Expected P(2)=8, got {y}"
+    assert z == pytest.approx(18, rel=1e-5), f"Expected P'(2)=18, got {z}"
+
+def test_horner_quadratic():
+    # P(x) = x^2 + x + 5.
+    
+    a = [1, 1, 5]
+    x0 = 3
+    y, z = horner_method(a, x0)
+    assert y == pytest.approx(17, rel=1e-5), f"Expected P(3)=17, got {y}"
+    assert z == pytest.approx(7, rel=1e-5), f"Expected P'(3)=7, got {z}"
+
+def test_horner_linear():
+    # P(x) = 3x - 2.
+    
+    a = [3, -2]
+    x0 = 4
+    y, z = horner_method(a, x0)
+    assert y == pytest.approx(10, rel=1e-5), f"Expected P(4)=10, got {y}"
+    assert z == pytest.approx(3, rel=1e-5), f"Expected P'(4)=3, got {z}"

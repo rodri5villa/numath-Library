@@ -307,7 +307,7 @@ solution, iterations = false_position(f, p0, p1, TOL=1e-5, N0=100)
 print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
 ```
 
-## 6- Método de Steffensen(`steffensen_method(g, p0, TOL=1e-5, N0=100)`)
+## 6- Método de Steffensen (`steffensen_method(g, p0, TOL=1e-5, N0=100)`)
 
 El Método de Steffensen es un método para acelerar la convergencia de una iteración de punto fijo. Es decir, se utiliza para encontrar la solución de `p = g(p)` a partir de una aproximación inicial. La idea es aplicar el proceso de aceleración de Aitken para obtener una mejor aproximación en cada iteración.
 
@@ -364,6 +364,80 @@ p0 = 1.0
 
 solution, iterations = steffensen_method(g, p0, TOL=1e-5, N0=100)
 print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
+```
+
+## 6- Método de Honer (`horner_method(a, x0)`)
+
+El **Método de Horner** es una forma eficiente de evaluar un polinomio en un valor específico `x0`. Además, puede adaptarse para obtener también la derivada del polinomio en ese mismo punto. Dado un polinomio de grado `n`:
+
+ `P(x) = a_n*x^n + + a_{n-1}*x^{n-1} + ... + a1*x + a0`
+
+Queremos calcular:
+   - `y = P(x0)`
+   - `z = P'(x0)`
+
+### Proceso del Método
+
+Para evaluar un polinomio y su derivada en un punto `x_0` usando el método de Horner, se asume que el polinomio se expresa en la forma `P(x) = a_n*x^n + + a_{n-1}*x^{n-1} + ... + a1*x + a0`
+
+Se asume que los coeficientes se proporcionan en orden descendente, es decir, `a = [a_n, a_(n-1), ..., a1, a0]` donde `a_n` es el coeficiente del término de mayor grado y `a0` el término independiente.
+
+1. **Entrada**
+
+   Se recibe:
+     - La lista de coeficientes en orden descendente.
+     - El punto de evaluación `x0`.
+
+2. **Inicialización**
+
+   Se define:
+     - El grado `n` (implícito en la longitud de la lista de coeficientes).
+     - `y = a0` (inicialmente, el acumulador para `P(x0)` es el coeficiente del término de mayor grado).
+     - `z = a0` (inicialmente, el acumulador para `P'(x0)` es el mismo coeficiente).
+
+3. **Iteración**
+
+   Se van "desplazando" los coeficientes y acumulando el valor del polinomio y de su derivada de manera eficiente.
+
+4. **Finalización**
+
+   Al finalizar, `y` contiene `P(x0)` y `z` contiene `P'(x0)`.
+
+5. **Salida**
+
+   Se retorna el par `(y, z)`.
+
+### Parametros de Entrada y Salida
+
+```python
+def horner_method(a, x0):
+    """    
+    Entradas:
+      a   : lista de coeficientes [a_n, a_(n-1), ..., a_1, a_0].
+      x0  : punto en el que se quiere evaluar el polinomio y su derivada.
+    
+    Salida:
+      (y, z) donde:
+         y = P(x0)   (valor del polinomio en x0)
+         z = P'(x0)  (valor de la derivada en x0)
+    """
+``` 
+
+### Ejemplo de Uso
+
+Supongamos que queremos resolver la ecuación P(x) = 2x^3 - 6x + 4
+
+```python
+
+if __name__ == "__main__":
+    # Polinomio: P(x) = 2x^3 - 6x + 4
+    # Coeficientes en orden descendente: [2, 0, -6, 4]
+    a = [2, 0, -6, 4]
+    x0 = 4
+
+    y, z = horner_method(a, x0)
+    print(f"P({x0}) = {y}")
+    print(f"P'({x0}) = {z}")
 ```
 
 

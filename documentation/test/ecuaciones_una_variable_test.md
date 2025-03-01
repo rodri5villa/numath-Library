@@ -94,19 +94,19 @@
 
 ## 6 - Método de Steffensen
 
-#### 1. Test de Funcionalidad (`test_steffensen_correct`)
+### 1. Test de Funcionalidad (`test_steffensen_correct`)
 
   - Se define la función `g(x) = cos(x)` cuyo punto fijo es aproximadamente `0.739085`. Aunque se utiliza un valor inicial `p0 = 7.0`, el método debe converger a la solución correcta en pocas iteraciones.
   - Se utiliza `pytest.approx` para comparar la solución obtenida con el valor esperado `0.739085` usando una tolerancia relativa de 1e-5.  
   - Se informa mediante un mensaje de error en caso de que la solución no coincida.
 
-#### 2. Test Trivial de Identidad (`test_steffensen_identity`)
+### 2. Test Trivial de Identidad (`test_steffensen_identity`)
  
   - Se define la función `g(x) = x`.  
   - Dado que para la función identidad cualquier valor es punto fijo, se espera que, con una aproximación inicial `p0 = 5.0`, el método retorne inmediatamente `5.0`.
   - Se verifica que la solución obtenida sea exactamente 5.0 y que el número de iteraciones sea 1, utilizando `pytest.approx` para la comparación.
 
-#### 3. Test de Excepción (`test_steffensen_division_by_zero`)
+### 3. Test de Excepción (`test_steffensen_division_by_zero`)
 
   - Se define una función `g(x) = x + 1`.  
   - En este caso, para cualquier valor de `p` se tiene:  
@@ -115,3 +115,26 @@
   - El denominador en la fórmula de Steffensen se calcula como `p2 - 2 * p1 + p0`
   - Esto provocará una división por cero.
   - Se utiliza `pytest.raises(ValueError)` para comprobar que se lanza la excepción esperada en este caso.
+
+## Método de Horner
+
+### 1. Test de Funcionalidad (`test_horner_cubic`)
+ 
+  - Se evalúa el polinomio `P(x) = 2x^3 - 6x + 4`.  
+  - Los coeficientes, en orden descendente, son: `[2, 0, -6, 4]`.  
+  - Punto de evaluación: `x0 = 2`.
+  - Se utiliza `pytest.approx` para comparar la salida de la función con los valores esperados con una tolerancia relativa de 1e-5.
+
+### 2. Test  de Funcionalidad (`test_horner_quadratic`)
+
+  - Se evalúa el polinomio `P(x) = x^2 + x + 5`.  
+  - Los coeficientes en orden descendente son: `[1, 1, 5]`.
+  - Punto de evaluación: `x0 = 3`.
+  - Se verifica que la función retorne los valores para el polinomio y para su derivada, usando `pytest.approx` con tolerancia 1e-5.
+
+### 3. Test de Funcionalidad (`test_horner_linear`)
+
+  - Se evalúa el polinomio lineal `P(x) = 3x - 2`.  
+  - Los coeficientes en orden descendente son: `[3, -2]`.
+  - Punto de evaluación: `x0 = 4`.
+  - Se comprueba que la función retorne los valores para el polinomio y para su derivada, utilizando `pytest.approx` con una tolerancia relativa de 1e-5.

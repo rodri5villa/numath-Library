@@ -1,3 +1,5 @@
+### BISECCION ###
+
 def bisection(f, a, b, TOL=1e-5, N0=100):
 
     if f(a) * f(b) >= 0:
@@ -20,6 +22,8 @@ def bisection(f, a, b, TOL=1e-5, N0=100):
 
     raise ValueError(f"El método fracasó después de {N0} iteraciones.")
 
+### ITERACION DE PUNTO FIJO ###
+
 def fixed_point_iteration(g, p0, TOL=1e-5, N0=100):
 
     i = 1  
@@ -31,6 +35,8 @@ def fixed_point_iteration(g, p0, TOL=1e-5, N0=100):
         p0 = p  
 
     raise ValueError(f"El método falló después de {N0} iteraciones.")
+
+### METODO DE NEWTON Y SUS EXTENSIONES ###
 
 def _derivative(f, TOL=1e-5):
     return lambda x: (f(x + TOL) - f(x - TOL)) / (2 * TOL)
@@ -99,6 +105,8 @@ def false_position(f, p0, p1, TOL=1e-5, N0=100):
 
     raise ValueError(f"El método falló después de {N0} iteraciones.")
 
+### CONVERGENCIA ACELERADA ###
+
 def steffensen_method(g, p0, TOL=1e-5, N0=100):
     
     i = 1 
@@ -118,3 +126,17 @@ def steffensen_method(g, p0, TOL=1e-5, N0=100):
         p0 = p        
 
     raise ValueError(f"El método falló después de {N0} iteraciones.")
+
+### CEROS DE POLINOMIOS Y METODO DE MULLER
+
+def horner_method(a, x0):
+ 
+    n = len(a) - 1  
+    y = a[0] 
+    z = a[0] 
+    for j in range(1, n):
+        y = x0 * y + a[j]  
+        z = x0 * z + y   
+    y = x0 * y + a[n]
+    return y, z
+
