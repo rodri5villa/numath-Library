@@ -1,6 +1,6 @@
 import pytest
 import math
-from numath.ecuaciones_una_variable import bisection, fixed_point_iteration, newton_method, secant_method, false_position, steffensen_method, horner_method
+from numath.ecuaciones_una_variable import bisection, fixed_point_iteration, newton_method, secant_method, false_position, steffensen_method, horner_method, muller_method
 
 ### BISECTION ###
 
@@ -197,3 +197,19 @@ def test_horner_linear():
     y, z = horner_method(a, x0)
     assert y == pytest.approx(10, rel=1e-5), f"Expected P(4)=10, got {y}"
     assert z == pytest.approx(3, rel=1e-5), f"Expected P'(4)=3, got {z}"
+
+### MULLER METHOD ###
+
+import pytest
+
+def test_muller_root_convergence():
+    def f(x):
+        return x**2 - 4  
+    root = muller_method(f, 1, 3, 4, TOL=1e-5, N0=100)
+    assert pytest.approx(root, abs=1e-5) == 2
+
+def test_muller_negative_discriminant():
+    def f(x):
+        return x**2 + 1  
+    result = muller_method(f, -1, 0, 1, TOL=1e-5, N0=100)
+    assert result == "undefined"

@@ -140,3 +140,40 @@ def horner_method(a, x0):
     y = x0 * y + a[n]
     return y, z
 
+def muller_method(f, p0, p1, p2, TOL=1e-5, N0=100):
+   
+    h1 = p1 - p0
+    h2 = p2 - p1
+    δ1 = (f(p1) - f(p0)) / h1
+    δ2 = (f(p2) - f(p1)) / h2
+    d = (δ2 - δ1) / (h2 + h1)
+    i = 3
+    while i <= N0:
+        
+        b = δ2 + h2 * d
+        discriminant = b**2 - 4 * f(p2) * d
+        if discriminant < 0:
+            print("Discriminante negativo, la raíz será compleja o indefinida.")
+            return "undefined" 
+        D = discriminant**0.5  
+        if abs(b - D) < abs(b + D):
+            E = b + D
+        else:
+            E = b - D
+        if E == 0:
+            E = TOL 
+        h = -2 * f(p2) / E
+        p = p2 + h
+        if abs(h) < TOL:
+            return p
+        p0 = p1
+        p1 = p2
+        p2 = p
+        h1 = p1 - p0
+        h2 = p2 - p1
+        δ1 = (f(p1) - f(p0)) / h1
+        δ2 = (f(p2) - f(p1)) / h2
+        d = (δ2 - δ1) / (h2 + h1)
+        i += 1
+    
+    raise RuntimeError(f"El método falló después de {N0} iteraciones")

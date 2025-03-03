@@ -440,6 +440,80 @@ if __name__ == "__main__":
     print(f"P'({x0}) = {z}")
 ```
 
+## 7- Método de Müller
+
+El **Método de Müller** es una técnica numérica para encontrar raíces de ecuaciones no lineales, que es una generalización del método de la secante y puede usar aritmética compleja para manejar funciones donde otras técnicas no convergen. Se destaca por su capacidad para alcanzar rápidamente la convergencia incluso con aproximaciones iniciales relativamente lejanas de la raíz, y es útil especialmente cuando se desconocen derivadas de la función o son difíciles de calcular.
+
+El método utiliza tres aproximaciones iniciales `p0, p1, p2` y a través de un proceso iterativo trata de encontrar una raíz 𝑝 de la función `f(x)`. Utiliza diferencias divididas y una forma cuadrática para estimar la siguiente aproximación.
+
+### Proceso de Método
+
+1. **Elección de Puntos Iniciales** 
+
+   Se seleccionan tres puntos iniciales, `p0, p1, p2`, que son necesarios para comenzar el algoritmo. Estos puntos deben ser elegidos cuidadosamente para asegurar que estén cerca de la raíz que se desea encontrar.
+
+2. **Inicialización**
+
+   Se calculan las diferencias `h1 = p1 - p0` y `h2 = p2 - p1`.
+   Se determinan las diferencias divididas `δ1 = (f(p1) - f(p0)) / h1` y `δ2 = (f(p2) - f(p1)) / h2`.
+   Se calcula la derivada dividida de segundo orden `d = (δ2 - δ1) / (h2 + h1)`.
+   Se establece el contador de iteraciones en 3.
+
+3. **Iteración**
+
+   En cada iteración se realiza lo siguiente:
+     - Se calcula `b = δ2 + h2 * d`.
+     - Se determina el discriminante `D = (b**2 - 4 * f(p2) * d) ** 0.5`.
+     - Se elige `E` de manera que `E = b + D` si `|b - D| < |b + D|`, de lo contrario `E = b - D`.
+     - Se calcula el paso hacia la nueva aproximación `h = -2 * f(p2) / E`.
+     - Se actualiza `p = p2 + h`.
+
+4. **Evaluación de Convergencia**
+
+   Se verifica si el tamaño del paso `|h|` es menor que la tolerancia. Si es así, se retorna `p` como la raíz encontrada y se termina el proceso.
+
+5. **Actualización para la Siguiente Iteración**
+
+   Se actualizan los puntos: `p0 = p1`, `p1 = p2`, `p2 = p`.
+   Se recalculan las diferencias y diferencias divididas para la próxima iteración.
+   Se incrementa el contador de iteraciones.
+
+6. **Condición de Fallo**
+
+   Si se alcanzan `N0` iteraciones sin que la diferencia `|h|` alcance la tolerancia, se lanza un error indicando que el método no ha sido exitoso después de `N0` iteraciones.
+
+### Parametros de Entrada y Salida
+
+```python
+def muller(f, p0, p1, p2, TOL=1e-5, N0=100):
+    """
+    Entradas:
+      f   : función (callable) para la cual se busca la raíz, f(x)=0.
+      p0  : primera aproximación inicial.
+      p1  : segunda aproximación inicial.
+      p2  : tercera aproximación inicial.
+      TOL : tolerancia para la convergencia, predeterminada a 1e-5.
+      N0  : número máximo de iteraciones permitidas, predeterminado a 100.
+    
+    Salida:
+      p   : aproximación a la raíz de la función o error si no se encuentra.
+    """
+```
+
+### Ejemplo de Uso
+
+```python
+def f(x):
+    return x**2 - 3*x + 2
+
+p0 = 3
+p1 = 4
+p2 = 5
+
+root = muller_method(f, p0, p1, p2, TOL=1e-5, N0=100)
+print(f"La raíz encontrada es: {root}")
+```
+
 
 
 

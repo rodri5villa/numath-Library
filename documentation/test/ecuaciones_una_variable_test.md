@@ -116,7 +116,7 @@
   - Esto provocará una división por cero.
   - Se utiliza `pytest.raises(ValueError)` para comprobar que se lanza la excepción esperada en este caso.
 
-## Método de Horner
+## 7- Método de Horner
 
 ### 1. Test de Funcionalidad (`test_horner_cubic`)
  
@@ -138,3 +138,17 @@
   - Los coeficientes en orden descendente son: `[3, -2]`.
   - Punto de evaluación: `x0 = 4`.
   - Se comprueba que la función retorne los valores para el polinomio y para su derivada, utilizando `pytest.approx` con una tolerancia relativa de 1e-5.
+
+## 8- Método de Müller
+
+### 1. Test de Funcionalidad (`test_muller_root_convergence`)
+
+  - Este test verifica que el método de Müller puede encontrar correctamente la raíz de una función cuando se conocen las raíces de antemano. Es crucial para probar que el método está implementado correctamente y que funciona como se espera para casos ideales.
+  - Se eligen puntos iniciales cerca de una de las raíz conocida `x = 2`, asegurando que el método tenga la oportunidad de converger (importante tener en cuenta que si cogemos de punto el valor de la raíz podemos tener fallos en la cálculos para que converja).
+  - El método de Müller se ejecuta con estos puntos y una tolerancia de 1e-5, esperando que identifique correctamente la raíz cercana a 2.
+  - El `assert` verifica si la raíz encontrada está dentro de la tolerancia especificada de la raíz real.
+
+### 2. Test de Funcionalidad (`test_muller_negative_discriminant`)
+
+  - Este test asegura que el método de Müller maneje adecuadamente los casos donde el discriminante en la fórmula cuadrática es negativo, lo cual puede ocurrir dependiendo de la función y los puntos iniciales. En tales casos, el método debe reconocer que no puede encontrar una raíz real y devolver un resultado "undefined".
+  - El método debería detectar esto y devolver "undefined", lo cual es verificado por el `assert`.
