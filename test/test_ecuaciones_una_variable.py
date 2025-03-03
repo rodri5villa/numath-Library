@@ -200,8 +200,6 @@ def test_horner_linear():
 
 ### MULLER METHOD ###
 
-import pytest
-
 def test_muller_root_convergence():
     def f(x):
         return x**2 - 4  
