@@ -2,7 +2,7 @@
 
 ## 1- Método de Bisección (`bisection(f, a, b, TOL, N0)`)
 
-El **método de bisección** es un método numérico para encontrar la raíz de una función continua. Se basa en el **teorema del valor intermedio**, el cual establece que si una función `f(x)` es continua en un intervalo `[a, b]` y `f(a)` y `f(b)` tienen signos opuestos, entonces existe al menos un punto c en `[a, b]` tal que `f(c) = 0`.
+El **método de bisección** es un método numérico para encontrar la raíz de una función continua de forma aproximada. Se basa en el **teorema del valor intermedio**, el cual establece que si una función `f(x)` es continua en un intervalo `[a, b]` y `f(a)` y `f(b)` tienen signos opuestos, entonces existe al menos un punto c en `[a, b]` tal que `f(c) = 0`.
 
 ### Proceso del Método
 
@@ -44,13 +44,10 @@ def bisection(f, a, b, TOL=1e-5, N0=100):
 Supongamos que queremos encontrar la raíz de la función `𝑓(𝑥)=𝑥**2−4` en el intervalo `[0,3]`. Para ello, definimos la función y llamamos a bisection_method:
 
 ```python
-# Definición de la función a analizar
 def f(x):
     return x**2 - 4
 
-# Llamada al método de bisección en el intervalo [0, 3]
-raiz, iteraciones = bisection_method(f, 0, 3)
-
+raiz, iteraciones = bisection(f, 0, 3)
 print(f"La raíz aproximada es {raiz} encontrada en {iteraciones} iteraciones.")
 ```
 
@@ -63,7 +60,7 @@ Si la función `g(p)` es contractiva en la región cercana al punto fijo, la suc
 ### Proceso del Método
 
 1. **Conversión**  
-   Se convierte la función dada a la forma `p = g(p)`.
+   La función se debe introducir de la forma `p = g(p)`.
 
 2. **Inicialización**   
   Se inicializa el contador de iteraciones y se inicia un bucle que se ejecuta mientras el número de iteraciones no supere `N0`.
@@ -101,16 +98,10 @@ Definimos la función `g(p)` para el problema: `p = cos(p)`
 
    ```python
    def g(p):
-        return math.cos(p)
+     return math.cos(p)
 
-    # Aproximación inicial
-    p0 = 1.0
-
-    try:
-        solution, iterations = fixed_point_iteration(g, p0, TOL=1e-5, N0=100)
-        print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
-    except ValueError as e:
-        print(e)
+   solution, iterations = na.fixed_point_iteration(g, 1, TOL=1e-5, N0=100)
+   print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
    ```
 ## 3- Método de Newton (`newton_method(f, p0, TOL=1e-5, N0=100, factor=1e-8)`)
 
@@ -164,7 +155,6 @@ def newton_method(f, p0, TOL=1e-5, N0=100, factor=1e-8):
 Utilizamos el método de Newton, usando derivación numérica, y elegimos una aproximación inicial razonable.
 
    ```python
-
    def f(x):
       return x**3 - 2
 
@@ -221,7 +211,6 @@ def secant_method(f, p0, p1, TOL=1e-5, N0=100):
 Considera la ecuación `f(x)=x^2-2=0`. La raíz real es `sqrt{2}, approx 1.41421`. Utilizaremos dos aproximaciones iniciales, por ejemplo, `p0=1` y `p1=2`.
 
 ```python
-
 def f(x):
     return x**2 - 2
 
@@ -296,7 +285,6 @@ Ambos métodos utilizan la idea de aproximar la raíz mediante la intersección 
 Consideremos la función `f(x)=x^2-3`, cuya raíz real es `sqrt{3} \approx 1.73205`. Utilizaremos las aproximaciones iniciales `p0=1.0` y `p1=2.0`.
 
 ```python
-
 def f(x):
     return x**2 - 3
 
@@ -356,7 +344,6 @@ def steffensen_method(g, p0, TOL=1e-5, N0=100):
 Supongamos que queremos resolver la ecuación de punto fijo para la función `g(x)=cos(x)`
 
 ```python
-
 def g(x):
     return math.cos(x)
 
@@ -378,7 +365,7 @@ Queremos calcular:
 
 ### Proceso del Método
 
-Para evaluar un polinomio y su derivada en un punto `x_0` usando el método de Horner, se asume que el polinomio se expresa en la forma `P(x) = a_n*x^n + + a_{n-1}*x^{n-1} + ... + a1*x + a0`
+Para evaluar un polinomio y su derivada en un punto `x0` usando el método de Horner, se asume que el polinomio se expresa en la forma `P(x) = a_n*x^n + + a_{n-1}*x^{n-1} + ... + a1*x + a0`
 
 Se asume que los coeficientes se proporcionan en orden descendente, es decir, `a = [a_n, a_(n-1), ..., a1, a0]` donde `a_n` es el coeficiente del término de mayor grado y `a0` el término independiente.
 
@@ -428,16 +415,13 @@ def horner_method(a, x0):
 Supongamos que queremos resolver la ecuación P(x) = 2x^3 - 6x + 4
 
 ```python
-
-if __name__ == "__main__":
     # Polinomio: P(x) = 2x^3 - 6x + 4
     # Coeficientes en orden descendente: [2, 0, -6, 4]
     a = [2, 0, -6, 4]
     x0 = 4
 
     y, z = horner_method(a, x0)
-    print(f"P({x0}) = {y}")
-    print(f"P'({x0}) = {z}")
+    print(f"La solución encontrada es P({x0}) = {y} y P'({x0}) = {z}")
 ```
 
 ## 7- Método de Müller
