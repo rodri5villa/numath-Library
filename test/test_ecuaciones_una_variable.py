@@ -5,169 +5,154 @@ from numath.ecuaciones_una_variable import bisection, fixed_point_iteration, new
 ### BISECTION ###
 
 def test_bisection_correct():
-    def f(x):
-        return x**2 - 4
     
-    root, iterations = bisection(f, 0, 3, TOL=1e-5, N0=100)
+    funcion = "x^2- 4"
+    root, iterations = bisection(funcion, 0, 3, TOL=1e-5, N0=100)
     assert root == pytest.approx(2, rel=1e-5), f"Se obtuvo {root}, en {iterations} iteraciones"
 
 def test_bisection_error():
-    def f(x):
-        return x**2 - 4
-
+    
+    funcion = "x^2- 4"
     with pytest.raises(ValueError):
-        bisection(f, 2, 3, TOL=1e-5, N0=100)
+        bisection(funcion, 2, 3, TOL=1e-5, N0=100)
 
 ### FIXED POINT ITERACTION ###
 
 def test_fixed_point_correct():
    
-    def g(x):
-        return math.cos(x)
-    
+    funcion = "cos(x)"
     p0 = 1.0  
-    solution, iterations = fixed_point_iteration(g, p0, TOL=1e-5, N0=100)
+    solution, iterations = fixed_point_iteration(funcion, p0, TOL=1e-5, N0=100)
     assert solution == pytest.approx(0.739085, rel=1e-5), f"Se esperaba ~0.739085 pero se obtuvo {solution} en {iterations} iteraciones"
 
 def test_fixed_point_identity():
-    def g(x):
-        return x
     
+    funcion = "x"
     p0 = 42  
-    solution, iterations = fixed_point_iteration(g, p0, TOL=1e-5, N0=100)
+    solution, iterations = fixed_point_iteration(funcion, p0, TOL=1e-5, N0=100)
     assert solution == 42, f"Se esperaba 42 pero se obtuvo {solution}"
     assert iterations == 1, f"Se esperaba 1 iteración pero se realizaron {iterations}"
 
 def test_fixed_point_error():
-    def g(x):
-        return 3 * x + 2
     
+    funcion = "3x + 2"
     p0 = 0.0  
     with pytest.raises(ValueError):
-        fixed_point_iteration(g, p0, TOL=1e-5, N0=50)
+        fixed_point_iteration(funcion, p0, TOL=1e-5, N0=50)
 
 ### NEWTON METHOD ###
 
 def test_newton_sqrt():
-    def f(x):
-        return x**2 - 2
 
+    funcion = "x^2 - 2"
     p0 = 1.0  
-    solution, iterations = newton_method(f, p0, TOL=1e-5, N0=100)
+    solution, iterations = newton_method(funcion, p0, TOL=1e-5, N0=100)
     expected = math.sqrt(2)
     assert solution == pytest.approx(expected, rel=1e-5), \
            f"Se esperaba {expected} pero se obtuvo {solution} en {iterations} iteraciones."
 
 def test_newton_cubic():
-    def f(x):
-        return x**3 - 2
     
+    funcion = "x^3 - 2"
     p0 = 1.5
-    solution, iterations = newton_method(f, p0, TOL=1e-5, N0=100)
+    solution, iterations = newton_method(funcion, p0, TOL=1e-5, N0=100)
     expected = 2 ** (1/3)
     assert solution == pytest.approx(expected, rel=1e-5), \
            f"Se esperaba {expected} pero se obtuvo {solution} en {iterations} iteraciones."
 
 def test_newton_deriv_zero():
-    def f(x):
-        return x**3
 
+    funcion = "x^3"
     p0 = 0.0  
     with pytest.raises(ValueError):
-        newton_method(f, p0, TOL=1e-5, N0=50, factor=1e-8)
+        newton_method(funcion, p0, TOL=1e-5, N0=50, factor=1e-8)
 
 ### SECANT METHOD ###
 
 def test_secant_sqrt():
-    def f(x):
-        return x**2 - 4
-
+    
+    funcion = "x^2 - 4"
     p0 = 1.0
     p1 = 2.0
-    solution, iterations = secant_method(f, p0, p1, TOL=1e-5, N0=100)
+    solution, iterations = secant_method(funcion, p0, p1, TOL=1e-5, N0=100)
     expected = math.sqrt(4)
     assert solution == pytest.approx(expected, rel=1e-5), \
            f"Se esperaba {expected} pero se obtuvo {solution} en {iterations} iteraciones."
 
 def test_secant_linear():
-    def f(x):
-        return 5 * x + 3
 
+    funcion = "5x + 3"
     p0 = 0.0
     p1 = 1.0
-    solution, iterations = secant_method(f, p0, p1, TOL=1e-5, N0=100)
+    solution, iterations = secant_method(funcion, p0, p1, TOL=1e-5, N0=100)
     expected = -3/5
     assert solution == pytest.approx(expected, rel=1e-5), \
            f"Se esperaba {expected} pero se obtuvo {solution} en {iterations} iteraciones."
 
 def test_secant_division_zero():
-    def f(x):
-        return 5
-
+    
+    funcion = "5"
     p0 = 1.0
     p1 = 2.0
     with pytest.raises(ValueError):
-        secant_method(f, p0, p1, TOL=1e-5, N0=100)
+        secant_method(funcion, p0, p1, TOL=1e-5, N0=100)
 
 ### FALSE POSITION ###
 
 def test_false_position_sqrt():
-    def f(x):
-        return x**2 - 7
-
+    
+    funcion = "x^2 - 7"
     p0 = 2.0
     p1 = 4.0
-    solution, iterations = false_position(f, p0, p1, TOL=1e-5, N0=100)
+    solution, iterations = false_position(funcion, p0, p1, TOL=1e-5, N0=100)
     expected = math.sqrt(7)
     assert solution == pytest.approx(expected, rel=1e-5), \
            f"Se esperaba {expected} pero se obtuvo {solution} en {iterations} iteraciones."
 
 def test_false_position_linear():
-    def f(x):
-        return 11 * x + 4
-
+    
+    funcion = "11x + 4"
     p0 = -1.0
     p1 = 0.0
-    solution, iterations = false_position(f, p0, p1, TOL=1e-5, N0=100)
+    solution, iterations = false_position(funcion, p0, p1, TOL=1e-5, N0=100)
     expected = -4/11
     assert solution == pytest.approx(expected, rel=1e-5), \
            f"Se esperaba {expected} pero se obtuvo {solution} en {iterations} iteraciones."
 
 def test_false_position_invalid_interval():
-    def f(x):
-        return 2 * x + x**3 - 2
 
+    funcion = "2x + x^3 - 2"
     p0 = 2.0
     p1 = 3.0
     with pytest.raises(ValueError):
-        false_position(f, p0, p1, TOL=1e-5, N0=100)
+        false_position(funcion, p0, p1, TOL=1e-5, N0=100)
 
 ### STEFFENSEN METHOD ###
 
 def test_steffensen_correct():
-    def g(x):
-        return math.cos(x)
+    
+    funcion = "cos(x)"
     p0 = 7.0
-    solution, iterations = steffensen_method(g, p0, TOL=1e-5, N0=100)
+    solution, iterations = steffensen_method(funcion, p0, TOL=1e-5, N0=100)
     expected = 0.739085
     assert solution == pytest.approx(expected, rel=1e-5), \
            f"Se esperaba {expected} pero se obtuvo {solution} en {iterations} iteraciones."
 
 def test_steffensen_identity():
-    def g(x):
-        return x
+    
+    funcion = "x"
     p0 = 5.0
-    solution, iterations = steffensen_method(g, p0, TOL=1e-5, N0=100)
+    solution, iterations = steffensen_method(funcion, p0, TOL=1e-5, N0=100)
     assert solution == pytest.approx(5.0, rel=1e-5), \
            f"Se esperaba 5.0, pero se obtuvo {solution} en {iterations} iteraciones."
     assert iterations == 1, f"Se esperaba convergencia en 1 iteración, pero se realizaron {iterations} iteraciones."
 
 def test_steffensen_division_by_zero():
-    def g(x):
-        return x + 1
+    
+    funcion = "x + 1"
     p0 = 0.0
     with pytest.raises(ValueError):
-        steffensen_method(g, p0, TOL=1e-5, N0=100)
+        steffensen_method(funcion, p0, TOL=1e-5, N0=100)
 
 ### HORNER METHOD ###
 
@@ -201,13 +186,13 @@ def test_horner_linear():
 ### MULLER METHOD ###
 
 def test_muller_root_convergence():
-    def f(x):
-        return x**2 - 4  
-    root = muller_method(f, 1, 3, 4, TOL=1e-5, N0=100)
+    
+    funcion = "x^2 - 4" 
+    root = muller_method(funcion, 1, 3, 4, TOL=1e-5, N0=100)
     assert pytest.approx(root, abs=1e-5) == 2
 
 def test_muller_negative_discriminant():
-    def f(x):
-        return x**2 + 1  
-    result = muller_method(f, -1, 0, 1, TOL=1e-5, N0=100)
+    
+    funcion = "x^2 + 1"
+    result = muller_method(funcion, -1, 0, 1, TOL=1e-5, N0=100)
     assert result == "undefined"

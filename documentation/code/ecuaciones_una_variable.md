@@ -1,6 +1,6 @@
 # Documentación Módulo Ecuaciones de una Variable
 
-## 1- Método de Bisección (`bisection(f, a, b, TOL, N0)`)
+## 1- Método de Bisección (`bisection(funcion, a, b, TOL, N0)`)
 
 El **método de bisección** es un método numérico para encontrar la raíz de una función continua de forma aproximada. Se basa en el **teorema del valor intermedio**, el cual establece que si una función `f(x)` es continua en un intervalo `[a, b]` y `f(a)` y `f(b)` tienen signos opuestos, entonces existe al menos un punto c en `[a, b]` tal que `f(c) = 0`.
 
@@ -26,10 +26,10 @@ El **método de bisección** es un método numérico para encontrar la raíz de 
 
 ### Parametros de Entrada y Salida
 ```python
-def bisection(f, a, b, TOL=1e-5, N0=100):
+def bisection(funcion, a, b, TOL=1e-5, N0=100):
     """
     Entradas:
-      f        : función (callable)
+      funcion  : función (callable)
       a, b     : Puntos finales del intervalo en el que se busca la raíz.
       TOL      : Tolerancia para la aproximación de la raíz.
       N0       : Número máximo de iteraciones permitidas.
@@ -44,14 +44,12 @@ def bisection(f, a, b, TOL=1e-5, N0=100):
 Supongamos que queremos encontrar la raíz de la función `𝑓(𝑥)=𝑥**2−4` en el intervalo `[0,3]`. Para ello, definimos la función y llamamos a bisection_method:
 
 ```python
-def f(x):
-    return x**2 - 4
-
-raiz, iteraciones = bisection(f, 0, 3)
+funcion = "x^2 - 4"
+raiz, iteraciones = bisection(funcion, 0, 3)
 print(f"La raíz aproximada es {raiz} encontrada en {iteraciones} iteraciones.")
 ```
 
-## 2- Método de Iteración de Punto Fijo (`fixed_point_iteration(g, p0, TOL, N0)`)
+## 2- Método de Iteración de Punto Fijo (`fixed_point_iteration(funcion, p0, TOL, N0)`)
 
 El **método de iteración de punto fijo** es un método numérico para encontrar una solución a la ecuación `p = g(p)`. La idea es partir de una aproximación inicial y generar una sucesión definida por `p{i+1} = g(pi)`.
 
@@ -78,13 +76,13 @@ Si la función `g(p)` es contractiva en la región cercana al punto fijo, la suc
 ### Parametros de Entrada y Salida
 
 ```python
-def fixed_point_iteration(g, p0, TOL=1e-5, N0=100):
+def fixed_point_iteration(funcion, p0, TOL=1e-5, N0=100):
     """
     Entradas:
-      g   : función (callable) que define el método de punto fijo, es decir, g(p).
-      p0  : aproximación inicial.
-      TOL : tolerancia para la convergencia.
-      N0  : número máximo de iteraciones permitidas.
+      funcion  : función (callable) que define el método de punto fijo, g(p).
+      p0       : aproximación inicial.
+      TOL      : tolerancia para la convergencia.
+      N0       : número máximo de iteraciones permitidas.
     
     Salida:
       Retorna una tupla (p, i) donde:
@@ -97,13 +95,11 @@ def fixed_point_iteration(g, p0, TOL=1e-5, N0=100):
 Definimos la función `g(p)` para el problema: `p = cos(p)`
 
    ```python
-   def g(p):
-     return math.cos(p)
-
-   solution, iterations = na.fixed_point_iteration(g, 1, TOL=1e-5, N0=100)
+   funcion = "cos(x)"
+   solution, iterations = na.fixed_point_iteration(funcion, 1, TOL=1e-5, N0=100)
    print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
    ```
-## 3- Método de Newton (`newton_method(f, p0, TOL=1e-5, N0=100, factor=1e-8)`)
+## 3- Método de Newton (`newton_method(funcion, p0, TOL=1e-5, N0=100, factor=1e-8)`)
 
 El Método de Newton es un procedimiento iterativo para encontrar soluciones aproximadas de la ecuación `f(x)=0`. Se parte de una aproximación inicial y se va mejorando dicha aproximación usando la fórmula `p = p0 - f(p0)/f′(p0)`
 
@@ -116,13 +112,12 @@ El Método de Newton es un procedimiento iterativo para encontrar soluciones apr
    En cada iteración se realiza lo siguiente:
    - **Cálculo de la nueva aproximación:**  
      Se calcula:
-     `p= p0 − f(p0)/f′(p0)`, en nuestro caso `p = p0 - f_val / df_val`
+     `p= p0 − f(p0)/f′(p0)`, en nuestro caso `p = p0 - f(p0) / derivada`
 
-     `df_val` se obtiene numéricamente mediante el método de diferencia centrada.
+     `derivada` se obtiene numéricamente mediante el método de diferencia centrada.
    - **Evaluación del cambio:**  
      Se calcula la diferencia para evaluar el progreso de la iteración.
 
-   **`threshold`**:   El umbral se define como `factor * (1 + |p0|)`. Esto permite ajustar el umbral en función de la escala de la aproximación inicial. Si la magnitud de la derivada en `p0` es menor que este umbral, se considera que la derivada es demasiado pequeña, y por tanto no es seguro aplicar el método de Newton.
 3. **Criterio de Convergencia**  
    Si la diferencia es menor que la tolerancia predefinida, se considera que la iteración ha convergido y se retorna la solución aproximada junto con el número de iteraciones.
 
@@ -130,15 +125,15 @@ El Método de Newton es un procedimiento iterativo para encontrar soluciones apr
    Si la condición de convergencia no se cumple, se incrementa el contador en 1 y se actualiza `p0` con el valor de `p` para la siguiente iteración.
 
 5. **Fallo**  
-   Si la derivada es demasiado pequeña en `p0` (es decir, menor que el umbral relativo calculado) o si se alcanza el número máximo de iteraciones sin convergencia, se lanza un ValueError indicando que el método de Newton no se puede aplicar o que ha fallado.
+   Si la derivada es demasiado pequeña en `p0` (es decir, menor que el umbral relativo calculado `factor`) o si se alcanza el número máximo de iteraciones sin convergencia, se lanza un ValueError indicando que el método de Newton no se puede aplicar o que ha fallado.
 
 ### Parametros de Entrada y Salida
 
 ```python
-def newton_method(f, p0, TOL=1e-5, N0=100, factor=1e-8):
+def newton_method(funcion, p0, TOL=1e-5, N0=100, factor=1e-8):
    """
       Entradas:
-         f        : función (callable) para la cual se busca la raíz, f(x)=0.
+         funcion  : función (callable) para la cual se busca la raíz, f(x)=0.
          p0       : aproximación inicial.
          TOL      : tolerancia para la convergencia.
          N0       : número máximo de iteraciones permitidas.
@@ -155,14 +150,13 @@ def newton_method(f, p0, TOL=1e-5, N0=100, factor=1e-8):
 Utilizamos el método de Newton, usando derivación numérica, y elegimos una aproximación inicial razonable.
 
    ```python
-   def f(x):
-      return x**3 - 2
-
+   funcion = "x^3 - 2"
    p0 = 1.5  
-   solution, iterations = newton_method(f, p0, TOL=1e-5, N0=100, factor=1e-8)
+   solution, iterations = newton_method(funcion, p0, TOL=1e-5, N0=100, factor=1e-8)
    print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
    ```
-## 4- Método de la secante (`secant_method(f, p0, p1, TOL=1e-5, N0=100)`)
+   
+## 4- Método de la secante (`secant_method(funcion, p0, p1, TOL=1e-5, N0=100)`)
 
 El **Método de la Secante** es un método numérico para encontrar una solución aproximada a la ecuación `f(x)=0` sin requerir el cálculo explícito de la derivada. En lugar de usar la derivada, utiliza dos aproximaciones iniciales y calcula la siguiente aproximación mediante la recta secante que une los puntos `(p0, f(p0))` y `(p1, f(p1))`.
 
@@ -191,14 +185,14 @@ El **Método de la Secante** es un método numérico para encontrar una solució
 ### Parametros de Entrada y Salida
 
 ```python
-def secant_method(f, p0, p1, TOL=1e-5, N0=100):
+def secant_method(funcion, p0, p1, TOL=1e-5, N0=100):
     """
     Entradas:
-      f    : función (callable) para la cual se busca la raíz, f(x)=0.
-      p0   : primera aproximación inicial.
-      p1   : segunda aproximación inicial.
-      TOL  : tolerancia para la convergencia.
-      N0   : número máximo de iteraciones permitidas.
+      funcion  : función (callable) para la cual se busca la raíz, f(x)=0.
+      p0       : primera aproximación inicial.
+      p1       : segunda aproximación inicial.
+      TOL      : tolerancia para la convergencia.
+      N0       : número máximo de iteraciones permitidas.
     
     Salida:
       Retorna una tupla (p, i) donde:
@@ -211,16 +205,14 @@ def secant_method(f, p0, p1, TOL=1e-5, N0=100):
 Considera la ecuación `f(x)=x^2-2=0`. La raíz real es `sqrt{2}, approx 1.41421`. Utilizaremos dos aproximaciones iniciales, por ejemplo, `p0=1` y `p1=2`.
 
 ```python
-def f(x):
-    return x**2 - 2
-
+funcion = "x^2 - 2"
 p0 = 1.0
 p1 = 2.0
 
-solution, iterations = secant_method(f, p0, p1, TOL=1e-5, N0=100)
+solution, iterations = secant_method(funcion, p0, p1, TOL=1e-5, N0=100)
 print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
 ```
-## 5- Método de Posición Falsa (`false_position(f, p0, p1, TOL=1e-5, N0=100)`)
+## 5- Método de Posición Falsa (`false_position(funcion, p0, p1, TOL=1e-5, N0=100)`)
 
 El **método de la posición falsa** es un método numérico para encontrar una solución aproximada de la ecuación `f(x)=0` cuando la función `f` es continua en el intervalo `[p0, p1]` y `f(p0)` y `f(p1)` tienen signos opuestos. La idea es usar una recta secante (la línea que une los puntos `(p0, f(p0))` y `(p1, f(p1))`) para estimar la raíz.
 
@@ -248,14 +240,14 @@ El **método de la posición falsa** es un método numérico para encontrar una 
 ### Parametros de Entrada y Salida
 
 ```python
-def false_position(f, p0, p1, TOL=1e-5, N0=100):
+def false_position(funcion, p0, p1, TOL=1e-5, N0=100):
     """
     Entradas:
-      f    : función (callable) para la cual se busca la raíz, f(x)=0.
-      p0   : primera aproximación inicial.
-      p1   : segunda aproximación inicial.
-      TOL  : tolerancia para la convergencia.
-      N0   : número máximo de iteraciones permitidas.
+      funcion     : función (callable) para la cual se busca la raíz, f(x)=0.
+      p0          : primera aproximación inicial.
+      p1          : segunda aproximación inicial.
+      TOL         : tolerancia para la convergencia.
+      N0          : número máximo de iteraciones permitidas.
       
     Salida:
       Retorna una tupla (p, i) donde:
@@ -285,17 +277,14 @@ Ambos métodos utilizan la idea de aproximar la raíz mediante la intersección 
 Consideremos la función `f(x)=x^2-3`, cuya raíz real es `sqrt{3} \approx 1.73205`. Utilizaremos las aproximaciones iniciales `p0=1.0` y `p1=2.0`.
 
 ```python
-def f(x):
-    return x**2 - 3
-
+funcion = "x^2 - 3"
 p0 = 1.0
 p1 = 2.0
-
-solution, iterations = false_position(f, p0, p1, TOL=1e-5, N0=100)
+solution, iterations = false_position(funcion, p0, p1, TOL=1e-5, N0=100)
 print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
 ```
 
-## 6- Método de Steffensen (`steffensen_method(g, p0, TOL=1e-5, N0=100)`)
+## 6- Método de Steffensen (`steffensen_method(funcion, p0, TOL=1e-5, N0=100)`)
 
 El Método de Steffensen es un método para acelerar la convergencia de una iteración de punto fijo. Es decir, se utiliza para encontrar la solución de `p = g(p)` a partir de una aproximación inicial. La idea es aplicar el proceso de aceleración de Aitken para obtener una mejor aproximación en cada iteración.
 
@@ -324,13 +313,13 @@ El Método de Steffensen es un método para acelerar la convergencia de una iter
 ### Parametros de Entrada y Salida
 
 ```python
-def steffensen_method(g, p0, TOL=1e-5, N0=100):
+def steffensen_method(funcion, p0, TOL=1e-5, N0=100):
     """
     Entradas:
-       g    : función (callable) que define el método de punto fijo, es decir, g(p).
-       p0   : aproximación inicial.
-       TOL  : tolerancia para la convergencia.
-       N0   : número máximo de iteraciones permitidas.
+      funcion  : función (callable) que define el método de punto fijo, es decir, g(p).
+      p0       : aproximación inicial.
+      TOL      : tolerancia para la convergencia.
+      N0       : número máximo de iteraciones permitidas.
 
     Salida:
        Retorna una tupla (p, i) donde:
@@ -344,12 +333,9 @@ def steffensen_method(g, p0, TOL=1e-5, N0=100):
 Supongamos que queremos resolver la ecuación de punto fijo para la función `g(x)=cos(x)`
 
 ```python
-def g(x):
-    return math.cos(x)
-
+funcion = "cos(x)"
 p0 = 1.0 
-
-solution, iterations = steffensen_method(g, p0, TOL=1e-5, N0=100)
+solution, iterations = steffensen_method(funcion, p0, TOL=1e-5, N0=100)
 print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
 ```
 
@@ -419,12 +405,11 @@ Supongamos que queremos resolver la ecuación P(x) = 2x^3 - 6x + 4
     # Coeficientes en orden descendente: [2, 0, -6, 4]
     a = [2, 0, -6, 4]
     x0 = 4
-
     y, z = horner_method(a, x0)
     print(f"La solución encontrada es P({x0}) = {y} y P'({x0}) = {z}")
 ```
 
-## 7- Método de Müller
+## 7- Método de Müller (`muller_method(funcion, p0, p1, p2, TOL=1e-5, N0=100)`)
 
 El **Método de Müller** es una técnica numérica para encontrar raíces de ecuaciones no lineales, que es una generalización del método de la secante y puede usar aritmética compleja para manejar funciones donde otras técnicas no convergen. Se destaca por su capacidad para alcanzar rápidamente la convergencia incluso con aproximaciones iniciales relativamente lejanas de la raíz, y es útil especialmente cuando se desconocen derivadas de la función o son difíciles de calcular.
 
@@ -469,15 +454,15 @@ El método utiliza tres aproximaciones iniciales `p0, p1, p2` y a través de un 
 ### Parametros de Entrada y Salida
 
 ```python
-def muller(f, p0, p1, p2, TOL=1e-5, N0=100):
+def muller(funcion, p0, p1, p2, TOL=1e-5, N0=100):
     """
     Entradas:
-      f   : función (callable) para la cual se busca la raíz, f(x)=0.
-      p0  : primera aproximación inicial.
-      p1  : segunda aproximación inicial.
-      p2  : tercera aproximación inicial.
-      TOL : tolerancia para la convergencia, predeterminada a 1e-5.
-      N0  : número máximo de iteraciones permitidas, predeterminado a 100.
+      funcion   : función (callable) para la cual se busca la raíz, f(x)=0.
+      p0        : primera aproximación inicial.
+      p1        : segunda aproximación inicial.
+      p2        : tercera aproximación inicial.
+      TOL       : tolerancia para la convergencia, predeterminada a 1e-5.
+      N0        : número máximo de iteraciones permitidas, predeterminado a 100.
     
     Salida:
       p   : aproximación a la raíz de la función o error si no se encuentra.
@@ -487,14 +472,11 @@ def muller(f, p0, p1, p2, TOL=1e-5, N0=100):
 ### Ejemplo de Uso
 
 ```python
-def f(x):
-    return x**2 - 3*x + 2
-
+funcion = "x^2 - 3x + 2"
 p0 = 3
 p1 = 4
 p2 = 5
-
-root = muller_method(f, p0, p1, p2, TOL=1e-5, N0=100)
+root = muller_method(funcion, p0, p1, p2, TOL=1e-5, N0=100)
 print(f"La raíz encontrada es: {root}")
 ```
 
