@@ -339,7 +339,7 @@ solution, iterations = steffensen_method(funcion, p0, TOL=1e-5, N0=100)
 print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
 ```
 
-## 6- Método de Honer (`horner_method(a, x0)`)
+## 7- Método de Honer (`horner_method(a, x0)`)
 
 El **Método de Horner** es una forma eficiente de evaluar un polinomio en un valor específico `x0`. Además, puede adaptarse para obtener también la derivada del polinomio en ese mismo punto. Dado un polinomio de grado `n`:
 
@@ -409,7 +409,7 @@ Supongamos que queremos resolver la ecuación P(x) = 2x^3 - 6x + 4
     print(f"La solución encontrada es P({x0}) = {y} y P'({x0}) = {z}")
 ```
 
-## 7- Método de Müller (`muller_method(funcion, p0, p1, p2, TOL=1e-5, N0=100)`)
+## 8- Método de Müller (`muller_method(funcion, p0, p1, p2, TOL=1e-5, N0=100)`)
 
 El **Método de Müller** es una técnica numérica para encontrar raíces de ecuaciones no lineales, que es una generalización del método de la secante y puede usar aritmética compleja para manejar funciones donde otras técnicas no convergen. Se destaca por su capacidad para alcanzar rápidamente la convergencia incluso con aproximaciones iniciales relativamente lejanas de la raíz, y es útil especialmente cuando se desconocen derivadas de la función o son difíciles de calcular.
 
