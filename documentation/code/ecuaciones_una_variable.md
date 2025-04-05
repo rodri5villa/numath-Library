@@ -339,7 +339,7 @@ solution, iterations = steffensen_method(funcion, p0, TOL=1e-5, N0=100)
 print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
 ```
 
-## 7- Método de Honer (`horner_method(a, x0)`)
+## 7- Método de Horner (`horner_method(a, x0)`)
 
 El **Método de Horner** es una forma eficiente de evaluar un polinomio en un valor específico `x0`. Además, puede adaptarse para obtener también la derivada del polinomio en ese mismo punto. Dado un polinomio de grado `n`:
 
