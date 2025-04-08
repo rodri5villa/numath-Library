@@ -4,16 +4,16 @@ import re
 def reemplazar_funciones(funcion_entrada):
 
     partes_a_reemplazar = {
-        'asen(': 'math.asin(',
+        'asin(': 'math.asin(',
         'acos(': 'math.acos(',
         'atan(': 'math.atan(',
-        'sen(': 'math.sin(',
+        'sin(': 'math.sin(',
         'cos(': 'math.cos(',
         'tan(': 'math.tan(',
         'exp()': 'math.e',
         'exp(': 'math.exp(',
         'ln(': 'math.log(',
-        'log(': 'math.log(',
+        # 'log(': 'math.log(',
         'sqrt(': 'math.sqrt(',
         '^': '**',
         'pow(': 'math.pow(',
