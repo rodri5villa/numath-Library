@@ -22,7 +22,7 @@ def derivative_three_points_central(funcion, x, h):
 
 ### Extremo de tres puntos ###
 
-def derivative_three_points_forward(funcion, x, h):
+def derivative_three_points_border(funcion, x, h):
     """
     Calcula la derivada de una función en x (extremo) usando la fórmula hacia adelante de tres puntos.
     
@@ -62,7 +62,7 @@ def derivative_five_points_central(funcion, x, h):
 
 ### Extremo de cinco puntos ###
 
-def derivative_five_points_forward(funcion, x, h):
+def derivative_five_points_border(funcion, x, h):
     """
     Calcula la derivada de una función en x (extremo) usando la fórmula hacia adelante de cinco puntos.
     
@@ -148,23 +148,28 @@ def derivative_unified(datos, x0):
     
     raise ValueError("No se pudo calcular la derivada para x0 con los datos proporcionados.")
 
-# Ejemplo de uso:
-datos = {
-    1.8: 10.889365,  
-    1.9: 12.703199,
-    2.0: 14.778112,
-    2.1: 17.148957,
-    2.2: 19.855030
-}
-x0 = 2.0
-derivada = derivative_unified(datos, x0)
-print("Derivada unificada en", x0, "=", derivada)
+
+
+
+if __name__ == "__main__":
+
+    # Ejemplo de uso:
+    datos = {
+        1.8: 10.889365,  
+        1.9: 12.703199,
+        2.0: 14.778112,
+        2.1: 17.148957,
+        2.2: 19.855030
+    }
+    x0 = 2.0
+    derivada = derivative_unified(datos, x0)
+    print("Derivada unificada en", x0, "=", derivada)
 
 
 
 
 # # Ejemplo de uso con la función sin(x)
-# if __name__ == "__main__":
+
 #     funcion = "ln(x) * sin(x)"
 #     x = 3  
 #     h = 0.1
@@ -172,7 +177,3 @@ print("Derivada unificada en", x0, "=", derivada)
 #     # Calcular derivadas usando diferentes fórmulas
 #     deriv_central_3 = derivative_three_points_central(funcion, x, h)
 #     print("Derivada (central, 3 puntos):", deriv_central_3)
-    
-  
-
- 
