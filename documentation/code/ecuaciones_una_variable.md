@@ -24,7 +24,7 @@ El **método de bisección** es un método numérico para encontrar la raíz de 
 5. **Fallo**  
    Si se alcanzan `N0` iteraciones sin convergencia, se lanza un error.
 
-### Parametros de Entrada y Salida
+### Parámetros de Entrada y Salida
 ```python
 def bisection(funcion, a, b, TOL=1e-5, N0=100):
     """
@@ -73,7 +73,7 @@ Si la función `g(p)` es contractiva en la región cercana al punto fijo, la suc
 5. **Fallo**  
   Si se sale del bucle sin convergencia, se lanza un `ValueError` indicando que el método falló tras `N0` iteraciones.
 
-### Parametros de Entrada y Salida
+### Parámetros de Entrada y Salida
 
 ```python
 def fixed_point_iteration(funcion, p0, TOL=1e-5, N0=100):
@@ -127,7 +127,7 @@ El Método de Newton es un procedimiento iterativo para encontrar soluciones apr
 5. **Fallo**  
    Si la derivada es demasiado pequeña en `p0` (es decir, menor que el umbral relativo calculado `factor`) o si se alcanza el número máximo de iteraciones sin convergencia, se lanza un ValueError indicando que el método de Newton no se puede aplicar o que ha fallado.
 
-### Parametros de Entrada y Salida
+### Parámetros de Entrada y Salida
 
 ```python
 def newton_method(funcion, p0, TOL=1e-5, N0=100, factor=1e-8):
@@ -182,7 +182,7 @@ El **Método de la Secante** es un método numérico para encontrar una solució
 3. **Fallo**  
    Si se alcanzan `N0` iteraciones sin satisfacer el criterio de convergencia, se lanza un error indicando que el método no fue exitoso.
 
-### Parametros de Entrada y Salida
+### Parámetros de Entrada y Salida
 
 ```python
 def secant_method(funcion, p0, p1, TOL=1e-5, N0=100):
@@ -237,7 +237,7 @@ El **método de la posición falsa** es un método numérico para encontrar una 
 
    Si se alcanza el número máximo de iteraciones `N0` sin convergencia, se lanza un error indicando que el método falló.
 
-### Parametros de Entrada y Salida
+### Parámetros de Entrada y Salida
 
 ```python
 def false_position(funcion, p0, p1, TOL=1e-5, N0=100):
@@ -310,7 +310,7 @@ El Método de Steffensen es un método para acelerar la convergencia de una iter
 
    Si se alcanza el número máximo de iteraciones `N0` sin que se cumpla el criterio de convergencia, se lanza un error indicando que el método no fue exitoso.
 
-### Parametros de Entrada y Salida
+### Parámetros de Entrada y Salida
 
 ```python
 def steffensen_method(funcion, p0, TOL=1e-5, N0=100):
@@ -380,7 +380,7 @@ Se asume que los coeficientes se proporcionan en orden descendente, es decir, `a
 
    Se retorna el par `(y, z)`.
 
-### Parametros de Entrada y Salida
+### Parámetros de Entrada y Salida
 
 ```python
 def horner_method(a, x0):
@@ -451,7 +451,7 @@ El método utiliza tres aproximaciones iniciales `p0, p1, p2` y a través de un 
 
    Si se alcanzan `N0` iteraciones sin que la diferencia `|h|` alcance la tolerancia, se lanza un error indicando que el método no ha sido exitoso después de `N0` iteraciones.
 
-### Parametros de Entrada y Salida
+### Parámetros de Entrada y Salida
 
 ```python
 def muller(funcion, p0, p1, p2, TOL=1e-5, N0=100):

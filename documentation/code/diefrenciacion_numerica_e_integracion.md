@@ -1,0 +1,244 @@
+# Documentación Módulo Diferenciación Númerica e Integración
+
+## 1. Punto medio de tres puntos (`derivative_three_points_central(funcion, x0, h)`)
+
+Calcula la derivada de una función en el punto `x0` utilizando la **fórmula del punto medio de tres puntos**. 
+
+### Fórmula
+
+`f'(x0) = (f(x0 + h) - f(x0 - h)) / (2 * h)`
+
+### Parámetros de Entrada y Salida
+
+```python
+def derivative_three_points_central(funcion, x0, h):
+"""    
+    Parámetros:
+        funcion: función a derivar
+        x0: punto en el que se calcula la derivada
+        h: tamaño del paso
+        
+    Retorna:
+        Aproximación de f'(x)
+"""
+```
+
+### Ejemplo de uso
+
+```python
+funcion = "x^2" 
+x0 = 2.0
+h = 0.001
+derivada = derivative_three_points_central(funcion, x0, h)
+print("La derivada aproximada de x^2 en x=2 es:", derivada)
+```
+
+## 2. Extremo de tres puntos (`derivative_three_points_border(funcion, x0, h)`)
+
+Calcula la derivada de una función en un punto extremo, utilizando la **fórmula del extremo de tres puntos**. Este método se emplea cuando el punto a evaluar está en el borde del intervalo.
+
+### Fórmula
+
+`f'(x0) = (-3 * f(x0) + 4 * f(x0 + h) - f(x0 + 2 * h)) / (2 * h)`
+
+### Parámetros de Entrada y Salida
+
+```python
+def derivative_three_points_border(funcion, x0, h):
+    """   
+    Parámetros:
+        funcion: función a derivar
+        x0: punto en el extremo 
+        h: tamaño del paso
+        
+    Retorna:
+        Aproximación de f'(x)
+    """
+```
+
+### Ejemplo de uso
+
+```python
+funcion = "sin(x)"  
+x0 = 0.0
+h = 1e-5
+derivada = derivative_three_points_border(funcion, x0, h)
+print("La derivada aproximada de sin(x) en x=0 es:", derivada)
+```
+
+## 3. Punto medio de cinco puntos (`derivative_five_points_central(funcion, x0, h)`)
+
+Calcula la derivada de una función en el punto `x0` utilizando la **fórmula del punto medio de cinco puntos**.
+
+### Fórmula
+
+`f'(x0) = (f(x0 - 2 * h) - 8 * f(x0 - h) + 8 * f(x0 + h) - f(x0 + 2 * h)) / (12 * h)`
+
+### Parámetros de Entrada y Salida
+
+```python
+def derivative_five_points_central(funcion, x0, h):
+    """        
+    Parámetros:
+        funcion: función a derivar
+        x0: punto en el que se calcula la derivada
+        h: tamaño del paso
+        
+    Retorna:
+        Aproximación de f'(x)
+    """
+```
+
+### Ejemplo de uso
+
+```python
+funcion = "cos(x)"  
+x0 = math.pi / 3
+h = 1e-5
+derivada = derivative_five_points_central(funcion, x0, h)
+print("La derivada aproximada de cos(x) en x=pi/3 es:", derivada)
+```
+
+## 4. Extremo de cinco puntos (`derivative_five_points_border(funcion, x0, h)`)
+
+Calcula la derivada de una función en un punto extremo utilizando la **fórmula del extremo de cinco puntos** . Este método se emplea cuando el punto a evaluar está en el borde del intervalo.
+
+### Fórmula
+
+`f'(x0) = (-25 * f(x0) + 48 * f(x0 + h) - 36 * f(x0 + 2 * h) + 16 * f(x0 + 3 * h) - 3 * f(x0 + 4 * h)) / (12 * h)`
+
+### Parámetros de Entrada y Salida
+
+```python
+def derivative_five_points_border(funcion, x0, h):
+    """        
+    Parámetros:
+        funcion: función a derivar
+        x0: punto en el extremo
+        h: tamaño del paso
+        
+    Retorna:
+        Aproximación de f'(x)
+    """
+```
+
+### Ejemplo de uso
+
+```python
+funcion = "exp(x)"  
+x0 = 0.0
+h = 1e-5
+derivada = derivative_five_points_border(funcion, x0, h)
+print("La derivada aproximada de exp(x) en x=0 es:", derivada)
+```
+
+## 5. Derivadas unificadas respecto a los puntos dados (`derivative_unified(datos, x0)`)
+
+### Proceso
+
+Calcula la derivada numérica en el punto `x0` a partir de un conjunto de puntos dados en un diccionario `{x: f(x)}`. Este método selecciona automáticamente la fórmula adecuada según:
+- Si hay al menos 5 puntos y `x0` tiene dos vecinos a cada lado, se utiliza la **fórmula del punto medio de cinco puntos**.
+- Si `x0` es el primer elemento:
+  - Usa la **fórmula forward de tres puntos** si hay menos de 5 puntos.
+  - Si hay al menos 5 puntos, utiliza la **fórmula forward de cinco puntos**.
+- Si `x0` es el último elemento:
+  - Usa la **fórmula backward de tres puntos** si hay menos de 5 puntos.
+  - Si hay al menos 5 puntos, utiliza la **fórmula backward de cinco puntos**.
+- En otro caso, se usa la **fórmula del punto medio de tres puntos**.
+
+Este método asume que los datos están equidistantes.
+
+### Parámetros de Entrada y Salida
+
+```python
+def derivative_unified(datos, x0):
+    """ 
+    Parámetros:
+        datos: Diccionario con los pares {x: f(x)}.
+        x0: El valor de x en el que se quiere estimar la derivada.
+    
+    Retorna:
+        Aproximación de la derivada f'(x0).
+    """
+```
+
+### Ejemplo de uso
+
+```python
+datos = {
+    1.0: 1.0,   
+    2.0: 4.0,   
+    3.0: 9.0,   
+    4.0: 16.0,  
+    5.0: 25.0   
+}
+x0 = 3.0
+derivada = derivative_unified(datos, x0)
+print("La derivada unificada en x=3.0 es:", derivada)
+```
+
+## 6. Punto medio de la segunda derivada (`second_derivative_central(funcion, x0, h)`)
+
+Calcula una aproximación de la segunda derivada de una función en el punto `x0` utilizando la **fórmula del punto medio de la segunda derivada**. 
+
+### Fórmula
+
+`f''(x0) = (f(x0 - h) - 2 * f(x0) + f(x0 + h)) / (h**2)`
+
+### Parámetros de Entrada y Salida
+
+```python
+def second_derivative_central(funcion, x0, h):
+    """   
+    Parámetros:
+        funcion: función a derivar
+        x0: punto en el que se calcula la segunda derivada
+        h: tamaño del paso
+            
+    Retorna:
+        Aproximación de la segunda derivada f''(x).
+    """
+```
+
+### Ejemplo de uso
+
+```python
+funcion = "x^2"  
+x0 = 2.0
+h = 0.001
+seg_deriv = second_derivative_central(funcion, x0, h)
+print("La segunda derivada de x^2 en x=2.0 es:", seg_deriv)
+```
+
+---
+
+## 7. Punto medio de la segunda derivada respecto a los puntos dados (`second_derivative_central_data(datos, x0)`)
+
+Calcula la aproximación de la segunda derivada en un punto `x0` a partir de un conjunto de puntos dados en un diccionario `{x: f(x)}`. Se utiliza la **fórmula del punto medio de la segunda derivada**, asumiendo que los datos están equidistantes y que `x0` cuenta con un vecino a ambos lados.
+
+### Parámetros de Entrada y Salida
+
+```python
+def second_derivative_central_data(datos, x0):
+    """   
+    Parámetros:
+        datos: Diccionario con los pares {x: f(x)}.
+        x0: El valor de x en el que se quiere estimar la derivada.
+            
+    Retorna:
+        Aproximación de la segunda derivada f''(x0).
+    """
+```
+
+### Ejemplo de uso
+
+```python
+datos = {
+    1.9: 3.61,
+    2.0: 4.00,
+    2.1: 4.41
+}
+x0 = 2.0
+seg_deriv_data = second_derivative_central_data(datos, x0)
+print("La segunda derivada a partir de datos en x=2.0 es:", seg_deriv_data)
+```

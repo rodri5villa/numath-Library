@@ -1,4 +1,4 @@
-# Documentación General de Tests del Módulo Ecuaciones de una Variable
+# Documentación de los Tests del Módulo Ecuaciones de una Variable
 
 ## 1- Método de Bisección
 
