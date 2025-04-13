@@ -147,3 +147,53 @@
     {0.0: 1.0, 0.5: 2.75, 1.0: 6.0, 1.5: 10.75, 2.0: 17.0}
     ```  
   - Se evalúa en `x0 = 0.5` y se espera `6`
+
+## 8- Fórmulas de Newton-Cotes Cerradas
+
+## 8.1- n=1: Regla Trapezoidal
+
+### 1. Test de Funcionalidad (`test_trapezoidal_linear`)
+
+  - Se prueba el método usando una función lineal, para la cual la Regla del Trapecio es exacta.
+  - Se evalúa la función `f(x) = 2x + 1` en `[0, 2]` y el resultado esperado es `6`
+  
+### 2. Test de Funcionalidad (`test_trapezoidal_constante`)
+
+- Se prueba el método usando una función constante, cuyo resultado es exacto.
+- Se evalúa la función `f(x) = 4` en `[1, 3]` y el resultado esperado es `8`
+  
+## 8.2- n=2: Regla de Simpson
+
+### 1. Test de Funcionalidad (`test_simpson_quadratic`)
+
+- Se prueba el método usando una función cuadrática, para la cual la Regla de Simpson es exacta.
+- Se evalúa la función `f(x) = x^2` en `[0, 1]` y el resultado esperado es `1/3 ≈ 0.33333`
+
+### 2. Test de Funcionalidad (`test_simpson_cubic`)
+
+- Se prueba el método con una función cúbica, para la cual la Regla de Simpson también da el valor exacto.
+- Se evalúa la función `f(x) = x^3` en `[0, 1]` y el resultado esperado es `1/4 = 0.25`
+
+## 8.3- n=3: Regla de Simpson 3/8
+
+### 1. Test de Funcionalidad (`test_simpson38_cubic`)
+
+- Se prueba la regla utilizando la función cúbica.
+- Se evalúa la función `f(x) = x^3` en `[0, 1]` y el resultado esperado es `1/4 = 0.25`
+
+### 2. Test de Funcionalidad (`test_simpson38_doble_cubic`)
+
+- Se prueba la regla utilizando una función cúbica escalada.
+- Se evalúa la función `f(x) = 2x^3` en `[0, 1]` y el resultado esperado es `2 * (1/4) = 0.5`
+
+## 8.4- n=4
+
+### 1. Test de Funcionalidad (`test_n4_polynomial_degree4`)
+
+- Se prueba la regla n=4 con un polinomio de grado 4.
+- Se evalúa la función `f(x) = x^4` en `[0, 2]` y el resultado esperado es `32/5 = 6.4`
+
+### 2. Test de Funcionalidad (`test_n4_polynomial_degree5`)
+
+- Se prueba la regla n=4 con un polinomio de grado 5.
+- Se evalúa la función `f(x) = 3x^5` en `[0, 1]` y el resultado esperado es `3/6 = 0.5`

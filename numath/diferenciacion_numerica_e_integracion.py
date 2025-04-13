@@ -93,3 +93,41 @@ def second_derivative_central_data(datos, x0):
         raise ValueError("Para la fórmula central se requiere que x0 no esté en un extremo.")
     
     return (datos[claves[i-1]] - 2 * datos[x0] + datos[claves[i+1]]) / (h**2)
+
+### FÓRMULAS NEWTON-COTES CERRADAS ###
+
+### n=1: Regla Trapezoidal ###
+
+def trapezoidal_rule(funcion, a, b):
+   
+    f = crear_funcion(funcion)
+    h = b - a
+    I = (h / 2) * (f(a) + f(b)) 
+    return I
+
+### n=2: Regla de Simpson ###
+
+def simpson_rule(funcion, a, b):
+    
+    f = crear_funcion(funcion)
+    h = (b - a) / 2
+    I = (h / 3) * (f(a) + 4 * f(a + h) + f(b))
+    return I
+
+### n=3: Regla de Simpson 3/8 ###
+
+def simpson_38_rule(funcion, a, b):
+    
+    f = crear_funcion(funcion)
+    h = (b - a) / 3
+    I = (3 * h / 8) * (f(a) + 3 * f(a + h) + 3 * f(a + 2 * h) + f(b))
+    return I
+
+### n=4
+
+def n4_rule(funcion, a, b):
+    
+    f = crear_funcion(funcion)
+    h = (b - a) / 4
+    I = (2 * h / 45) * (7 * f(a) + 32 * f(a + h) + 12 * f(a + 2 * h) + 32 * f(a + 3 * h) + 7 * f(b))
+    return I

@@ -242,3 +242,153 @@ x0 = 2.0
 seg_deriv_data = second_derivative_central_data(datos, x0)
 print("La segunda derivada a partir de datos en x=2.0 es:", seg_deriv_data)
 ```
+
+## 8. Fórmulas de Newton-Cotes Cerradas
+
+## 8.1. n=1: Regla Trapezoidal (`trapezoidal_rule(funcion, a, b)`)
+
+La **Regla del Trapecio** aproxima la integral de una función en el intervalo `[a, b]` interpolando la función por una línea recta que conecta los extremos.
+
+### Fórmula
+
+`I = (h / 2) * (f(a) + f(b))`
+
+donde 
+
+`h = b - a`
+
+### Parámetros de Entrada y Salida
+
+```python
+def trapezoidal_rule(funcion, a, b):
+    """
+    Parámetros:
+      funcion: función a integrar.
+      a, b: extremos del intervalo de integración.
+    
+    Devuelve:
+      Aproximación de la integral.
+    """
+```
+
+### Ejemplo de Uso
+
+```python
+funcion = "2x+1"
+a = 0
+b = 2
+
+resultado = trapezoidal_rule(funcion, a, b)
+print("Resultado Regla Trapezoidal:", resultado)
+```
+
+## 8.2. n=2: Regla de Simpson (`simpson_rule(funcion, a, b)`)
+
+La **Regla de Simpson** aproxima la integral mediante la interpolación de la función con un polinomio de segundo grado (una parábola) utilizando tres puntos equidistantes: `x0 = a`, `x1 = a+h` y `x2 = b`.
+
+### Fórmula
+
+`I = (h / 3) * (f(a) + 4 * f(a + h) + f(b))`
+
+donde 
+
+`h = (b - a) / 2`
+
+### Parámetros de Entrada y Salida
+
+```python
+def simpson_rule(funcion, a, b):
+    """
+    Parámetros:
+      funcion: función a integrar.
+      a, b: extremos del intervalo de integración.
+    
+    Devuelve:
+      Aproximación de la integral.
+    """
+```
+
+### Ejemplo de Uso
+
+```python
+funcion = "x^2"
+a = 0
+b = 1
+
+resultado = simpson_rule(funcion, a, b)
+print("Resultado Regla de Simpson:", resultado)
+```
+
+## 8.3. n=3: Regla de Simpson 3/8 (`simpson_38_rule(funcion, a, b)`)
+
+La **Regla de Simpson 3/8** aproxima la integral de la función utilizando la interpolación con un polinomio de tercer grado sobre cuatro puntos igualmente espaciados: `x0 = a`, `x1 = a+h`, `x2 = a+2*h` y `x3 = b`.
+
+### Fórmula
+
+`I = (3 * h / 8) * (f(a) + 3 * f(a + h) + 3 * f(a + 2 * h) + f(b))`
+
+donde 
+
+`h = (b - a) / 3`
+
+### Parámetros de Entrada y Salida
+
+```python
+def simpson_38_rule(funcion, a, b):
+    """
+    Parámetros:
+      funcion: función a integrar.
+      a, b: extremos del intervalo de integración.
+    
+    Devuelve:
+      Aproximación de la integral.
+    """
+```
+
+### Ejemplo de Uso
+
+```python
+funcion = "x^3"
+a = 0
+b = 1
+
+resultado = simpson_38_rule(funcion, a, b)
+print("Resultado Regla de Simpson 3/8:", resultado)
+```
+
+## 8.4. n=4 (`n4_rule(funcion, a, b)`)
+
+La regla **n=4** es un método de Newton–Cotes que evalúa la función en cinco puntos igualmente espaciados: `x0 = a`, `x1 = a+h`, `x2 = a+2*h`, `x3 = a+3*h` y `x4 = b`.
+
+### Fórmula
+
+`I = (2 * h / 45) * (7 * f(a) + 32 * f(a + h) + 12 * f(a + 2 * h) + 32 * f(a + 3 * h) + 7 * f(b))`
+
+donde 
+
+`h = (b - a) / 4`
+
+### Parámetros de Entrada y Salida
+
+```python
+def n4_rule(funcion, a, b):
+    """
+    Parámetros:
+      funcion: función a integrar.
+      a, b: extremos del intervalo de integración.
+    
+    Devuelve:
+      Aproximación de la integral.
+    """
+```
+
+### Ejemplo de Uso
+
+```python
+funcion = "x^4"
+a = 0
+b = 2
+
+resultado = n4_rule(funcion, a, b)
+print("Resultado Regla de Boole (n=4):", resultado)
+```
