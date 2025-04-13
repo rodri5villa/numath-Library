@@ -125,9 +125,53 @@ def simpson_38_rule(funcion, a, b):
 
 ### n=4
 
-def n4_rule(funcion, a, b):
+def n4_close_rule(funcion, a, b):
     
     f = crear_funcion(funcion)
     h = (b - a) / 4
     I = (2 * h / 45) * (7 * f(a) + 32 * f(a + h) + 12 * f(a + 2 * h) + 32 * f(a + 3 * h) + 7 * f(b))
     return I
+
+### FÓRMULAS NEWTON-COTES ABIERTAS ###
+
+### n=0: Regla del Punto Medio ###
+def midpoint_rule(funcion, a, b):
+    
+    f = crear_funcion(funcion)
+    h = (b - a) / 2.0
+    x0 = a + h
+    return 2 * h * f(x0)
+
+
+### n=1 ###
+
+def n1_open_rule(funcion, a, b):
+    
+    f = crear_funcion(funcion)
+    h = (b - a) / 3.0
+    x0 = a + h
+    x1 = x0 + h  
+    return (3.0 * h / 2.0) * (f(x0) + f(x1))
+
+### n=2 ###
+
+def n2_open_rule(funcion, a, b):
+    
+    f = crear_funcion(funcion)
+    h = (b - a) / 4.0
+    x0 = a + h
+    x1 = x0 + h   
+    x2 = x1 + h   
+    return (4.0 * h / 3.0) * (2.0 * f(x0) - f(x1) + 2.0 * f(x2))
+
+### n=3 ###
+
+def n3_open_rule(funcion, a, b):
+    
+    f = crear_funcion(funcion)
+    h = (b - a) / 5.0
+    x0 = a + h
+    x1 = x0 + h   
+    x2 = x1 + h   
+    x3 = x2 + h   
+    return (5.0 * h / 24.0) * (11.0 * f(x0) + f(x1) + f(x2) + 11.0 * f(x3))

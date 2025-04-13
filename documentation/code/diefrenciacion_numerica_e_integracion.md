@@ -392,3 +392,175 @@ b = 2
 resultado = n4_rule(funcion, a, b)
 print("Resultado Regla de Boole (n=4):", resultado)
 ```
+
+## 9. Fórmulas de Newton-Cotes Abiertas
+
+## 9.1. n=0: Regla del Punto Medio (`midpoint_rule(funcion, a, b)`)
+
+Este método aproxima la integral de la función mediante la evaluación en el punto medio del intervalo, dado un intervalo `[a, b]` 
+
+### Fórmula
+
+`I = 2 * h * f(x0)`
+
+donde 
+
+`h = (b - a) / 2.0`
+
+y los puntos son: 
+
+    x0 = a + h
+
+### Parámetros de Entrada y Salida
+
+```python
+def midpoint_rule(funcion, a, b):
+    """
+    Parámetros:
+      funcion: función a integrar.
+      a, b: extremos del intervalo de integración ⇒ longitud total = 2h.
+    
+    Devuelve:
+      Aproximación de la integral.
+    """
+```
+
+### Ejemplo de Uso
+
+```python
+funcion = "sin(x)"
+a = 2
+b = 6
+
+resultado = midpoint_rule(funcion, a, b)
+print("Integral aproximada (n=0):", resultado)
+```
+
+## 9.2. n=1 (`n1_open_rule(funcion, a, b)`)
+
+En esta regla se utiliza dos puntos interiores del intervalo `[a, b]` 
+
+### Fórmula
+
+`I = (3.0 * h / 2.0) * (f(x0) + f(x1))`
+
+donde 
+
+`h = (b - a) / 3.0`
+
+y los puntos son: 
+
+    x0 = a + h
+    x1 = x0 + h
+
+### Parámetros de Entrada y Salida
+
+```python
+def n1_open_rule(funcion, a, b):
+    """
+    Parámetros:
+      funcion: función a integrar.
+      a, b: extremos del intervalo de integración ⇒ longitud total = 3h.
+    
+    Devuelve:
+      Aproximación de la integral.
+    """
+```
+
+### Ejemplo de Uso
+
+```python
+funcion = "x+1"
+a = 1
+b = 4
+
+resultado = n1_open_rule(funcion, a, b)
+print("Integral aproximada (n=1):", resultado)
+```
+
+## 9.3. n=2 (`n2_open_rule(funcion, a, b)`)
+
+Esta regla utiliza tres puntos interiores del intervalo `[a, b]` 
+
+### Fórmula
+
+`I = (4.0 * h / 3.0) * (2.0 * f(x0) - f(x1) + 2.0 * f(x2))`
+
+donde 
+
+`h = (b - a) / 4.0`
+
+y los puntos son: 
+
+    x0 = a + h
+    x1 = x0 + h
+    x2 = x1 + h
+
+### Parámetros de Entrada y Salida
+
+```python
+def n2_open_rule(funcion, a, b):
+    """
+    Parámetros:
+      funcion: función a integrar.
+      a, b: extremos del intervalo de integración ⇒ longitud total = 4h.
+    
+    Devuelve:
+      Aproximación de la integral.
+    """
+```
+
+### Ejemplo de Uso
+
+```python
+funcion = "x^2"
+a = 0
+b = 4
+
+resultado = n2_open_rule(funcion, a, b)
+print("Integral aproximada (n=2):", resultado)
+```
+
+## 9.4. n=3 (`n3_open_rule(funcion, a, b)`)
+
+Esta regla utiliza cuatro puntos interiores del intervalo `[a, b]` 
+
+### Fórmula
+
+`I = (5.0 * h / 24.0) * (11.0 * f(x0) + f(x1) + f(x2) + 11.0 * f(x3))`
+
+donde 
+
+`h = (b - a) / 5.0`
+
+y los puntos son: 
+
+    x0 = a + h
+    x1 = x0 + h
+    x2 = x1 + h
+    x3 = x2 + h
+
+### Parámetros de Entrada y Salida
+
+```python
+def n3_open_rule(funcion, a, b):
+    """
+    Parámetros:
+      funcion: función a integrar.
+      a, b: extremos del intervalo de integración ⇒ longitud total = 5h.
+    
+    Devuelve:
+      Aproximación de la integral.
+    """
+```
+
+### Ejemplo de Uso
+
+```python
+funcion = "x^3"
+a = 0
+b = 5
+
+resultado = n3_open_rule(funcion, a, b)
+print("Integral aproximada (n=3):", resultado)
+```
