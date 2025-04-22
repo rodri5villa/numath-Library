@@ -1,6 +1,6 @@
 import math
 import pytest
-from numath.diferenciacion_numerica_e_integracion import derivative_three_points_central, derivative_three_points_border, derivative_five_points_central, derivative_five_points_border, derivative_unified, second_derivative_central, second_derivative_central_data, trapezoidal_rule, simpson_rule, simpson_38_rule, n4_close_rule, midpoint_rule, n1_open_rule, n2_open_rule, n3_open_rule
+from numath.diferenciacion_numerica_e_integracion import derivative_three_points_central, derivative_three_points_border, derivative_five_points_central, derivative_five_points_border, derivative_unified, second_derivative_central, second_derivative_central_data, trapezoidal_rule, simpson_rule, simpson_38_rule, n4_close_rule, midpoint_rule, n1_open_rule, n2_open_rule, n3_open_rule, composite_simpson_rule, composite_trapezoidal_rule, composite_midpoint_rule
 
 ### Punto medio de tres puntos ###
 
@@ -372,3 +372,69 @@ def test_n3_open_rule_cubic_escalada():
     resultado = n3_open_rule(funcion, a, b)
     expected = 647.5
     assert resultado == pytest.approx(expected, rel=1e-5)
+
+### Regla de Simpson Compuesta ###
+
+def test_composite_simpson_mixed_polynomial():
+    
+    funcion = "3x^3 - x^2 + 5x - 2"
+    a = -1
+    b = 2
+    n = 4
+    resultado = composite_simpson_rule(funcion, a, b, n)
+    expected = 39/4
+    assert resultado == pytest.approx(expected, rel=0, abs=1e-12)
+
+def test_composite_simpson_quadratic_shifted():
+    
+    funcion = "x^2 + 2x + 1"
+    a = 1 
+    b = 4
+    n = 6
+    resultado = composite_simpson_rule(funcion, a, b, n)
+    expected = 39.0
+    assert resultado == pytest.approx(expected, rel=0, abs=1e-12)
+
+### Regla Trapezoidal Compuesta ###
+
+def test_composite_trapezoidal_exponential():
+    
+    funcion = "exp(x)"
+    a = 0
+    b = 1
+    n = 50
+    resultado = composite_trapezoidal_rule(funcion, a, b, n)
+    expected = math.e - 1
+    assert resultado == pytest.approx(expected, rel=1e-4)
+
+def test_composite_trapezoidal_reciprocal_square():
+    
+    funcion = "1/(1+x^2)"
+    a = -1
+    b = 1
+    n = 100
+    resultado = composite_trapezoidal_rule(funcion, a, b, n)
+    expected = math.pi/2
+    assert resultado == pytest.approx(expected, rel=1e-4)
+
+### Regla del Punto Medio Compuesta ###
+
+def test_composite_midpoint_logarithm():
+    
+    funcion = "ln(1+x)"
+    a = 0
+    b = 1
+    n = 10
+    resultado = composite_midpoint_rule(funcion, a, b, n)
+    expected = 2*math.log(2) - 1
+    assert resultado == pytest.approx(expected, rel=1e-2)
+
+def test_composite_midpoint_gaussian():
+   
+    funcion = "exp(-x^2)"
+    a = 0
+    b = 1 
+    n = 20
+    resultado = composite_midpoint_rule(funcion, a, b, n)
+    expected = 0.7468241328124271
+    assert resultado == pytest.approx(expected, rel=1e-3)

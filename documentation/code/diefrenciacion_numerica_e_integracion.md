@@ -564,3 +564,124 @@ b = 5
 resultado = n3_open_rule(funcion, a, b)
 print("Integral aproximada (n=3):", resultado)
 ```
+
+## 10. Regla de Simpson Compuesta (`composite_simpson_rule(funcion, a, b, n)`)
+
+Aproxima la integral definida de una función `f(x)` en el intervalo `[a,b]` utilizando la **regla compuesta de Simpson**, que interpola la función mediante parábolas en pares de subintervalos para aumentar la precisión.
+
+### Fórmula
+
+`I = (h / 3.0) * (f(a)  + 2.0 * sum_even + 4.0 * sum_odd + f(b))`
+
+donde 
+
+`h = (b - a) / n`
+
+y `n` es el número de subintervalos (debe ser par).
+
+### Parámetros de Entrada y Salida
+
+```python
+def composite_simpson_rule(funcion, a, b, n):
+    """
+    Parámetros:
+      funcion: Cadena que representa la función.
+      a, b: Extremos del intervalo de integración.
+      n: Número de subintervalos (entero positivo, debe ser par).
+
+    Devuelve:
+      Aproximación numérica de la integral de f(x) en [a,b].
+    """
+```
+
+### Ejemplo de uso
+
+```python
+funcion = "sin(x)"
+a = 0
+b = math.pi
+n = 100
+
+resultado = composite_simpson_rule(funcion, a, b, n)
+print(resultado)
+```
+
+## 11. Regla Trapezoidal Compuesta (`composite_trapezoidal_rule(funcion, a, b, n)`)
+
+Aproxima la integral definida de una función `f(x)` en el intervalo `[a,b]` mediante la **regla trapezoidal compuesta**, que aproxima el área bajo la curva con trapezoides en cada subintervalo.
+
+### Fórmula
+
+`I = (h / 2.0) * (f(a) + 2.0 * suma_interiores + f(b))`
+
+donde 
+
+`h = (b - a) / n`
+
+### Parámetros de Entrada y Salida
+
+```python
+def composite_trapezoidal_rule(funcion, a, b, n):
+    """
+    Parámetros:
+      funcion : Cadena que representa la función a integrar,.
+      a, b : Extremos del intervalo de integración.
+      n : Número de subintervalos (entero positivo).
+
+    Devuelve:
+      Aproximación numérica de la integral de f(x) en [a, b].
+    """
+```
+
+### Ejemplo de uso
+
+```python
+funcion = "sin(x)"
+a = 0
+b = math.pi
+n = 100
+
+resultado = composite_trapezoidal_rule(funcion, a, b, n)
+print(resultado) 
+```
+
+## 12. Regla del Punto Medio Compuesta (`composite_midpoint_rule(funcion, a, b, n)`)
+
+Aproxima la integral definida de una función `f(x)` en el intervalo `[a,b]` usando la **regla del punto medio compuesta**, que evalúa la función en los puntos medios de pares de subintervalos.
+
+### Fórmula
+
+`I = 2.0 * h * suma_mid`
+
+donde 
+
+`h = (b - a) / n`
+
+y `n` es par.
+
+### Parámetros de Entrada y Salida
+
+```python
+def composite_midpoint_rule(funcion, a, b, n):
+    """
+    Parámetros:
+      funcion : Cadena que representa la función a integrar.
+      a, b : Extremos del intervalo de integración.
+      n : Número de subintervalos (entero positivo y par).
+
+    Devuelve:
+      Aproximación numérica de la integral de f(x) en [a, b].
+    """
+```
+
+### Ejemplo de uso
+
+```python
+funcion = "sin(x)"
+a = 0
+b = math.pi
+n = 10
+
+resultado = composite_midpoint_rule(funcion, a, b, n)
+print(resultado) 
+```

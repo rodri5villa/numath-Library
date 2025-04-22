@@ -247,3 +247,38 @@
 
   - Se prueba la regla de `n=3` con una función cúbica escalada.
   - Se evalúa la función `f(x) = 2x^3` en `[1, 6]` y el resultado esperado es `647.5`
+
+## 10- Regla de Simpson Compuesta
+
+### 1. Test de Funcionalidad (`test_composite_simpson_mixed_polynomial`)
+  
+  - Se evalúa la función `f(x) = 3x^3 - x^2 + 5x - 2` en el intervalo `[-1, 2]` usando `n = 4` 
+  - El resultado esperado es `39/4`  
+
+### 2. Test de Funcionalidad (`test_composite_simpson_quadratic_shifted`)
+
+  - Se evalúa la función `f(x) = x^2 + 2x + 1` en `[1, 4]` con `n = 6`
+  - El resultado esperado es `39.0`  
+
+## 11- Regla Trapezoidal Compuesta
+
+### 1. Test de Funcionalidad (`test_composite_trapezoidal_exponential`)
+
+  - Se evalúa la función `f(x) = exp(x)` en `[0, 1]` con `n = 50`
+  - El resultado esperado es `e - 1`
+
+### 2. Test de Funcionalidad (`test_composite_trapezoidal_reciprocal_square`)
+
+  - Se evalúa la función `f(x) = 1/(1+x^2)` en `[-1, 1]` con `n = 100`
+  - El resultado esperado es `π/2`
+
+## 12- Regla del Punto Medio Compuesta
+
+### 1. Test de Funcionalidad (`test_composite_midpoint_logarithm`)
+
+  - Se evalúa la función `f(x) = ln(1+x)` en `[0, 1]` con `n = 10`
+  - El resultado esperado es `2ln2 - 1`
+
+### 2. Test de Funcionalidad (`test_composite_midpoint_gaussian`)
+  - Se evalúa la función `f(x) = exp(-x^2)` en `[0, 1]` con `n = 20`
+  - El resultado esperado es `0.7468241328124271`

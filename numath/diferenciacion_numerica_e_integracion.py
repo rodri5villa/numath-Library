@@ -140,8 +140,8 @@ def midpoint_rule(funcion, a, b):
     f = crear_funcion(funcion)
     h = (b - a) / 2.0
     x0 = a + h
-    return 2 * h * f(x0)
-
+    I = 2 * h * f(x0)
+    return I
 
 ### n=1 ###
 
@@ -151,7 +151,8 @@ def n1_open_rule(funcion, a, b):
     h = (b - a) / 3.0
     x0 = a + h
     x1 = x0 + h  
-    return (3.0 * h / 2.0) * (f(x0) + f(x1))
+    I = (3.0 * h / 2.0) * (f(x0) + f(x1))
+    return I
 
 ### n=2 ###
 
@@ -162,7 +163,8 @@ def n2_open_rule(funcion, a, b):
     x0 = a + h
     x1 = x0 + h   
     x2 = x1 + h   
-    return (4.0 * h / 3.0) * (2.0 * f(x0) - f(x1) + 2.0 * f(x2))
+    I = (4.0 * h / 3.0) * (2.0 * f(x0) - f(x1) + 2.0 * f(x2))
+    return I
 
 ### n=3 ###
 
@@ -174,4 +176,67 @@ def n3_open_rule(funcion, a, b):
     x1 = x0 + h   
     x2 = x1 + h   
     x3 = x2 + h   
-    return (5.0 * h / 24.0) * (11.0 * f(x0) + f(x1) + f(x2) + 11.0 * f(x3))
+    I = (5.0 * h / 24.0) * (11.0 * f(x0) + f(x1) + f(x2) + 11.0 * f(x3))
+    return I
+
+### Regla de Simpson Compuesta ###
+
+def composite_simpson_rule(funcion, a, b, n):
+    
+    f = crear_funcion(funcion)
+    
+    if n <= 0 or n % 2 != 0:
+        raise ValueError("El número de subintervalos n debe ser un entero par positivo.")
+    
+    h = (b - a) / n
+    
+    sum_odd = 0.0   
+    sum_even = 0.0  
+    
+    for i in range(1, n):
+        x = a + i * h
+        if i % 2 == 0:
+            sum_even += f(x)
+        else:
+            sum_odd += f(x)
+    
+    I = (h / 3.0) * (f(a) + 2.0 * sum_even + 4.0 * sum_odd + f(b))
+    return I
+
+### Regla Trapezoidal Compuesta ###
+
+def composite_trapezoidal_rule(funcion, a, b, n):
+    
+    f = crear_funcion(funcion)
+
+    if n <= 0:
+        raise ValueError("El número de subintervalos n debe ser un entero positivo.")
+
+    h = (b - a) / n
+
+    suma_interiores = 0.0
+    for j in range(1, n):
+        xj = a + j * h
+        suma_interiores += f(xj)
+
+    I = (h / 2.0) * (f(a) + 2.0 * suma_interiores + f(b))
+    return I
+
+### Regla del Punto Medio Compuesta ###
+
+def composite_midpoint_rule(funcion, a, b, n):
+    
+    f = crear_funcion(funcion)
+
+    if n <= 0 or n % 2 != 0:
+        raise ValueError("El número de subintervalos n debe ser un entero positivo y par.")
+
+    h = (b - a) / n
+    suma_mid = 0.0
+
+    for j in range(1, n, 2):
+        xj = a + j * h
+        suma_mid += f(xj)
+
+    I = 2.0 * h * suma_mid
+    return I
