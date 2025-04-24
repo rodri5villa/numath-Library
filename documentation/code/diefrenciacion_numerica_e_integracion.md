@@ -245,7 +245,7 @@ print("La segunda derivada a partir de datos en x=2.0 es:", seg_deriv_data)
 
 ## 8. Fórmulas de Newton-Cotes Cerradas
 
-## 8.1. n=1: Regla Trapezoidal (`trapezoidal_rule(funcion, a, b)`)
+## 8.1. n=1: Regla Trapezoidal (`newton_cotes_n1_close(funcion, a, b)`)
 
 La **Regla del Trapecio** aproxima la integral de una función en el intervalo `[a, b]` interpolando la función por una línea recta que conecta los extremos.
 
@@ -282,7 +282,7 @@ resultado = trapezoidal_rule(funcion, a, b)
 print("Resultado Regla Trapezoidal:", resultado)
 ```
 
-## 8.2. n=2: Regla de Simpson (`simpson_rule(funcion, a, b)`)
+## 8.2. n=2: Regla de Simpson (`newton_cotes_n2_close(funcion, a, b)`)
 
 La **Regla de Simpson** aproxima la integral mediante la interpolación de la función con un polinomio de segundo grado (una parábola) utilizando tres puntos equidistantes: `x0 = a`, `x1 = a+h` y `x2 = b`.
 
@@ -319,7 +319,7 @@ resultado = simpson_rule(funcion, a, b)
 print("Resultado Regla de Simpson:", resultado)
 ```
 
-## 8.3. n=3: Regla de Simpson 3/8 (`simpson_38_rule(funcion, a, b)`)
+## 8.3. n=3: Regla de Simpson 3/8 (`newton_cotes_n3_close(funcion, a, b)`)
 
 La **Regla de Simpson 3/8** aproxima la integral de la función utilizando la interpolación con un polinomio de tercer grado sobre cuatro puntos igualmente espaciados: `x0 = a`, `x1 = a+h`, `x2 = a+2*h` y `x3 = b`.
 
@@ -356,7 +356,7 @@ resultado = simpson_38_rule(funcion, a, b)
 print("Resultado Regla de Simpson 3/8:", resultado)
 ```
 
-## 8.4. n=4 (`n4_rule(funcion, a, b)`)
+## 8.4. n=4 (`newton_cotes_n4_close(funcion, a, b)`)
 
 La regla **n=4** es un método de Newton–Cotes que evalúa la función en cinco puntos igualmente espaciados: `x0 = a`, `x1 = a+h`, `x2 = a+2*h`, `x3 = a+3*h` y `x4 = b`.
 
@@ -395,7 +395,7 @@ print("Resultado Regla de Boole (n=4):", resultado)
 
 ## 9. Fórmulas de Newton-Cotes Abiertas
 
-## 9.1. n=0: Regla del Punto Medio (`midpoint_rule(funcion, a, b)`)
+## 9.1. n=0: Regla del Punto Medio (`newton_cotes_n0_open(funcion, a, b)`)
 
 Este método aproxima la integral de la función mediante la evaluación en el punto medio del intervalo, dado un intervalo `[a, b]` 
 
@@ -436,7 +436,7 @@ resultado = midpoint_rule(funcion, a, b)
 print("Integral aproximada (n=0):", resultado)
 ```
 
-## 9.2. n=1 (`n1_open_rule(funcion, a, b)`)
+## 9.2. n=1 (`newton_cotes_n1_open(funcion, a, b)`)
 
 En esta regla se utiliza dos puntos interiores del intervalo `[a, b]` 
 
@@ -478,7 +478,7 @@ resultado = n1_open_rule(funcion, a, b)
 print("Integral aproximada (n=1):", resultado)
 ```
 
-## 9.3. n=2 (`n2_open_rule(funcion, a, b)`)
+## 9.3. n=2 (`newton_cotes_n2_open(funcion, a, b)`)
 
 Esta regla utiliza tres puntos interiores del intervalo `[a, b]` 
 
@@ -521,7 +521,7 @@ resultado = n2_open_rule(funcion, a, b)
 print("Integral aproximada (n=2):", resultado)
 ```
 
-## 9.4. n=3 (`n3_open_rule(funcion, a, b)`)
+## 9.4. n=3 (`newton_cotes_n3_open(funcion, a, b)`)
 
 Esta regla utiliza cuatro puntos interiores del intervalo `[a, b]` 
 

@@ -152,48 +152,48 @@
 
 ## 8.1- n=1: Regla Trapezoidal
 
-### 1. Test de Funcionalidad (`test_trapezoidal_linear`)
+### 1. Test de Funcionalidad (`test_n1c_linear`)
 
   - Se prueba el método usando una función lineal, para la cual la Regla del Trapecio es exacta.
   - Se evalúa la función `f(x) = 2x + 1` en `[0, 2]` y el resultado esperado es `6`
   
-### 2. Test de Funcionalidad (`test_trapezoidal_constant`)
+### 2. Test de Funcionalidad (`test_n1c_constant`)
 
   - Se prueba el método usando una función constante, cuyo resultado es exacto.
   - Se evalúa la función `f(x) = 4` en `[1, 3]` y el resultado esperado es `8`
   
 ## 8.2- n=2: Regla de Simpson
 
-### 1. Test de Funcionalidad (`test_simpson_quadratic`)
+### 1. Test de Funcionalidad (`test_n2c_quadratic`)
 
   - Se prueba el método usando una función cuadrática, para la cual la Regla de Simpson es exacta.
   - Se evalúa la función `f(x) = x^2` en `[0, 1]` y el resultado esperado es `1/3 ≈ 0.33333`
 
-### 2. Test de Funcionalidad (`test_simpson_cubic`)
+### 2. Test de Funcionalidad (`test_n2c_cubic`)
 
   - Se prueba el método con una función cúbica, para la cual la Regla de Simpson también da el valor exacto.
   - Se evalúa la función `f(x) = x^3` en `[0, 1]` y el resultado esperado es `1/4 = 0.25`
 
 ## 8.3- n=3: Regla de Simpson 3/8
 
-### 1. Test de Funcionalidad (`test_simpson38_cubic`)
+### 1. Test de Funcionalidad (`test_n3c_cubic`)
 
   - Se prueba la regla utilizando la función cúbica.
   - Se evalúa la función `f(x) = x^3` en `[0, 1]` y el resultado esperado es `1/4 = 0.25`
 
-### 2. Test de Funcionalidad (`test_simpson38_doble_cubic`)
+### 2. Test de Funcionalidad (`test_n3c_doble_cubic`)
 
   - Se prueba la regla utilizando una función cúbica escalada.
   - Se evalúa la función `f(x) = 2x^3` en `[0, 1]` y el resultado esperado es `2 * (1/4) = 0.5`
 
 ## 8.4- n=4
 
-### 1. Test de Funcionalidad (`test_n4_polynomial_degree4`)
+### 1. Test de Funcionalidad (`test_n4c_polynomial_degree4`)
 
   - Se prueba la regla n=4 con un polinomio de grado 4.
   - Se evalúa la función `f(x) = x^4` en `[0, 2]` y el resultado esperado es `32/5 = 6.4`
 
-### 2. Test de Funcionalidad (`test_n4_polynomial_degree5`)
+### 2. Test de Funcionalidad (`test_n4c_polynomial_degree5`)
 
   - Se prueba la regla n=4 con un polinomio de grado 5.
   - Se evalúa la función `f(x) = 3x^5` en `[0, 1]` y el resultado esperado es `3/6 = 0.5`
@@ -202,48 +202,48 @@
 
 ## 9.1- n=0: Regla del Punto Medio
 
-### 1. Test de Funcionalidad (`test_midpoint_rule_constant`)
+### 1. Test de Funcionalidad (`test_n0a_constant`)
 
   - Se prueba la regla del punto medio utilizando una función constante.
   - Se evalúa la función `f(x) = 4` en `[2, 6]` y el resultado esperado es `16`
 
-### 2. Test de Funcionalidad (`test_midpoint_rule_lineal`)
+### 2. Test de Funcionalidad (`test_n0a_lineal`)
 
   - Se prueba la regla del punto medio con una función lineal.
   - Se evalúa la función `f(x) = 2x` en `[0, 4]` y el resultado esperado es `16`
 
 ## 9.2- n=1
 
-### 1. Test de Funcionalidad (`test_n1_open_rule_lineal`)
+### 1. Test de Funcionalidad (`test_n1a_lineal`)
 
   - Se prueba la regla de `n=1` usando una función lineal.
   - Se evalúa la función `f(x) = x + 1` en `[1, 4]` y el resultado esperado es `10.5`
 
-### 2. Test de Funcionalidad (`test_n1_open_rule_afine`)
+### 2. Test de Funcionalidad (`test_n1a_afine`)
 
   - Se prueba la regla de `n=1` con una función afín.
   - Se evalúa la función `f(x) = 3x + 2` en `[0, 3]` y el resultado esperado es `19.5`
 
 ## 9.3- n=2
 
-### 1. Test de Funcionalidad (`test_n2_open_rule_quadratic`)
+### 1. Test de Funcionalidad (`test_n2a_quadratic`)
 
   - Se prueba la regla de `n=2` utilizando una función cuadrática.  
   - Se evalúa la función `f(x) = x^2` en `[0, 4]` y el resultado esperado es `64/3`
 
-### 2. Test de Funcionalidad (`test_n2_open_rule_no_lineal`)
+### 2. Test de Funcionalidad (`test_n2a_no_lineal`)
 
   - Se prueba la regla de `n=2` con una función polinómica de segundo grado sumada a un término lineal.
   - Se evalúa la función `f(x) = x^2 + x` en `[1, 5]` y el resultado esperado es `160/3`
 
 ## 9.4- n=3 
 
-### 1. Test de Funcionalidad (`test_n3_open_rule_cubic`)
+### 1. Test de Funcionalidad (`test_n3a_cubic`)
 
   - Se prueba la regla de `n=3` usando una función cúbica.
   - Se evalúa la función `f(x) = x^3` en `[0, 5]` y el resultado esperado es `625/4 = 156.25`
 
-### 2. Test de Funcionalidad (`test_n3_open_rule_cubic_escalada`)
+### 2. Test de Funcionalidad (`test_n3a_cubic_escalada`)
 
   - Se prueba la regla de `n=3` con una función cúbica escalada.
   - Se evalúa la función `f(x) = 2x^3` en `[1, 6]` y el resultado esperado es `647.5`

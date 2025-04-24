@@ -98,7 +98,7 @@ def second_derivative_central_data(datos, x0):
 
 ### n=1: Regla Trapezoidal ###
 
-def trapezoidal_rule(funcion, a, b):
+def newton_cotes_n1_close(funcion, a, b):
    
     f = crear_funcion(funcion)
     h = b - a
@@ -107,7 +107,7 @@ def trapezoidal_rule(funcion, a, b):
 
 ### n=2: Regla de Simpson ###
 
-def simpson_rule(funcion, a, b):
+def newton_cotes_n2_close(funcion, a, b):
     
     f = crear_funcion(funcion)
     h = (b - a) / 2
@@ -116,7 +116,7 @@ def simpson_rule(funcion, a, b):
 
 ### n=3: Regla de Simpson 3/8 ###
 
-def simpson_38_rule(funcion, a, b):
+def newton_cotes_n3_close(funcion, a, b):
     
     f = crear_funcion(funcion)
     h = (b - a) / 3
@@ -125,7 +125,7 @@ def simpson_38_rule(funcion, a, b):
 
 ### n=4
 
-def n4_close_rule(funcion, a, b):
+def newton_cotes_n4_close(funcion, a, b):
     
     f = crear_funcion(funcion)
     h = (b - a) / 4
@@ -135,7 +135,7 @@ def n4_close_rule(funcion, a, b):
 ### FÓRMULAS NEWTON-COTES ABIERTAS ###
 
 ### n=0: Regla del Punto Medio ###
-def midpoint_rule(funcion, a, b):
+def newton_cotes_n0_open(funcion, a, b):
     
     f = crear_funcion(funcion)
     h = (b - a) / 2.0
@@ -145,7 +145,7 @@ def midpoint_rule(funcion, a, b):
 
 ### n=1 ###
 
-def n1_open_rule(funcion, a, b):
+def newton_cotes_n1_open(funcion, a, b):
     
     f = crear_funcion(funcion)
     h = (b - a) / 3.0
@@ -156,7 +156,7 @@ def n1_open_rule(funcion, a, b):
 
 ### n=2 ###
 
-def n2_open_rule(funcion, a, b):
+def newton_cotes_n2_open(funcion, a, b):
     
     f = crear_funcion(funcion)
     h = (b - a) / 4.0
@@ -168,7 +168,7 @@ def n2_open_rule(funcion, a, b):
 
 ### n=3 ###
 
-def n3_open_rule(funcion, a, b):
+def newton_cotes_n3_open(funcion, a, b):
     
     f = crear_funcion(funcion)
     h = (b - a) / 5.0
