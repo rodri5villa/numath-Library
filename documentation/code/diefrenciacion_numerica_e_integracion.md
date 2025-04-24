@@ -260,7 +260,7 @@ donde
 ### Parámetros de Entrada y Salida
 
 ```python
-def trapezoidal_rule(funcion, a, b):
+def newton_cotes_n1_close(funcion, a, b):
     """
     Parámetros:
       funcion: función a integrar.
@@ -278,7 +278,7 @@ funcion = "2x+1"
 a = 0
 b = 2
 
-resultado = trapezoidal_rule(funcion, a, b)
+resultado = newton_cotes_n1_close(funcion, a, b)
 print("Resultado Regla Trapezoidal:", resultado)
 ```
 
@@ -297,7 +297,7 @@ donde
 ### Parámetros de Entrada y Salida
 
 ```python
-def simpson_rule(funcion, a, b):
+def newton_cotes_n2_close(funcion, a, b):
     """
     Parámetros:
       funcion: función a integrar.
@@ -315,7 +315,7 @@ funcion = "x^2"
 a = 0
 b = 1
 
-resultado = simpson_rule(funcion, a, b)
+resultado = newton_cotes_n2_close(funcion, a, b)
 print("Resultado Regla de Simpson:", resultado)
 ```
 
@@ -334,7 +334,7 @@ donde
 ### Parámetros de Entrada y Salida
 
 ```python
-def simpson_38_rule(funcion, a, b):
+def newton_cotes_n3_close(funcion, a, b):
     """
     Parámetros:
       funcion: función a integrar.
@@ -352,7 +352,7 @@ funcion = "x^3"
 a = 0
 b = 1
 
-resultado = simpson_38_rule(funcion, a, b)
+resultado = newton_cotes_n3_close(funcion, a, b)
 print("Resultado Regla de Simpson 3/8:", resultado)
 ```
 
@@ -371,7 +371,7 @@ donde
 ### Parámetros de Entrada y Salida
 
 ```python
-def n4_rule(funcion, a, b):
+def newton_cotes_n4_close(funcion, a, b):
     """
     Parámetros:
       funcion: función a integrar.
@@ -389,7 +389,7 @@ funcion = "x^4"
 a = 0
 b = 2
 
-resultado = n4_rule(funcion, a, b)
+resultado = newton_cotes_n4_close(funcion, a, b)
 print("Resultado Regla de Boole (n=4):", resultado)
 ```
 
@@ -414,7 +414,7 @@ y los puntos son:
 ### Parámetros de Entrada y Salida
 
 ```python
-def midpoint_rule(funcion, a, b):
+def newton_cotes_n0_open(funcion, a, b):
     """
     Parámetros:
       funcion: función a integrar.
@@ -432,7 +432,7 @@ funcion = "sin(x)"
 a = 2
 b = 6
 
-resultado = midpoint_rule(funcion, a, b)
+resultado = newton_cotes_n0_open(funcion, a, b)
 print("Integral aproximada (n=0):", resultado)
 ```
 
@@ -456,7 +456,7 @@ y los puntos son:
 ### Parámetros de Entrada y Salida
 
 ```python
-def n1_open_rule(funcion, a, b):
+def newton_cotes_n1_open(funcion, a, b):
     """
     Parámetros:
       funcion: función a integrar.
@@ -474,7 +474,7 @@ funcion = "x+1"
 a = 1
 b = 4
 
-resultado = n1_open_rule(funcion, a, b)
+resultado = newton_cotes_n1_open(funcion, a, b)
 print("Integral aproximada (n=1):", resultado)
 ```
 
@@ -499,7 +499,7 @@ y los puntos son:
 ### Parámetros de Entrada y Salida
 
 ```python
-def n2_open_rule(funcion, a, b):
+def newton_cotes_n2_open(funcion, a, b):
     """
     Parámetros:
       funcion: función a integrar.
@@ -517,7 +517,7 @@ funcion = "x^2"
 a = 0
 b = 4
 
-resultado = n2_open_rule(funcion, a, b)
+resultado = newton_cotes_n2_open(funcion, a, b)
 print("Integral aproximada (n=2):", resultado)
 ```
 
@@ -543,7 +543,7 @@ y los puntos son:
 ### Parámetros de Entrada y Salida
 
 ```python
-def n3_open_rule(funcion, a, b):
+def newton_cotes_n3_open(funcion, a, b):
     """
     Parámetros:
       funcion: función a integrar.
@@ -561,7 +561,7 @@ funcion = "x^3"
 a = 0
 b = 5
 
-resultado = n3_open_rule(funcion, a, b)
+resultado = newton_cotes_n3_open(funcion, a, b)
 print("Integral aproximada (n=3):", resultado)
 ```
 
