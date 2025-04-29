@@ -240,3 +240,71 @@ def composite_midpoint_rule(funcion, a, b, n):
 
     I = 2.0 * h * suma_mid
     return I
+
+### Integración de Romberg ###
+
+def romberg_integration(funcion, a, b, n):
+    
+    f = crear_funcion(funcion)
+    if not isinstance(n, int) or n < 1:
+        raise ValueError("El nivel n debe ser un entero ≥ 1.")
+
+    R = [[0.0] * (n+1) for _ in range(n+1)]
+    h = b - a
+
+    R[1][1] = (h / 2.0) * (f(a) + f(b))
+
+    for i in range(2, n+1):
+        h /= 2.0
+
+        suma = sum(f(a + k * h) for k in range(1, 2**(i-1), 2))
+        R[i][1] = 0.5 * R[i-1][1] + h * suma
+
+        for j in range(2, i+1):
+            R[i][j] = (4**(j-1) * R[i][j-1] - R[i-1][j-1]) / (4**(j-1) - 1)
+
+    return R
+
+### Integral Doble de Simpson ###
+
+def composite_double_simpson(funcion, a, b, c_func, d_func, n, m):
+    
+    f = crear_funcion(funcion)
+    c = crear_funcion(c_func)
+    d = crear_funcion(d_func)
+
+    if n <= 0 or n % 2 != 0:
+        raise ValueError("n debe ser entero par positivo")
+    if m <= 0 or m % 2 != 0:
+        raise ValueError("m debe ser entero par positivo")
+
+    h = (b - a) / n
+    J1 = J2 = J3 = 0.0
+
+    for i in range(n+1):
+        x = a + i * h
+        c_x = c(x)
+        d_x = d(x)
+        HX = (d_x - c_x) / m
+        
+        K1 = f(x, c_x) + f(x, d_x)
+        K2 = K3 = 0.0
+
+        for j in range(1, m):
+            y = c_x + j * HX
+            Q = f(x, y)
+            if j % 2 == 0:
+                K2 += Q
+            else:
+                K3 += Q
+        L = (K1 + 2 * K2 + 4 * K3) * HX / 3.0
+
+        if i == 0 or i == n:
+            J1 += L
+        elif i % 2 == 0:
+            J2 += L
+        else:
+            J3 += L
+
+    J = (h / 3.0) * (J1 + 2 * J2 + 4 * J3) 
+    return J

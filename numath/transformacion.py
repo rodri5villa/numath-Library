@@ -25,20 +25,30 @@ def reemplazar_funciones(funcion_entrada):
         funcion_entrada = funcion_entrada.replace(parte, reemplazo)
     
     # Usar expresiones regulares para insertar el operador de multiplicación
-    # Ejemplo: "3x" -> "3*x" o "2sin(x)" -> "2*math.sin(x)"
-    funcion_entrada = re.sub(r'(\d)([a-zA-Z\(])', r'\1*\2', funcion_entrada)
+    # Dígito seguido de letra/función
+    funcion_entrada = re.sub(r'(\d)([a-zA-Z(])', r'\1*\2', funcion_entrada)
+    # Variable x o y seguida de otra x o y
+    funcion_entrada = re.sub(r'(?<=[xy])(?=[xy])', '*', funcion_entrada)
 
     return funcion_entrada
 
 def crear_funcion(funcion_entrada):
     
-    # Primero se realiza el reemplazo de la notación
-    funcion_transformada = reemplazar_funciones(funcion_entrada)
-    
-    # Se construye la función lambda usando eval. Se limita el scope para que solo se pueda acceder a math (y al parámetro x).
+    expr = reemplazar_funciones(funcion_entrada)
+    # Detectar variables usadas
+    vars_detectadas = []
+    if re.search(r'\bx\b', expr):
+        vars_detectadas.append('x')
+    if re.search(r'\by\b', expr):
+        vars_detectadas.append('y')
+    if not vars_detectadas:
+        # Por defecto asumimos variable x
+        vars_detectadas.append('x')
+    # Construir lambda con argumentos detectados
+    args = ','.join(vars_detectadas)
+    code = f"lambda {args}: {expr}"
     try:
-        funcion = eval("lambda x: " + funcion_transformada, {"math": math})
+        func = eval(code, {'math': math})
     except Exception as e:
-        raise ValueError("Error al transformar la función: " + str(e))
-    
-    return funcion
+        raise ValueError(f"Error al transformar la función '{funcion_entrada}': {e}")
+    return func

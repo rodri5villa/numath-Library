@@ -1,6 +1,6 @@
 import math
 import pytest
-from numath.diferenciacion_numerica_e_integracion import derivative_three_points_central, derivative_three_points_border, derivative_five_points_central, derivative_five_points_border, derivative_unified, second_derivative_central, second_derivative_central_data, newton_cotes_n1_close, newton_cotes_n2_close, newton_cotes_n3_close, newton_cotes_n4_close, newton_cotes_n0_open, newton_cotes_n1_open, newton_cotes_n2_open, newton_cotes_n3_open, composite_simpson_rule, composite_trapezoidal_rule, composite_midpoint_rule
+from numath.diferenciacion_numerica_e_integracion import derivative_three_points_central, derivative_three_points_border, derivative_five_points_central, derivative_five_points_border, derivative_unified, second_derivative_central, second_derivative_central_data, newton_cotes_n1_close, newton_cotes_n2_close, newton_cotes_n3_close, newton_cotes_n4_close, newton_cotes_n0_open, newton_cotes_n1_open, newton_cotes_n2_open, newton_cotes_n3_open, composite_simpson_rule, composite_trapezoidal_rule, composite_midpoint_rule, romberg_integration, composite_double_simpson
 
 ### Punto medio de tres puntos ###
 
@@ -438,3 +438,53 @@ def test_composite_midpoint_gaussian():
     resultado = composite_midpoint_rule(funcion, a, b, n)
     expected = 0.7468241328124271
     assert resultado == pytest.approx(expected, rel=1e-3)
+
+### Integración de Romberg ###
+
+def test_romberg_sin():
+    
+    funcion = "sin(x)"
+    a = 0
+    b = math.pi
+    n = 5
+    R = romberg_integration(funcion, a, b, n)
+    resultado = R[n][n]
+    expected = 2.0
+    assert resultado == pytest.approx(expected, rel=1e-8)
+
+def test_romberg_polynomial_cubic():
+   
+    funcion = "x^3"
+    a = 0
+    b = 1
+    n = 4
+    R = romberg_integration(funcion, a, b, n)
+    resultado = R[n][n]
+    expected = 0.25
+    assert resultado == pytest.approx(expected, abs=1e-12)
+
+### Integral Doble de Simpson ###
+
+def test_composite_double_simpson_logarithm():
+        
+    funcion = "ln(x+2y)"
+    a = 1.4
+    b = 2
+    c_func = "1"
+    d_func = "1.5"
+    n = m = 10
+    resultado = composite_double_simpson(funcion, a, b, c_func, d_func, n, m)
+    expected = 0.4295545265
+    assert resultado == pytest.approx(expected, rel=1e-7)
+
+def test_composite_double_simpson_variable_limits():
+   
+    funcion = "xy"
+    a = 0
+    b = 2
+    c_func = "0"
+    d_func = "x"
+    n = m = 4
+    resultado = composite_double_simpson(funcion, a, b, c_func, d_func, n, m)
+    expected = 2.0
+    assert resultado == pytest.approx(expected, rel=1e-9)

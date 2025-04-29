@@ -7,7 +7,7 @@ def parse_requirements(filename):
 
 setup(
     name='numath',  # Nombre del paquete
-    version='1.0.0',  # Versión inicial del paquete
+    version='0.1.0',  # Versión inicial del paquete
     author='Rodrigo Villa',  # Tu nombre como autor
     author_email='rodrigo.villa@alumnos.uneatlantico.es',  # Tu correo electrónico
     description='Librería de operaciones matemáticas para Matemática Numérica',
@@ -24,7 +24,7 @@ setup(
         'Programming Language :: Python :: 3.11',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.11',  # Requiere Python 3.11 o superior
+    python_requires='>=3.10',  # Requiere Python 3.10 o superior
     install_requires=parse_requirements('requirements.txt'),  # Dependencias listadas en requirements.txt
     extras_require={
         'dev': ['pytest>=6.0'],  # Dependencias para desarrollo

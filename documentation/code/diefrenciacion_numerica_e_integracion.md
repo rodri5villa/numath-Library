@@ -567,7 +567,7 @@ print("Integral aproximada (n=3):", resultado)
 
 ## 10. Regla de Simpson Compuesta (`composite_simpson_rule(funcion, a, b, n)`)
 
-Aproxima la integral definida de una función `f(x)` en el intervalo `[a,b]` utilizando la **regla compuesta de Simpson**, que interpola la función mediante parábolas en pares de subintervalos para aumentar la precisión.
+Aproxima la integral de una función `f(x)` usando **párabolas** (polinomios de segundo grado). Divide el intervalo `[a,b]` en un número par de subintervalos y aplica la **fórmula de Simpson** en cada par de intervalos.
 
 ### Fórmula
 
@@ -608,7 +608,7 @@ print(resultado)
 
 ## 11. Regla Trapezoidal Compuesta (`composite_trapezoidal_rule(funcion, a, b, n)`)
 
-Aproxima la integral definida de una función `f(x)` en el intervalo `[a,b]` mediante la **regla trapezoidal compuesta**, que aproxima el área bajo la curva con trapezoides en cada subintervalo.
+Aproxima la integral de una función `f(x)` usando **segmentos de línea recta** entre los puntos. Divide el intervalo `[a,b]` en `n` subintervalos y usa la **fórmula del trapecio** en cada uno, sumando luego los resultados.
 
 ### Fórmula
 
@@ -647,7 +647,7 @@ print(resultado)
 
 ## 12. Regla del Punto Medio Compuesta (`composite_midpoint_rule(funcion, a, b, n)`)
 
-Aproxima la integral definida de una función `f(x)` en el intervalo `[a,b]` usando la **regla del punto medio compuesta**, que evalúa la función en los puntos medios de pares de subintervalos.
+Aproxima la integral de una función `f(x)` usando el valor de la función en el **punto medio** de cada subintervalo. Divide el intervalo `[a,b]` en un `n`subintervalos y evala `f`en el **centro** de cada par de intervalos.
 
 ### Fórmula
 
@@ -683,5 +683,101 @@ b = math.pi
 n = 10
 
 resultado = composite_midpoint_rule(funcion, a, b, n)
+print(resultado) 
+```
+
+## 13. Integración de Romberg (`romberg_integration(funcion, a, b, n)`)
+
+Aproxima la integral de una función `f(x)` en `[a,b]` usando el **método de Romberg**, que combina la **regla del trapecio compuesta** con **extrapolación de Richardson** para acelerar la convergencia.
+
+### Fórmulas
+
+1. **Trapecio inicial** 
+
+  `R[1][1] = (h / 2.0) * (f(a) + f(b))`
+
+2. **Refinamiento trapezoidal** para i = 2,...,n 
+
+  `R[i][1] = 0.5 * R[i-1][1] + h * suma`
+
+3. **Extrapolación de Richardson** para j = 2,...,i
+
+  `R[i][j] = (4**(j-1) * R[i][j-1] - R[i-1][j-1]) / (4**(j-1) - 1)`
+
+Al final, la aproximación más afinada es `R[n][n]`
+
+### Parámetros de Entrada y Salida
+
+```python
+def romberg_integration(funcion, a, b, n):
+    """
+    Parámetros:
+      funcion : Cadena con la expresión de f(x).
+      a, b : Extremos del intervalo de integración.
+      n : Nivel máximo de refinamiento (>= 1). Genera una tabla R de tamaño (n+1)x(n+1).
+
+    Devuelve:
+      Tabla R de Romberg, donde el valor más preciso está en R[n][n].
+    """
+```
+
+### Ejemplo de uso
+
+```python
+funcion = "sin(x)"
+a = 0
+b = math.pi
+n = 4
+
+tabla = romberg_integration(funcion, a, b, n)
+aprox = tabla[4][4]
+print(aprox)  
+```
+
+## 14. Integral Doble de Simpson (`composite_double_simpson(funcion, a, b, c_func, d_func, n, m)`)
+
+Aproxima la integral de una función `f(x,y)` usando la regla compuesta de Simpson primero en `y` (para cada `xi`) y luego en `x`.
+
+### Fórmula
+
+1. **Subdividir** `[a,b]` en n subintervalos (`n` par) y cada `[c(xi),d(xi)]` en `m` subintervalos (`m` par).  
+2. **Para cada** `xi = a + i*hx` con `hx = (b-a)/n`:
+  - Calcular `ci = c(xi)`, `di = d(xi)`, `hy = (di-ci)/m`
+  - Aproximar la integral interior:
+     
+    `L = (f(x, cx) + f(x, dx) + 2 * (K2 + f(x, y)) + 4 * (K3 + f(x, y))) * HX / 3.0`
+
+3. **Luego**, aplicar Simpson en \(x\):
+   
+    `J = (h / 3.0) * ((J1 + L) + 2 * (J2 + L) + 4 * (J3 + L))`
+
+### Parámetros de Entrada y Salida
+
+```python
+def composite_double_simpson(funcion, a, b, c_func, d_func, n, m):
+    """
+    Parámetros:
+      funcion : Cadena con la expresión de f(x,y).
+      a, b    : Extremos del intervalo en x.
+      c_func  : Cadena con la función límite inferior c(x).
+      d_func  : Cadena con la función límite superior d(x).
+      n, m    : Número de subintervalos en x e y (enteros pares y > 0).
+
+    Devuelve:
+      Aproximación numérica de la integral doble.
+    """
+```
+
+### Ejemplo de uso
+
+```python
+funcion = "xy"
+a = 0
+b = 1
+c_func = "0"
+d_func = "1"
+n = m = 4
+
+resultado = composite_double_simpson(funcion, a, b, c_func, d_func, n, m)
 print(resultado) 
 ```

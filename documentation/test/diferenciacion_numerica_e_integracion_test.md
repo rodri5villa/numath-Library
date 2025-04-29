@@ -280,5 +280,30 @@
   - El resultado esperado es `2ln2 - 1`
 
 ### 2. Test de Funcionalidad (`test_composite_midpoint_gaussian`)
+
   - Se evalúa la función `f(x) = exp(-x^2)` en `[0, 1]` con `n = 20`
   - El resultado esperado es `0.7468241328124271`
+
+## 13- Tests de Integración de Romberg
+
+### 1. Test de Funcionalidad (`test_romberg_sin`)
+
+- Se aproxima la función `sin(x)` en `[0, pi]` con `n = 5`  
+- El resultado esperado es `2.0`
+
+### 2. Test de Funcionalidad (`test_romberg_polynomial_cubic`)
+
+- Se aproxima la función `x^3` en `[0, 1]` con `n = 4`  
+- El resultado esperado es `0.25`
+
+## 14- Tests de Integral Doble de Simpson
+
+### 1. Test de Funcionalidad (`test_composite_double_simpson_logarithm`)
+
+- Se aproxima la función `ln(x+2y)` en `[1.4, 2]` con `[c_func, d_func] = [1, 1.5]` con `n = m = 10`  
+- El resultado esperado es `0.4295545265`
+
+### 2. Test de Funcionalidad (`test_composite_double_simpson_variable_limits`)
+
+- Se aproxima la función `xy` en `[0, 2]` con `[c_func, d_func] = [0, x]` con `n = m = 4`  
+- El resultado esperado es `2.0`
