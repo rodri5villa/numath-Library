@@ -284,7 +284,7 @@
   - Se evalúa la función `f(x) = exp(-x^2)` en `[0, 1]` con `n = 20`
   - El resultado esperado es `0.7468241328124271`
 
-## 13- Tests de Integración de Romberg
+## 13- Integración de Romberg
 
 ### 1. Test de Funcionalidad (`test_romberg_sin`)
 
@@ -296,7 +296,7 @@
 - Se aproxima la función `x^3` en `[0, 1]` con `n = 4`  
 - El resultado esperado es `0.25`
 
-## 14- Tests de Integral Doble de Simpson
+## 14- Integral Doble de Simpson
 
 ### 1. Test de Funcionalidad (`test_composite_double_simpson_logarithm`)
 
@@ -307,3 +307,27 @@
 
 - Se aproxima la función `xy` en `[0, 2]` con `[c_func, d_func] = [0, x]` con `n = m = 4`  
 - El resultado esperado es `2.0`
+
+## 15- Integral Doble Gaussiana
+
+### 1. Test de Funcionalidad (`test_double_gaussian_x_times_y_squared`)
+
+- Se aproxima la función `x*y^2` en el dominio `[0, 3]`, `[0, 1]` usando cuadratura de Gauss–Legendre con `m = n = 4`.
+- El resultado esperado es `1.5`
+
+### 2. Test de Funcionalidad (`test_double_gaussian_sin_x_cos_y`)
+
+- Se aproxima la función `sin(x)*cos(y)` en el dominio `[0, π]`, `[0, π/2]` usando cuadratura de Gauss–Legendre con `m = n = 5`.
+- El resultado esperado es `1.5`
+
+## 16- Integral Triple Gaussiana
+
+### 1. Test de Funcionalidad (`test_triple_gaussian_sum_of_vars`)
+
+- Se aproxima la función `x+y+z` en el dominio `[0, 1]`, `[0, 1]`, `[0, 1]` usando cuadratura de Gauss–Legendre con `m = n = p = 4`.
+- El resultado esperado es `1.5`
+
+### 2. Test de Funcionalidad (`test_triple_gaussian_product_xyz_region`)
+
+- Se aproxima la función `x*y*z` en el dominio `[1, 2]`, `[0, 1]`, `[0, 1]` usando cuadratura de Gauss–Legendre con `m = n = p = 3`.
+- El resultado esperado es `0.375`

@@ -781,3 +781,102 @@ n = m = 4
 resultado = composite_double_simpson(funcion, a, b, c_func, d_func, n, m)
 print(resultado) 
 ```
+
+## 15. Integral Doble Gaussiana (`double_gaussian_integration(funcion, a, b, c_func, d_func, m, n)`)
+
+Aproxima la integral doble usando **cuadratura de Gauss–Legendre** de orden `m` en `x` `y` orden `n` en `y`.  
+
+### Fórmula
+
+- `h1 = (b - a) / 2.0`
+- `h2 = (b + a) / 2.0`
+- `x = h1 * x_nodes[i] + h2`  
+- `k1 = (d1 - c1) / 2.0 `                 
+- `k2 = (d1 + c1) / 2.0 `             
+- `y = k1 * y_nodes[j] + k2`
+- `Q = f(x, y)`       
+- `JX += y_weights[j] * Q`
+- `J += x_weights[i] * k1 * JX`           
+- `J *= h1`                            
+
+### Parámetros
+
+```python
+def double_gaussian_integration(funcion, a, b, c_func, d_func, m, n)
+    """
+    Parámetros:
+      funcion : Cadena con la expresión de f(x,y).
+      a, b : Límite inferior y superior de la integral externa en x.
+      c_func, d_func : Cadenas para las funciones límites en y: c(x) y d(x).
+      m, n : Orden de la cuadratura en x e y (enteros ≥ 1).
+
+    Devuelve:
+      Aproximación numérica de la integral doble.
+    """
+```
+
+### Ejemplo de uso
+
+```python
+res1 = double_gaussian_integration(
+    funcion   = "x*y",
+    a = 0, b = 1,
+    c_func    = "0",
+    d_func    = "1",
+    m = 4, n = 4
+)
+print(res1) 
+```
+
+## 16. Integral Triple Gaussiana (`triple_gaussian_integration(funcion, a, b, c_func, d_func, alpha_func, beta_func, m, n, p)`)
+
+Aproxima la integral triple empleando **cuadratura de Gauss–Legendre** de orden `m` en `x`, `n` en `y` y `p` en `z`.
+
+### Fórmula
+
+- `h1 = (b - a) / 2.0`
+- `h2 = (b + a) / 2.0`
+- `x = h1 * x_nodes[i] + h2`  
+- `k1 = (d1 - c1) / 2.0 `                 
+- `k2 = (d1 + c1) / 2.0 `             
+- `y = k1 * y_nodes[j] + k2`
+- `beta1  = beta(x, y)`
+- `alpha1 = alpha(x, y)`
+- `l1 = (beta1 - alpha1) / 2.0`
+- `l2 = (beta1 + alpha1) / 2.0`
+- `z = l1 * z_nodes[k] + l2`
+- `Q = f(x, y, z)`
+- `JY += z_weights[k] * Q  `
+- `JX += y_weights[j] * l1 * JY`
+- `J += x_weights[i] * k1 * JX`
+- `J *= h1`
+
+### Parámetros
+
+```python
+def triple_gaussian_integration(funcion, a, b, c_func, d_func, alpha_func, beta_func, m, n, p)
+    """
+    Parámetros:
+      funcion : Expresión de f(x,y,z).
+      a, b :  Límite externo en x.
+      c_func, d_func : Cadenas para límites c(x) y d(x) en y.
+      alpha_func, beta_func : Cadenas para límites α(x,y) y β(x,y) en z.
+      m, n, p : Número de nodos de Gauss–Legendre (enteros ≥ 1) en x, y, z.
+
+    Devuelve:
+      Aproximación numérica de la integral triple.
+    """
+```
+
+### Ejemplo de uso
+
+```python
+res1 = triple_gaussian_integration(
+    funcion     = "x*y*z",
+    a=0, b=1,
+    c_func     = "0", d_func     = "1",
+    alpha_func = "0", beta_func  = "1",
+    m=3, n=3, p=3
+)
+print(res1)   
+```

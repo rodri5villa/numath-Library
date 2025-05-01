@@ -1,6 +1,6 @@
 import math
 import pytest
-from numath.diferenciacion_numerica_e_integracion import derivative_three_points_central, derivative_three_points_border, derivative_five_points_central, derivative_five_points_border, derivative_unified, second_derivative_central, second_derivative_central_data, newton_cotes_n1_close, newton_cotes_n2_close, newton_cotes_n3_close, newton_cotes_n4_close, newton_cotes_n0_open, newton_cotes_n1_open, newton_cotes_n2_open, newton_cotes_n3_open, composite_simpson_rule, composite_trapezoidal_rule, composite_midpoint_rule, romberg_integration, composite_double_simpson
+from numath.diferenciacion_numerica_e_integracion import derivative_three_points_central, derivative_three_points_border, derivative_five_points_central, derivative_five_points_border, derivative_unified, second_derivative_central, second_derivative_central_data, newton_cotes_n1_close, newton_cotes_n2_close, newton_cotes_n3_close, newton_cotes_n4_close, newton_cotes_n0_open, newton_cotes_n1_open, newton_cotes_n2_open, newton_cotes_n3_open, composite_simpson_rule, composite_trapezoidal_rule, composite_midpoint_rule, romberg_integration, composite_double_simpson, double_gaussian_integration, triple_gaussian_integration
 
 ### Punto medio de tres puntos ###
 
@@ -487,4 +487,60 @@ def test_composite_double_simpson_variable_limits():
     n = m = 4
     resultado = composite_double_simpson(funcion, a, b, c_func, d_func, n, m)
     expected = 2.0
+    assert resultado == pytest.approx(expected, rel=1e-9)
+
+### Integral Doble Gaussiana ###
+
+def test_double_gaussian_x_times_y_squared():
+    
+    funcion = "x*y^2"
+    a = 0
+    b = 3
+    c_func = "0"
+    d_func = "1"
+    m = n = 4
+    resultado = double_gaussian_integration(funcion, a, b, c_func, d_func, m, n)
+    expected = 1.5
+    assert resultado == pytest.approx(expected, rel=1e-9)
+
+def test_double_gaussian_sin_x_cos_y():
+    
+    funcion = "sin(x)*cos(y)"
+    a = 0
+    b = math.pi
+    c_func = "0"
+    d_func = "pi/2"
+    m = n = 5
+    resultado = double_gaussian_integration(funcion, a, b, c_func, d_func, m, n)
+    expected = 2.0
+    assert resultado == pytest.approx(expected, rel=1e-7)
+
+### Integral Triple Gaussiana ###
+
+def test_triple_gaussian_sum_of_vars():
+    
+    funcion = "x+y+z"
+    a = 0
+    b = 1
+    c_func = "0"
+    d_func = "1"
+    alpha_func = "0"
+    beta_func = "1"
+    m = n = p = 4
+    resultado = triple_gaussian_integration(funcion, a, b, c_func, d_func, alpha_func, beta_func, m, n, p)
+    expected = 1.5
+    assert resultado == pytest.approx(expected, rel=1e-9)
+
+def test_triple_gaussian_product_xyz_region():
+    
+    funcion = "x*y*z"
+    a = 1
+    b = 2
+    c_func = "0"
+    d_func = "1"
+    alpha_func = "0"
+    beta_func = "1"
+    m = n = p = 3
+    resultado = triple_gaussian_integration(funcion, a, b, c_func, d_func, alpha_func, beta_func, m, n, p)
+    expected = 0.375
     assert resultado == pytest.approx(expected, rel=1e-9)

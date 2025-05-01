@@ -1,4 +1,5 @@
 from numath.transformacion import crear_funcion
+import numpy as np
 
 ### Punto medio de tres puntos ###
 
@@ -307,4 +308,86 @@ def composite_double_simpson(funcion, a, b, c_func, d_func, n, m):
             J3 += L
 
     J = (h / 3.0) * (J1 + 2 * J2 + 4 * J3) 
+    return J
+
+### Integral Doble Gaussiana ###
+
+def double_gaussian_integration(funcion, a, b, c_func, d_func, m, n):
+    f = crear_funcion(funcion)
+    c = crear_funcion(c_func)
+    d = crear_funcion(d_func)
+
+    if m < 1 or n < 1:
+        raise ValueError("m y n deben ser enteros ≥ 1")
+
+    x_nodes, x_weights = np.polynomial.legendre.leggauss(m)
+    y_nodes, y_weights = np.polynomial.legendre.leggauss(n)
+
+    h1 = (b - a) / 2.0
+    h2 = (b + a) / 2.0
+    J = 0.0
+
+    for i in range(m):
+        JX = 0.0
+        x = h1 * x_nodes[i] + h2  
+        d1 = d(x)            
+        c1 = c(x)                           
+        k1 = (d1 - c1) / 2.0                  
+        k2 = (d1 + c1) / 2.0                 
+        
+        for j in range(n):
+            y = k1 * y_nodes[j] + k2 
+            Q = f(x, y)        
+            JX += y_weights[j] * Q
+        J += x_weights[i] * k1 * JX           
+
+    J *= h1                                    
+    return J
+
+### Integral Triple Gaussiana ###
+
+def triple_gaussian_integration(funcion, a, b, c_func, d_func, alpha_func, beta_func, m, n, p):
+    
+    f     = crear_funcion(funcion)
+    c     = crear_funcion(c_func)
+    d     = crear_funcion(d_func)
+    alpha = crear_funcion(alpha_func)
+    beta  = crear_funcion(beta_func)
+
+    if m < 1 or n < 1 or p < 1:
+        raise ValueError("m, n y p deben ser enteros ≥ 1")
+
+    x_nodes, x_weights = np.polynomial.legendre.leggauss(m)
+    y_nodes, y_weights = np.polynomial.legendre.leggauss(n)
+    z_nodes, z_weights = np.polynomial.legendre.leggauss(p)
+
+    h1 = (b - a) / 2.0
+    h2 = (b + a) / 2.0
+    J = 0.0
+
+    for i in range(m):
+        JX = 0.0
+        x = h1 * x_nodes[i] + h2
+        d1 = d(x)
+        c1 = c(x)
+        k1 = (d1 - c1) / 2.0
+        k2 = (d1 + c1) / 2.0
+
+        for j in range(n):
+            JY = 0.0
+            y = k1 * y_nodes[j] + k2
+            beta1  = beta(x, y)
+            alpha1 = alpha(x, y)
+            l1 = (beta1 - alpha1) / 2.0
+            l2 = (beta1 + alpha1) / 2.0
+            
+            for k in range(p):
+                z = l1 * z_nodes[k] + l2
+                Q = f(x, y, z)
+                JY += z_weights[k] * Q 
+
+            JX += y_weights[j] * l1 * JY
+        
+        J += x_weights[i] * k1 * JX
+    J *= h1
     return J

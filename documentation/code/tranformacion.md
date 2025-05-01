@@ -1,85 +1,83 @@
 # Documentación de la clase Transformación
 
-Esta clase convierte cadenas de texto que representan funciones matemáticas en _callables_ de Python (funciones lambda), permitiendo escribir expresiones como `x^2-3x`, `y**2` o `x*y+1` sin sintaxis estricta. El módulo se encarga de transformar esas cadenas en funciones evaluables.
+Este módulo permite convertir cadenas de texto con funciones matemáticas en _callables_ de Python (funciones `lambda`) que aceptan hasta tres variables (`x`, `y`, `z`) de forma muy flexible, insertando automáticamente las transformaciones y los operadores de multiplicación implícita necesarios.
 
-> **IMPORTANTE:**
-> - Ahora **se soportan variables** `x`, `y`, o ambas simultáneamente. La firma de la lambda resultante se adapta al conjunto de variables detectadas en la expresión.
-> - Si no se detectan ni `x` ni `y`, se asume por defecto la variable `x`.
-> - Para usar más variables o librerías (p.ej. `numpy`), hay que añadirlas al entorno de `eval` y ajustar el reemplazo.
+## `reemplazar_funciones(funcion_entrada)`
 
-## Funciones del módulo
+Convierte la notación “amigable” en expresiones válidas de Python:
 
-### `reemplazar_funciones(funcion_entrada)`
+- **Reemplazos básicos**  
+  Sustituye funciones y constantes por sus equivalentes en el módulo `math`:
+  ```python
+  {
+    'sin(':   'math.sin(',
+    'cos(':   'math.cos(',
+    'tan(':   'math.tan(',
+    'asin(':  'math.asin(',
+    'acos(':  'math.acos(',
+    'atan(':  'math.atan(',
+    'exp(':   'math.exp(',
+    'ln(':    'math.log(',
+    'sqrt(':  'math.sqrt(',
+    '^':      '**',
+    'pow(':   'math.pow(',
+    'pi':     'math.pi'
+  }
+  ```
 
-Transforma la cadena de entrada:
-- **Reemplazos básicos:**
-  - `sin(` → `math.sin(`, `cos(` → `math.cos(`, `^` → `**`, `pi` → `math.pi`, etc.
-- **Multiplicación implícita:**
-  Inserta `*` en `3x` → `3*x`, `2sin(x)` → `2*math.sin(x)` o `xy` → `x*y`.
+- **Multiplicación implícita**  
+  1. Inserta `*` cuando hay un dígito seguido de letra o función, p.ej.  
+     `3x` → `3*x`  o  `2sin(x)` → `2*math.sin(x)`.  
+  2. Inserta `*` cuando hay dos variables adyacentes (`x`,`y` o `z`), p.ej.  
+     `xy` → `x*y`,  `yz` → `y*z`,  `zx` → `z*x`.
 
-```python
-partes_a_reemplazar = {
-        'asin(': 'math.asin(',
-        'acos(': 'math.acos(',
-        'atan(': 'math.atan(',
-        'sin(': 'math.sin(',
-        'cos(': 'math.cos(',
-        'tan(': 'math.tan(',
-        'exp()': 'math.e',
-        'exp(': 'math.exp(',
-        'ln(': 'math.log(',
-        'sqrt(': 'math.sqrt(',
-        '^': '**',
-        'pow(': 'math.pow(',
-        'pi': 'math.pi'
-    }
-
-funcion_python = reemplazar_funciones("3x^2 + sin(x)")  # "3*x**2 + math.sin(x)"
-```
-
-### `crear_funcion(funcion_entrada)`
-
-Construye una función lambda de Python con firma adecuada según las variables en la expresión.
-
-1. **Transformación:** Convierte la notación amigable a Python válido mediante `reemplazar_funciones()`.
-2. **Detección de variables:** Busca `x` o `y` en la expresión transformada. Si aparecen ambas, crea `lambda x, y: …`; si solo una, `lambda x: …` o `lambda y: …`.
-3. **Evaluación segura:** Usa `eval` con entorno limitado a `{ 'math': math }`.
 
 ```python
-f1 = crear_funcion('sin(x)')        # lambda x: math.sin(x)
-f2 = crear_funcion('y^2')         # lambda y: y**2
-f3 = crear_funcion('xy + 2')      # lambda x,y: x*y + 2
+# Ejemplo de transformación
+reemplazar_funciones("3x^2 + sin(x) + yz")
+"3*x**2 + math.sin(x) + y*z"
 ```
 
-> **Nota:** Si necesitas más variables (p.ej. `z`) o librerías (p.ej. `np`), adapta la detección y pasa el entorno a `eval`:
- ```python
-  def crear_funcion(..., entorno={'math': math, 'np': np}):
-    ...
-    func = eval(code, entorno)
- ```
+## `crear_funcion(funcion_entrada)`
 
-## Seguridad y extensibilidad
+Construye y devuelve una función `lambda` con **firma fija** `(x=0, y=0, z=0)`.  
 
-- El entorno de `eval` se restringe a evitar ejecución de código arbitrario.
-- Para añadir nuevas funciones o constantes, amplía `partes_a_reemplazar`.
-- La detección de variables se basa en expresiones regulares sencillas; para casos complejos revisa la cadena previa.
+- **Variables**  
+  - Si la expresión sólo usa `x`, basta llamar `f(2)` o `f(x=2)`.  
+  - Si usa `y`, llamar `f(y=3)` o `f(0,3)`.  
+  - Si usa `z`, llamar `f(z=4)` o `f(0,0,4)`.  
+  - Si mezcla varias, usar posiciónales o keywords según convenga.  
+- **Errores**  
+  - Cualquier keyword distinto de `x`, `y` o `z` (p.ej. `w=…`) levantará un `TypeError`.
+  - Si la expresión no es válida tras el reemplazo, se lanza `ValueError`.
 
----
-
-## Ejemplo completo de uso
+### Ejemplos de uso
 
 ```python
-from mi_libreria.utils import crear_funcion
+f1 = crear_funcion("3x + 2")
+print(f1(2))        # 3*2 + 2 = 8
 
-# Función de una variable
-f = crear_funcion('x^3 - 3x + 1')
-print(f(2))  # 2**3 - 3*2 + 1 = 3
+f2 = crear_funcion("5y - 1")
+print(f2(y=4))      # 5*4 - 1 = 19
 
-# Función de y
-g = crear_funcion('y/2 + 1')
-print(g(4))  # 4/2 + 1 = 3
+f3 = crear_funcion("z^2 + 1")
+print(f3(z=3))      # 3**2 + 1 = 10
 
-# Función de dos variables
-h = crear_funcion('x*y + sin(x)')
-print(h(2, math.pi))  # 2*math.pi + math.sin(2) ≈ 7.1924827339
+f4 = crear_funcion("x*y + 1")
+print(f4(2, 3))     # 2*3 + 1 = 7
+print(f4(x=4,y=2))  # 4*2 + 1 = 9
+
+f5 = crear_funcion("x*y*z + z")
+print(f5(2,3,4))    # 2*3*4 + 4 = 28
+
+f6 = crear_funcion("xy + z")
+print(f6(x=2, y=5, z=1))  # x*y + z = 2*5 + 1 = 11
 ```
+
+### Seguridad y extensibilidad
+
+- El entorno de `eval` queda restringido a `{'math': math}`.  
+- Para incluir otras librerías (p.ej. `numpy`), pasar un diccionario ampliado a `eval`.  
+- Para soportar más variables (p.ej. `t`), basta con:
+  1. Añadir esa letra en la regex de `reemplazar_funciones`.  
+  2. Cambiar la firma a `lambda x=0, y=0, z=0, t=0: …`.  

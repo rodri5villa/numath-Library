@@ -28,27 +28,22 @@ def reemplazar_funciones(funcion_entrada):
     # Dígito seguido de letra/función
     funcion_entrada = re.sub(r'(\d)([a-zA-Z(])', r'\1*\2', funcion_entrada)
     # Variable x o y seguida de otra x o y
-    funcion_entrada = re.sub(r'(?<=[xy])(?=[xy])', '*', funcion_entrada)
+    funcion_entrada = re.sub(r'(?<=[xyz])(?=[xyz])', '*', funcion_entrada)
 
     return funcion_entrada
 
-def crear_funcion(funcion_entrada):
-    
+def crear_funcion(funcion_entrada: str):
+    """
+    Crea una lambda con firma (x=0, y=0, z=0), sin aceptar otros kwargs.
+    - Si usas sólo x, llama f(x=valor) o f(valor).
+    - Si usas sólo y, llama f(y=valor).
+    - Si usas sólo z, llama f(z=valor).
+    - Cualquier otro keyword, e.g. w=..., lanzará TypeError.
+    """
     expr = reemplazar_funciones(funcion_entrada)
-    # Detectar variables usadas
-    vars_detectadas = []
-    if re.search(r'\bx\b', expr):
-        vars_detectadas.append('x')
-    if re.search(r'\by\b', expr):
-        vars_detectadas.append('y')
-    if not vars_detectadas:
-        # Por defecto asumimos variable x
-        vars_detectadas.append('x')
-    # Construir lambda con argumentos detectados
-    args = ','.join(vars_detectadas)
-    code = f"lambda {args}: {expr}"
+    code = f"lambda x=0, y=0, z=0: {expr}"
     try:
         func = eval(code, {'math': math})
     except Exception as e:
-        raise ValueError(f"Error al transformar la función '{funcion_entrada}': {e}")
+        raise ValueError(f"Error al transformar '{funcion_entrada}': {e}")
     return func
