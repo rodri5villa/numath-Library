@@ -1,4 +1,4 @@
-# numath – Librería de Matemática Numérica en Python
+# numath – Librería de Matemática Numérica 
 
 **numath** es una librería en Python diseñada para resolver problemas clásicos de **matemática numérica**, mediante métodos clásicos como Newton, Simpson, Romberg, métodos de Newton-Cotes, bisección, Müller, entre muchos otros. Está orientada a estudiantes, docentes y profesionales que necesiten implementar métodos numéricos de forma rápida y confiable.  
 
@@ -26,33 +26,18 @@
 | `diferenciacion_numerica_e_integracion.py` | Métodos de derivación numérica e integración (Simpson, Romberg, Newton-Cotes, etc.). |
 | `ecuaciones_una_variable.py` | Métodos para resolver ecuaciones no lineales (bisección, Newton, secante, Müller, etc.). |
 
-### 📁 `test/` – Pruebas automatizadas
-
-Contiene tests unitarios con `pytest` para validar el comportamiento de cada módulo.
-
 ### 📁 `documentation/` – Documentación técnica (en `.md`)
 
 Explicación detallada de:
 - La teoría detrás de cada método
 - Cómo están implementados
-- Casos de prueba validados
 
 ---
 
-## Documentación completa
+## Repositorio
 
-Toda la documentación detallada de los módulos y los tests se encuentra en la carpeta [`documentation/`](./documentation/).
-
----
-
-## Tests
-
-Puedes ejecutar las pruebas usando `pytest`:
-
-```bash
-pip install pytest
-pytest 
-```
+El resto de la documentación detallada, junto con los tests realizados, se encuentra en el  
+📁 [repositorio oficial del proyecto](https://github.com/rodri5villa/numath-Library).
 
 ---
 
