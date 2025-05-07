@@ -1,35 +1,35 @@
 from numath.transformacion import crear_funcion
 import numpy as np
 
-### Punto medio de tres puntos ###
+### PUNTO MEDIO DE TRES PUNTOS ###
 
 def derivative_three_points_central(funcion, x0, h):
    
     f = crear_funcion(funcion)
     return (f(x0 + h) - f(x0 - h)) / (2 * h)
 
-### Extremo de tres puntos ###
+### EXTREMO DE TRES PUNTOS ###
 
 def derivative_three_points_border(funcion, x0, h):
     
     f = crear_funcion(funcion)
     return (-3 * f(x0) + 4 * f(x0 + h) - f(x0 + 2 * h)) / (2 * h)
 
-### Punto medio de cinco puntos ###
+### PUNTO MEDIO DE CINCO PUNTOS ###
 
 def derivative_five_points_central(funcion, x0, h):
     
     f = crear_funcion(funcion)
     return (f(x0 - 2 * h) - 8 * f(x0 - h) + 8 * f(x0 + h) - f(x0 + 2 * h)) / (12 * h)
 
-### Extremo de cinco puntos ###
+### EXTREMO DE CINCO PUNTOS ###
 
 def derivative_five_points_border(funcion, x0, h):
    
     f = crear_funcion(funcion)
     return (-25 * f(x0) + 48 * f(x0 + h) - 36 * f(x0 + 2 * h) + 16 * f(x0 + 3 * h) - 3 * f(x0 + 4 * h)) / (12 * h)
 
-### Derivadas unificadas respecto a los puntos dados ###
+### DERIVADAS UNIFICADAS RESPECTO A LOS PUNTOS DADOS ###
 
 def derivative_unified(datos, x0):
     
@@ -66,14 +66,14 @@ def derivative_unified(datos, x0):
     
     raise ValueError("No se pudo calcular la derivada para x0 con los datos proporcionados.")
 
-### Punto medio de la segunda derivada ###
+### PUNTO MEDIO DE LA SEGUNDA DERIVADA ###
 
 def second_derivative_central(funcion, x0, h):
     
     f = crear_funcion(funcion)
     return (f(x0 - h) - 2 * f(x0) + f(x0 + h)) / (h**2)
 
-### Punto medio de la segunda derivada respecto a los puntos dados ###
+### PUNTO MEDIO DE LA SEGUNDA DERIVADA RESPECTO A LOS PUNTOS DADOS ###
 
 def second_derivative_central_data(datos, x0):
 
@@ -180,7 +180,7 @@ def newton_cotes_n3_open(funcion, a, b):
     I = (5.0 * h / 24.0) * (11.0 * f(x0) + f(x1) + f(x2) + 11.0 * f(x3))
     return I
 
-### Regla de Simpson Compuesta ###
+### REGLA DE SIMPSON COMPUESTA ###
 
 def composite_simpson_rule(funcion, a, b, n):
     
@@ -204,7 +204,7 @@ def composite_simpson_rule(funcion, a, b, n):
     I = (h / 3.0) * (f(a) + 2.0 * sum_even + 4.0 * sum_odd + f(b))
     return I
 
-### Regla Trapezoidal Compuesta ###
+### REGLA TRAPEZOIDAL COMPUESTA ###
 
 def composite_trapezoidal_rule(funcion, a, b, n):
     
@@ -223,7 +223,7 @@ def composite_trapezoidal_rule(funcion, a, b, n):
     I = (h / 2.0) * (f(a) + 2.0 * suma_interiores + f(b))
     return I
 
-### Regla del Punto Medio Compuesta ###
+### REGLA DEL PUNTO MEDIO COMPUESTA ###
 
 def composite_midpoint_rule(funcion, a, b, n):
     
@@ -242,7 +242,7 @@ def composite_midpoint_rule(funcion, a, b, n):
     I = 2.0 * h * suma_mid
     return I
 
-### Integración de Romberg ###
+### INTEGRACION DE ROMBERG ###
 
 def romberg_integration(funcion, a, b, n):
     
@@ -266,7 +266,7 @@ def romberg_integration(funcion, a, b, n):
 
     return R
 
-### Integral Doble de Simpson ###
+### INTEGRAL DOBLE DE SIMPSON ###
 
 def composite_double_simpson(funcion, a, b, c_func, d_func, n, m):
     
@@ -310,7 +310,7 @@ def composite_double_simpson(funcion, a, b, c_func, d_func, n, m):
     J = (h / 3.0) * (J1 + 2 * J2 + 4 * J3) 
     return J
 
-### Integral Doble Gaussiana ###
+### INTEGRAL DOBLE GAUSSIANA ###
 
 def double_gaussian_integration(funcion, a, b, c_func, d_func, m, n):
     f = crear_funcion(funcion)
@@ -344,7 +344,7 @@ def double_gaussian_integration(funcion, a, b, c_func, d_func, m, n):
     J *= h1                                    
     return J
 
-### Integral Triple Gaussiana ###
+### INTEGRAL TRIPLE GAUSSIANA ###
 
 def triple_gaussian_integration(funcion, a, b, c_func, d_func, alpha_func, beta_func, m, n, p):
     

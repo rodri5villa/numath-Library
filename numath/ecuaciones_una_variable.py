@@ -41,7 +41,7 @@ def fixed_point_iteration(funcion, p0, TOL=1e-5, N0=100):
 
     raise ValueError(f"El método falló después de {N0} iteraciones.")
 
-### METODO DE NEWTON Y SUS EXTENSIONES ###
+### METODO DE NEWTON  ###
 
 def _derivative(f, TOL=1e-5):
     return lambda x: (f(x + TOL) - f(x - TOL)) / (2 * TOL)
@@ -65,6 +65,8 @@ def newton_method(funcion, p0, TOL=1e-5, N0=100, factor=1e-8):
 
     raise ValueError(f"El método falló después de {N0} iteraciones.")
 
+### METODO DE LA SECANTE  ###
+
 def secant_method(funcion, p0, p1, TOL=1e-5, N0=100):
    
     f = crear_funcion(funcion)
@@ -85,6 +87,8 @@ def secant_method(funcion, p0, p1, TOL=1e-5, N0=100):
         q1 = f(p1)
     
     raise ValueError(f"El método falló después de {N0} iteraciones.")
+
+### METODO DE POSICION FALSA ###
 
 def false_position(funcion, p0, p1, TOL=1e-5, N0=100):
     
@@ -110,7 +114,7 @@ def false_position(funcion, p0, p1, TOL=1e-5, N0=100):
 
     raise ValueError(f"El método falló después de {N0} iteraciones.")
 
-### CONVERGENCIA ACELERADA ###
+### METODO DE STEFFENSEN  ###
 
 def steffensen_method(funcion, p0, TOL=1e-5, N0=100):
     
@@ -133,7 +137,7 @@ def steffensen_method(funcion, p0, TOL=1e-5, N0=100):
 
     raise ValueError(f"El método falló después de {N0} iteraciones.")
 
-### CEROS DE POLINOMIOS Y METODO DE MULLER
+### METODO DE HORNER  ###
 
 def horner_method(a, x0):
  
@@ -145,6 +149,8 @@ def horner_method(a, x0):
         z = x0 * z + y   
     y = x0 * y + a[n]
     return y, z
+
+### METODO DE MÜLLER  ###
 
 def muller_method(funcion, p0, p1, p2, TOL=1e-5, N0=100):
    
