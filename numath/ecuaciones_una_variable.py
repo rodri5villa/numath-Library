@@ -1,10 +1,14 @@
-from numath.transformacion import crear_funcion
+from numath.transformacion import crear_funcion, transformar_parametro
 
 ### BISECCION ###
 
 def bisection(funcion, a, b, TOL=1e-5, N0=100):
 
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+    TOL = transformar_parametro(TOL)
+    N0 = int(transformar_parametro(N0))
 
     if f(a) * f(b) >= 0:
         raise ValueError("El método de bisección requiere que f(a) y f(b) tengan signos opuestos.")
@@ -31,6 +35,10 @@ def bisection(funcion, a, b, TOL=1e-5, N0=100):
 def fixed_point_iteration(funcion, p0, TOL=1e-5, N0=100):
 
     g = crear_funcion(funcion)
+    p0 = transformar_parametro(p0)
+    TOL = transformar_parametro(TOL)
+    N0 = int(transformar_parametro(N0))
+
     i = 1  
     while i <= N0:  
         p = g(p0)  
@@ -49,6 +57,11 @@ def _derivative(f, TOL=1e-5):
 def newton_method(funcion, p0, TOL=1e-5, N0=100, factor=1e-8):
   
     f = crear_funcion(funcion)
+    p0 = transformar_parametro(p0)
+    TOL = transformar_parametro(TOL)
+    N0 = int(transformar_parametro(N0))
+    factor = transformar_parametro(factor)
+
     df = _derivative(f, TOL)
     i = 1  
 
@@ -70,6 +83,11 @@ def newton_method(funcion, p0, TOL=1e-5, N0=100, factor=1e-8):
 def secant_method(funcion, p0, p1, TOL=1e-5, N0=100):
    
     f = crear_funcion(funcion)
+    p0 = transformar_parametro(p0)
+    p1 = transformar_parametro(p1)
+    TOL = transformar_parametro(TOL)
+    N0 = int(transformar_parametro(N0))
+
     i = 2 
     q0 = f(p0)
     q1 = f(p1)
@@ -93,6 +111,11 @@ def secant_method(funcion, p0, p1, TOL=1e-5, N0=100):
 def false_position(funcion, p0, p1, TOL=1e-5, N0=100):
     
     f = crear_funcion(funcion)
+    p0 = transformar_parametro(p0)
+    p1 = transformar_parametro(p1)
+    TOL = transformar_parametro(TOL)
+    N0 = int(transformar_parametro(N0))
+
     if f(p0) * f(p1) >= 0:
         raise ValueError("Los puntos iniciales no encierran una raíz: f(p0) y f(p1) deben tener signos opuestos.")
 
@@ -119,6 +142,10 @@ def false_position(funcion, p0, p1, TOL=1e-5, N0=100):
 def steffensen_method(funcion, p0, TOL=1e-5, N0=100):
     
     g = crear_funcion(funcion)
+    p0 = transformar_parametro(p0)
+    TOL = transformar_parametro(TOL)
+    N0 = int(transformar_parametro(N0))
+
     i = 1 
     while i <= N0:
         p1 = g(p0)    
@@ -140,7 +167,10 @@ def steffensen_method(funcion, p0, TOL=1e-5, N0=100):
 ### METODO DE HORNER  ###
 
 def horner_method(a, x0):
- 
+    
+    a = [transformar_parametro(coef) for coef in a]
+    x0 = transformar_parametro(x0)
+    
     n = len(a) - 1  
     y = a[0] 
     z = a[0] 
@@ -155,6 +185,12 @@ def horner_method(a, x0):
 def muller_method(funcion, p0, p1, p2, TOL=1e-5, N0=100):
    
     f = crear_funcion(funcion)
+    p0 = transformar_parametro(p0)
+    p1 = transformar_parametro(p1)
+    p2 = transformar_parametro(p2)
+    TOL = transformar_parametro(TOL)
+    N0 = int(transformar_parametro(N0))
+
     h1 = p1 - p0
     h2 = p2 - p1
     δ1 = (f(p1) - f(p0)) / h1

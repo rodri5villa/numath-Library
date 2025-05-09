@@ -45,7 +45,10 @@ Supongamos que queremos encontrar la raíz de la función `𝑓(𝑥)=𝑥**2−
 
 ```python
 funcion = "x^2 - 4"
-raiz, iteraciones = bisection(funcion, 0, 3)
+a = "0"
+b = "3"
+
+raiz, iteraciones = bisection(funcion, a, b)
 print(f"La raíz aproximada es {raiz} encontrada en {iteraciones} iteraciones.")
 ```
 
@@ -96,7 +99,9 @@ Definimos la función `g(p)` para el problema: `p = cos(p)`
 
    ```python
    funcion = "cos(x)"
-   solution, iterations = na.fixed_point_iteration(funcion, 1, TOL=1e-5, N0=100)
+   p0 = "1"
+
+   solution, iterations = na.fixed_point_iteration(funcion, p0)
    print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
    ```
 ## 3- Método de Newton (`newton_method(funcion, p0, TOL=1e-5, N0=100, factor=1e-8)`)
@@ -151,8 +156,9 @@ Utilizamos el método de Newton, usando derivación numérica, y elegimos una ap
 
    ```python
    funcion = "x^3 - 2"
-   p0 = 1.5  
-   solution, iterations = newton_method(funcion, p0, TOL=1e-5, N0=100, factor=1e-8)
+   p0 = "1.5"  
+
+   solution, iterations = newton_method(funcion, p0)
    print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
    ```
    
@@ -206,10 +212,12 @@ Considera la ecuación `f(x)=x^2-2=0`. La raíz real es `sqrt{2}, approx 1.41421
 
 ```python
 funcion = "x^2 - 2"
-p0 = 1.0
-p1 = 2.0
+p0 = "1.0"
+p1 = "2.0"
+TOL = "1e-6"
+N0 = "50"
 
-solution, iterations = secant_method(funcion, p0, p1, TOL=1e-5, N0=100)
+solution, iterations = secant_method(funcion, p0, p1, TOL, N0)
 print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
 ```
 ## 5- Método de Posición Falsa (`false_position(funcion, p0, p1, TOL=1e-5, N0=100)`)
@@ -278,9 +286,10 @@ Consideremos la función `f(x)=x^2-3`, cuya raíz real es `sqrt{3} \approx 1.732
 
 ```python
 funcion = "x^2 - 3"
-p0 = 1.0
-p1 = 2.0
-solution, iterations = false_position(funcion, p0, p1, TOL=1e-5, N0=100)
+p0 = "1.0"
+p1 = "2.0"
+
+solution, iterations = false_position(funcion, p0, p1)
 print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
 ```
 
@@ -334,8 +343,11 @@ Supongamos que queremos resolver la ecuación de punto fijo para la función `g(
 
 ```python
 funcion = "cos(x)"
-p0 = 1.0 
-solution, iterations = steffensen_method(funcion, p0, TOL=1e-5, N0=100)
+p0 = "1.0" 
+TOL = "1e-3"
+N0 = "200"
+
+solution, iterations = steffensen_method(funcion, p0, TOL, N0)
 print(f"La solución encontrada es {solution} en {iterations} iteraciones.")
 ```
 
@@ -403,8 +415,9 @@ Supongamos que queremos resolver la ecuación P(x) = 2x^3 - 6x + 4
 ```python
     # Polinomio: P(x) = 2x^3 - 6x + 4
     # Coeficientes en orden descendente: [2, 0, -6, 4]
-    a = [2, 0, -6, 4]
-    x0 = 4
+    a = ["2", "0", "-6", "4"]
+    x0 = "4"
+
     y, z = horner_method(a, x0)
     print(f"La solución encontrada es P({x0}) = {y} y P'({x0}) = {z}")
 ```
@@ -473,21 +486,10 @@ def muller(funcion, p0, p1, p2, TOL=1e-5, N0=100):
 
 ```python
 funcion = "x^2 - 3x + 2"
-p0 = 3
-p1 = 4
-p2 = 5
-root = muller_method(funcion, p0, p1, p2, TOL=1e-5, N0=100)
+p0 = "3"
+p1 = "4"
+p2 = "5"
+
+root = muller_method(funcion, p0, p1, p2)
 print(f"La raíz encontrada es: {root}")
 ```
-
-
-
-
-## Adicional
-
-### Método privado para derivar `(_derivative(f, TOL=1e-5))`
-Metodo privado que retorna una función que aproxima la derivada de `f` utilizando la fórmula de diferencia centrada.
-
-**Parámetros**:
-   - **f** : Función (callable) de la cual se quiere calcular la derivada.
-   - **TOL** : Paso pequeño para la aproximación (por defecto 1e-5).

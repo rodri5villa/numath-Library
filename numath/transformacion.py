@@ -38,3 +38,18 @@ def crear_funcion(funcion_entrada: str):
     except Exception as e:
         raise ValueError(f"Error al transformar '{funcion_entrada}': {e}")
     return func
+
+def transformar_parametro(param):
+    if isinstance(param, (int, float)):
+        return float(param)
+    elif isinstance(param, str):
+        try:
+            return float(param)
+        except ValueError:
+            expr = reemplazar_funciones(param)
+            try:
+                return float(eval(expr, {'math': math}))
+            except Exception as e:
+                raise ValueError(f"Error al evaluar el parámetro '{param}': {e}")
+    else:
+        raise TypeError(f"Tipo no soportado para el parámetro: {type(param)}")

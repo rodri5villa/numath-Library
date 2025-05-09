@@ -27,8 +27,9 @@ def derivative_three_points_central(funcion, x0, h):
 
 ```python
 funcion = "x^2" 
-x0 = 2.0
-h = 0.001
+x0 = "2.0"
+h = "0.001"
+
 derivada = derivative_three_points_central(funcion, x0, h)
 print("La derivada aproximada de x^2 en x=2 es:", derivada)
 ```
@@ -60,8 +61,9 @@ def derivative_three_points_border(funcion, x0, h):
 
 ```python
 funcion = "sin(x)"  
-x0 = 0.0
-h = 1e-5
+x0 = "0.0"
+h = "1e-5"
+
 derivada = derivative_three_points_border(funcion, x0, h)
 print("La derivada aproximada de sin(x) en x=0 es:", derivada)
 ```
@@ -93,8 +95,9 @@ def derivative_five_points_central(funcion, x0, h):
 
 ```python
 funcion = "cos(x)"  
-x0 = math.pi / 3
-h = 1e-5
+x0 = "pi / 3"
+h = "1e-5"
+
 derivada = derivative_five_points_central(funcion, x0, h)
 print("La derivada aproximada de cos(x) en x=pi/3 es:", derivada)
 ```
@@ -126,8 +129,9 @@ def derivative_five_points_border(funcion, x0, h):
 
 ```python
 funcion = "exp(x)"  
-x0 = 0.0
-h = 1e-5
+x0 = "0.0"
+h = "1e-5"
+
 derivada = derivative_five_points_border(funcion, x0, h)
 print("La derivada aproximada de exp(x) en x=0 es:", derivada)
 ```
@@ -166,13 +170,14 @@ def derivative_unified(datos, x0):
 
 ```python
 datos = {
-    1.0: 1.0,   
-    2.0: 4.0,   
-    3.0: 9.0,   
-    4.0: 16.0,  
-    5.0: 25.0   
+  "1.0": "1.0",
+  "2.0": "4.0",
+  "3.0": "9.0",
+  "4.0": "16.0",
+  "5.0": "25.0"  
 }
-x0 = 3.0
+x0 = "3.0"
+
 derivada = derivative_unified(datos, x0)
 print("La derivada unificada en x=3.0 es:", derivada)
 ```
@@ -204,8 +209,9 @@ def second_derivative_central(funcion, x0, h):
 
 ```python
 funcion = "x^2"  
-x0 = 2.0
-h = 0.001
+x0 = "2.0"
+h = "0.001"
+
 seg_deriv = second_derivative_central(funcion, x0, h)
 print("La segunda derivada de x^2 en x=2.0 es:", seg_deriv)
 ```
@@ -234,11 +240,12 @@ def second_derivative_central_data(datos, x0):
 
 ```python
 datos = {
-    1.9: 3.61,
-    2.0: 4.00,
-    2.1: 4.41
+  "1.9": "3.61",
+  "2.0": "4.00",
+  "2.1": "4.41"
 }
-x0 = 2.0
+x0 = "2.0"
+
 seg_deriv_data = second_derivative_central_data(datos, x0)
 print("La segunda derivada a partir de datos en x=2.0 es:", seg_deriv_data)
 ```
@@ -275,8 +282,8 @@ def newton_cotes_n1_close(funcion, a, b):
 
 ```python
 funcion = "2x+1"
-a = 0
-b = 2
+a = "0"
+b = "2"
 
 resultado = newton_cotes_n1_close(funcion, a, b)
 print("Resultado Regla Trapezoidal:", resultado)
@@ -312,8 +319,8 @@ def newton_cotes_n2_close(funcion, a, b):
 
 ```python
 funcion = "x^2"
-a = 0
-b = 1
+a = "0"
+b = "1"
 
 resultado = newton_cotes_n2_close(funcion, a, b)
 print("Resultado Regla de Simpson:", resultado)
@@ -349,8 +356,8 @@ def newton_cotes_n3_close(funcion, a, b):
 
 ```python
 funcion = "x^3"
-a = 0
-b = 1
+a = "0"
+b = "1"
 
 resultado = newton_cotes_n3_close(funcion, a, b)
 print("Resultado Regla de Simpson 3/8:", resultado)
@@ -386,8 +393,8 @@ def newton_cotes_n4_close(funcion, a, b):
 
 ```python
 funcion = "x^4"
-a = 0
-b = 2
+a = "0"
+b = "2"
 
 resultado = newton_cotes_n4_close(funcion, a, b)
 print("Resultado Regla de Boole (n=4):", resultado)
@@ -429,8 +436,8 @@ def newton_cotes_n0_open(funcion, a, b):
 
 ```python
 funcion = "sin(x)"
-a = 2
-b = 6
+a = "2"
+b = "6"
 
 resultado = newton_cotes_n0_open(funcion, a, b)
 print("Integral aproximada (n=0):", resultado)
@@ -471,8 +478,8 @@ def newton_cotes_n1_open(funcion, a, b):
 
 ```python
 funcion = "x+1"
-a = 1
-b = 4
+a = "1"
+b = "4"
 
 resultado = newton_cotes_n1_open(funcion, a, b)
 print("Integral aproximada (n=1):", resultado)
@@ -514,8 +521,8 @@ def newton_cotes_n2_open(funcion, a, b):
 
 ```python
 funcion = "x^2"
-a = 0
-b = 4
+a = "0"
+b = "4"
 
 resultado = newton_cotes_n2_open(funcion, a, b)
 print("Integral aproximada (n=2):", resultado)
@@ -558,8 +565,8 @@ def newton_cotes_n3_open(funcion, a, b):
 
 ```python
 funcion = "x^3"
-a = 0
-b = 5
+a = "0"
+b = "5"
 
 resultado = newton_cotes_n3_open(funcion, a, b)
 print("Integral aproximada (n=3):", resultado)
@@ -598,9 +605,9 @@ def composite_simpson_rule(funcion, a, b, n):
 
 ```python
 funcion = "sin(x)"
-a = 0
-b = math.pi
-n = 100
+a = "0"
+b = "pi"
+n = "100"
 
 resultado = composite_simpson_rule(funcion, a, b, n)
 print(resultado)
@@ -637,9 +644,9 @@ def composite_trapezoidal_rule(funcion, a, b, n):
 
 ```python
 funcion = "sin(x)"
-a = 0
-b = math.pi
-n = 100
+a = "0"
+b = "pi"
+n = "100"
 
 resultado = composite_trapezoidal_rule(funcion, a, b, n)
 print(resultado) 
@@ -678,9 +685,9 @@ def composite_midpoint_rule(funcion, a, b, n):
 
 ```python
 funcion = "sin(x)"
-a = 0
-b = math.pi
-n = 10
+a = "0"
+b = "pi"
+n = "10"
 
 resultado = composite_midpoint_rule(funcion, a, b, n)
 print(resultado) 
@@ -725,9 +732,9 @@ def romberg_integration(funcion, a, b, n):
 
 ```python
 funcion = "sin(x)"
-a = 0
-b = math.pi
-n = 4
+a = "0"
+b = "pi"
+n = "4"
 
 tabla = romberg_integration(funcion, a, b, n)
 aprox = tabla[4][4]
@@ -772,11 +779,11 @@ def composite_double_simpson(funcion, a, b, c_func, d_func, n, m):
 
 ```python
 funcion = "xy"
-a = 0
-b = 1
+a = "0"
+b = "1"
 c_func = "0"
 d_func = "1"
-n = m = 4
+n = m = "4"
 
 resultado = composite_double_simpson(funcion, a, b, c_func, d_func, n, m)
 print(resultado) 
@@ -818,14 +825,15 @@ def double_gaussian_integration(funcion, a, b, c_func, d_func, m, n)
 ### Ejemplo de uso
 
 ```python
-res1 = double_gaussian_integration(
-    funcion   = "x*y",
-    a = 0, b = 1,
-    c_func    = "0",
-    d_func    = "1",
-    m = 4, n = 4
-)
-print(res1) 
+funcion = "x*y"
+a = "0"
+b = "1"
+c_func = "0"
+d_func = "1"
+m = n = "4"
+  
+resultado = double_gaussian_integration(funcion, a, b, c_func, d_func, m, n)
+print(resultado) 
 ```
 
 ## 16. Integral Triple Gaussiana (`triple_gaussian_integration(funcion, a, b, c_func, d_func, alpha_func, beta_func, m, n, p)`)
@@ -871,12 +879,15 @@ def triple_gaussian_integration(funcion, a, b, c_func, d_func, alpha_func, beta_
 ### Ejemplo de uso
 
 ```python
-res1 = triple_gaussian_integration(
-    funcion     = "x*y*z",
-    a=0, b=1,
-    c_func     = "0", d_func     = "1",
-    alpha_func = "0", beta_func  = "1",
-    m=3, n=3, p=3
-)
-print(res1)   
+funcion = "x*y*z"
+a = "0"
+b = "1"
+c_func = "0"
+d_func = "1"
+alpha_func = "0"
+beta_func = "1"
+m = n = p = 3
+
+resultado = triple_gaussian_integration(funcion, a, b, c_func, d_func, alpha_func, beta_func, m, n, p)
+print(resultado)   
 ```
