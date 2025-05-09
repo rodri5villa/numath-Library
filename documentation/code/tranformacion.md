@@ -35,8 +35,10 @@ Convierte la notación “amigable” en expresiones válidas de Python:
 ```python
 # Ejemplo de transformación
 reemplazar_funciones("3x^2 + sin(x) + yz")
-"3*x**2 + math.sin(x) + y*z"
+# Devuelve: 3*x**2 + math.sin(x) + y*z
 ```
+
+---
 
 ## `crear_funcion(funcion_entrada)`
 
@@ -73,6 +75,40 @@ print(f5(2,3,4))    # 2*3*4 + 4 = 28
 f6 = crear_funcion("xy + z")
 print(f6(x=2, y=5, z=1))  # x*y + z = 2*5 + 1 = 11
 ```
+
+---
+
+## `transformar_parametro(param)`
+
+Evalúa un parámetro numérico dado como string o número y devuelve un `float` válido para operaciones matemáticas.
+
+### ¿Qué transforma?
+
+* Strings como `"1e-5"`, `"pi/2"`, `"sqrt(9)"`, `"2^3"`, `"cos(pi)"`, etc.
+* Números reales (`int` o `float`) ya válidos.
+* Utiliza internamente `reemplazar_funciones` para convertir la expresión a una sintaxis evaluable.
+
+### Comportamiento
+
+* Si `param` es un número (`int` o `float`), lo convierte a `float`.
+* Si es un string que ya representa un número (`"1e-5"`, `"3.14"`), lo convierte directamente.
+* Si es una expresión matemática, la transforma y evalúa usando `eval(...)`.
+* Si falla la evaluación, lanza `ValueError`.
+* Si el tipo no es compatible, lanza `TypeError`.
+
+### Ejemplos de uso
+
+```python
+transformar_parametro("3")          # 3.0
+transformar_parametro("pi")         # 3.141592...
+transformar_parametro("pi/2")       # 1.5708...
+transformar_parametro("2^3")        # 8.0
+transformar_parametro("sqrt(16)")   # 4.0
+transformar_parametro("cos(pi)")    # -1.0
+transformar_parametro("1e-5")       # 0.00001
+```
+
+---
 
 ### Seguridad y extensibilidad
 

@@ -7,7 +7,7 @@ def parse_requirements(filename):
 
 setup(
     name='numath',
-    version='0.0.3',
+    version='0.0.4',
     author='Rodrigo Villa',
     author_email='rodrigo.villa@alumnos.uneatlantico.es',
     description='Librería de operaciones matemáticas para Matemática Numérica',
@@ -15,8 +15,8 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/rodri5villa/numath-Library',
     project_urls={
-        'Documentación': 'https://github.com/rodri5villa/numath-Library/tree/main/documentation/code',
-        'Reportar errores': 'https://github.com/rodri5villa/numath-Library/issues',
+        'Documentation': 'https://github.com/rodri5villa/numath-Library/tree/main/documentation/code',
+        'Issues': 'https://github.com/rodri5villa/numath-Library/issues',
     },
     license='MIT',
     packages=find_packages(),

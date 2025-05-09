@@ -1,4 +1,4 @@
-from numath.transformacion import crear_funcion
+from numath.transformacion import crear_funcion, transformar_parametro
 import numpy as np
 
 ### PUNTO MEDIO DE TRES PUNTOS ###
@@ -6,6 +6,9 @@ import numpy as np
 def derivative_three_points_central(funcion, x0, h):
    
     f = crear_funcion(funcion)
+    x0 = transformar_parametro(x0)
+    h = transformar_parametro(h)
+
     return (f(x0 + h) - f(x0 - h)) / (2 * h)
 
 ### EXTREMO DE TRES PUNTOS ###
@@ -13,6 +16,9 @@ def derivative_three_points_central(funcion, x0, h):
 def derivative_three_points_border(funcion, x0, h):
     
     f = crear_funcion(funcion)
+    x0 = transformar_parametro(x0)
+    h = transformar_parametro(h)
+    
     return (-3 * f(x0) + 4 * f(x0 + h) - f(x0 + 2 * h)) / (2 * h)
 
 ### PUNTO MEDIO DE CINCO PUNTOS ###
@@ -20,6 +26,9 @@ def derivative_three_points_border(funcion, x0, h):
 def derivative_five_points_central(funcion, x0, h):
     
     f = crear_funcion(funcion)
+    x0 = transformar_parametro(x0)
+    h = transformar_parametro(h)
+
     return (f(x0 - 2 * h) - 8 * f(x0 - h) + 8 * f(x0 + h) - f(x0 + 2 * h)) / (12 * h)
 
 ### EXTREMO DE CINCO PUNTOS ###
@@ -27,12 +36,21 @@ def derivative_five_points_central(funcion, x0, h):
 def derivative_five_points_border(funcion, x0, h):
    
     f = crear_funcion(funcion)
+    x0 = transformar_parametro(x0)
+    h = transformar_parametro(h)
+
     return (-25 * f(x0) + 48 * f(x0 + h) - 36 * f(x0 + 2 * h) + 16 * f(x0 + 3 * h) - 3 * f(x0 + 4 * h)) / (12 * h)
 
 ### DERIVADAS UNIFICADAS RESPECTO A LOS PUNTOS DADOS ###
 
 def derivative_unified(datos, x0):
     
+    datos = {
+        transformar_parametro(k): transformar_parametro(v)
+        for k, v in datos.items()
+    }
+    x0 = transformar_parametro(x0)
+
     claves = sorted(datos.keys())
     n = len(claves)
     
@@ -71,11 +89,20 @@ def derivative_unified(datos, x0):
 def second_derivative_central(funcion, x0, h):
     
     f = crear_funcion(funcion)
+    x0 = transformar_parametro(x0)
+    h = transformar_parametro(h)
+
     return (f(x0 - h) - 2 * f(x0) + f(x0 + h)) / (h**2)
 
 ### PUNTO MEDIO DE LA SEGUNDA DERIVADA RESPECTO A LOS PUNTOS DADOS ###
 
 def second_derivative_central_data(datos, x0):
+
+    datos = {
+        transformar_parametro(k): transformar_parametro(v)
+        for k, v in datos.items()
+    }
+    x0 = transformar_parametro(x0)
 
     claves = sorted(datos.keys())
     n = len(claves)
@@ -102,6 +129,9 @@ def second_derivative_central_data(datos, x0):
 def newton_cotes_n1_close(funcion, a, b):
    
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+
     h = b - a
     I = (h / 2) * (f(a) + f(b)) 
     return I
@@ -111,6 +141,9 @@ def newton_cotes_n1_close(funcion, a, b):
 def newton_cotes_n2_close(funcion, a, b):
     
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+
     h = (b - a) / 2
     I = (h / 3) * (f(a) + 4 * f(a + h) + f(b))
     return I
@@ -120,6 +153,9 @@ def newton_cotes_n2_close(funcion, a, b):
 def newton_cotes_n3_close(funcion, a, b):
     
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+
     h = (b - a) / 3
     I = (3 * h / 8) * (f(a) + 3 * f(a + h) + 3 * f(a + 2 * h) + f(b))
     return I
@@ -129,6 +165,9 @@ def newton_cotes_n3_close(funcion, a, b):
 def newton_cotes_n4_close(funcion, a, b):
     
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+
     h = (b - a) / 4
     I = (2 * h / 45) * (7 * f(a) + 32 * f(a + h) + 12 * f(a + 2 * h) + 32 * f(a + 3 * h) + 7 * f(b))
     return I
@@ -139,6 +178,9 @@ def newton_cotes_n4_close(funcion, a, b):
 def newton_cotes_n0_open(funcion, a, b):
     
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+
     h = (b - a) / 2.0
     x0 = a + h
     I = 2 * h * f(x0)
@@ -149,6 +191,9 @@ def newton_cotes_n0_open(funcion, a, b):
 def newton_cotes_n1_open(funcion, a, b):
     
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+
     h = (b - a) / 3.0
     x0 = a + h
     x1 = x0 + h  
@@ -160,6 +205,9 @@ def newton_cotes_n1_open(funcion, a, b):
 def newton_cotes_n2_open(funcion, a, b):
     
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+    
     h = (b - a) / 4.0
     x0 = a + h
     x1 = x0 + h   
@@ -172,6 +220,9 @@ def newton_cotes_n2_open(funcion, a, b):
 def newton_cotes_n3_open(funcion, a, b):
     
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+
     h = (b - a) / 5.0
     x0 = a + h
     x1 = x0 + h   
@@ -185,6 +236,9 @@ def newton_cotes_n3_open(funcion, a, b):
 def composite_simpson_rule(funcion, a, b, n):
     
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+    n = int(transformar_parametro(n))
     
     if n <= 0 or n % 2 != 0:
         raise ValueError("El número de subintervalos n debe ser un entero par positivo.")
@@ -209,6 +263,9 @@ def composite_simpson_rule(funcion, a, b, n):
 def composite_trapezoidal_rule(funcion, a, b, n):
     
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+    n = int(transformar_parametro(n))
 
     if n <= 0:
         raise ValueError("El número de subintervalos n debe ser un entero positivo.")
@@ -228,6 +285,9 @@ def composite_trapezoidal_rule(funcion, a, b, n):
 def composite_midpoint_rule(funcion, a, b, n):
     
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+    n = int(transformar_parametro(n))
 
     if n <= 0 or n % 2 != 0:
         raise ValueError("El número de subintervalos n debe ser un entero positivo y par.")
@@ -247,6 +307,10 @@ def composite_midpoint_rule(funcion, a, b, n):
 def romberg_integration(funcion, a, b, n):
     
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+    n = int(transformar_parametro(n))
+
     if not isinstance(n, int) or n < 1:
         raise ValueError("El nivel n debe ser un entero ≥ 1.")
 
@@ -271,8 +335,12 @@ def romberg_integration(funcion, a, b, n):
 def composite_double_simpson(funcion, a, b, c_func, d_func, n, m):
     
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
     c = crear_funcion(c_func)
     d = crear_funcion(d_func)
+    n = int(transformar_parametro(n))
+    m = int(transformar_parametro(m))
 
     if n <= 0 or n % 2 != 0:
         raise ValueError("n debe ser entero par positivo")
@@ -313,9 +381,14 @@ def composite_double_simpson(funcion, a, b, c_func, d_func, n, m):
 ### INTEGRAL DOBLE GAUSSIANA ###
 
 def double_gaussian_integration(funcion, a, b, c_func, d_func, m, n):
+
     f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
     c = crear_funcion(c_func)
     d = crear_funcion(d_func)
+    m = int(transformar_parametro(m))
+    n = int(transformar_parametro(n))
 
     if m < 1 or n < 1:
         raise ValueError("m y n deben ser enteros ≥ 1")
@@ -348,11 +421,16 @@ def double_gaussian_integration(funcion, a, b, c_func, d_func, m, n):
 
 def triple_gaussian_integration(funcion, a, b, c_func, d_func, alpha_func, beta_func, m, n, p):
     
-    f     = crear_funcion(funcion)
-    c     = crear_funcion(c_func)
-    d     = crear_funcion(d_func)
+    f = crear_funcion(funcion)
+    a = transformar_parametro(a)
+    b = transformar_parametro(b)
+    c = crear_funcion(c_func)
+    d = crear_funcion(d_func)
     alpha = crear_funcion(alpha_func)
-    beta  = crear_funcion(beta_func)
+    beta = crear_funcion(beta_func)
+    m = int(transformar_parametro(m))
+    n = int(transformar_parametro(n))
+    p = int(transformar_parametro(p))
 
     if m < 1 or n < 1 or p < 1:
         raise ValueError("m, n y p deben ser enteros ≥ 1")

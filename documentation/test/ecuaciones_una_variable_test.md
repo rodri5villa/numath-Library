@@ -50,23 +50,27 @@
   - Se verifica la convergencia dentro de la tolerancia especificada.
 
 ### 3. Test de Excepción (`test_newton_deriv_zero`)
+
   - Verifica que se lance un ValueError cuando la derivada es cero en el punto inicial.
   - Por ejemplo, para `f(x)=x^3`, `f'(0)=0`. Se espera que el método lance un error si `p0=0`.
   - Se utiliza `pytest.raises(ValueError)` para confirmar que se lanza la excepción cuando se inicia en `p0=0`.
 
 ## 4- Método de la Secante
 
-### 1. Test de Funcionalidad (`test_secant_sqrt`): 
+### 1. Test de Funcionalidad (`test_secant_sqrt`)
+
   - Se definen dos aproximaciones iniciales.
   - Se espera que el método de la secante converja a la raíz real, que es `sqrt{4} (2)`.
   - Se utiliza `pytest.approx` para validar que la solución obtenida se encuentre dentro de la tolerancia definida.
 
-### 2. Test de Funcionalidad (`test_secant_linear`):
+### 2. Test de Funcionalidad (`test_secant_linear`)
+
   - Se define una función lineal, cuya raíz es `-3/5`.
   - Debido a la linealidad de la función, el método de la secante debe converger en una sola iteración.
   - Se verifica que la solución obtenida es igual a `-3/5`.
 
-### 3. Test de Excepción (`test_secant_division_zero`):  
+### 3. Test de Excepción (`test_secant_division_zero`)
+
   - Se define una función constante, `f(x)=5`, para la cual el numerador de la fórmula de la secante es cero ya que `f(p0) = f(p1) = 5`.
   - Esta situación produce una división por cero en el cálculo de la nueva aproximación.
   - Se utiliza `pytest.raises(ValueError)` para confirmar que el método lanza la excepción adecuada.
@@ -74,6 +78,7 @@
 ## 5 - Método de Posición Falsa
 
 ### 1. Test de Funcionalidad (`test_false_position_sqrt`)
+
   - Se define la función `f(x)=x^2-7`. Esta función tiene dos raíces reales: `sqrt{7}` y `-sqrt{7}`.  
     En este test, se utilizan las aproximaciones iniciales `p0=2.0` y `p1=4.0`, de modo que:
     - `f(2.0) = 4 - 7 = -3` (negativo)
