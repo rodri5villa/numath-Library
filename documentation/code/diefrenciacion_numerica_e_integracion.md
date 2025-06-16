@@ -791,7 +791,7 @@ print(resultado)
 
 ## 15. Integral Doble Gaussiana (`double_gaussian_integration(funcion, a, b, c_func, d_func, m, n)`)
 
-Aproxima la integral doble usando **cuadratura de Gauss–Legendre** de orden `m` en `x` `y` orden `n` en `y`.  
+Aproxima la integral doble usando **cuadratura de Gauss–Legendre** de orden `m` en `x` y de orden `n` en `y`.  
 
 ### Fórmula
 

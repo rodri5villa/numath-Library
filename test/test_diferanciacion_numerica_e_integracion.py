@@ -493,7 +493,7 @@ def test_composite_double_simpson_variable_limits():
 
 def test_double_gaussian_x_times_y_squared():
     
-    funcion = "x*y^2"
+    funcion = "xy^2"
     a = "0"
     b = "3"
     c_func = "0"
@@ -533,7 +533,7 @@ def test_triple_gaussian_sum_of_vars():
 
 def test_triple_gaussian_product_xyz_region():
     
-    funcion = "x*y*z"
+    funcion = "xyz"
     a = "1"
     b = "2"
     c_func = "0"
